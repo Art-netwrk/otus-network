@@ -1,7 +1,8 @@
 # Лабораторная работа. Базовая настройка коммутатора
 
 # Топология
-<img width="319" height="96" alt="image" src="https://github.com/user-attachments/assets/e6ccd2d3-5215-4be7-a73f-3322c9735d6c" />
+<img width="428" height="149" alt="image" src="https://github.com/user-attachments/assets/fe918522-b0d9-4d23-a461-1849b790118b" />
+
 
 # Таблица адресации
 

@@ -56,11 +56,6 @@ R1(config-if)# ipv6 address fe80::1 link-local
 R1(config-if)# no shutdown
 R1(config-if)# exit
 ```
-Включение маршрутизации:
-```
-R1(config)# ipv6 unicast-routing
-R1(config)# end
-```
 
 <img width="389" height="128" alt="image" src="https://github.com/user-attachments/assets/d68ab82c-4598-4716-be95-c0a47a61d9c8" />
 
@@ -69,10 +64,4 @@ R1(config)# end
 
 Какие группы многоадресной рассылки назначены интерфейсу G0/0?
 
-<img width="384" height="143" alt="image" src="https://github.com/user-attachments/assets/8ee04cff-fd36-4ec4-a3fa-12fc0fdb0f67" />
-
-FF02::1 - для всех IPv6 устройств
-
-FF02::2 - группа для всех маршрутизаторов
-
-FF02::1:FF00:1 - используется для Neighbor Discovery (аналог ARP в IPv6)
+Интерфейс G0/0/0 принадлежит группам: FF02::1, FF02::1:FF00:1

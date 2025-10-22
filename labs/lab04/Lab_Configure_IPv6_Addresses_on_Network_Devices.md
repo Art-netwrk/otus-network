@@ -123,6 +123,14 @@ a.	Откройте окно Свойства Ethernet для каждого П�
 
 <img width="667" height="158" alt="image" src="https://github.com/user-attachments/assets/853ccbdd-bfd7-4177-82de-a5a86dcb42fb" />
 
+SLAAC адреса:
+
+<img width="692" height="451" alt="image" src="https://github.com/user-attachments/assets/545c0b16-319c-403d-8fc1-68a775aad663" />
+
+<img width="718" height="452" alt="image" src="https://github.com/user-attachments/assets/b20e7f0a-a8de-4363-a3ec-e04864bc8a26" />
+
+
+
 ### Часть 3. Проверка сквозного подключения
 
 С PC-A отправьте эхо-запрос на FE80::1. Это локальный адрес канала, назначенный G0/1 на R1.

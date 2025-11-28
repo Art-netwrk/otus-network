@@ -29,15 +29,25 @@
 ### Шаг 2. Настройте базовые параметры для маршрутизатора.
 a.	Подключитесь к маршрутизатору с помощью консоли и активируйте привилегированный режим EXEC.
 Откройте окно конфигурации
+
 b.	Войдите в режим конфигурации.
+
 c.	Назначьте маршрутизатору имя устройства.
+
 d.	Отключите поиск DNS, чтобы предотвратить попытки маршрутизатора неверно преобразовывать введенные команды таким образом, как будто они являются именами узлов.
+
 e.	Назначьте class в качестве зашифрованного пароля привилегированного режима EXEC.
+
 f.	Назначьте cisco в качестве пароля консоли и включите вход в систему по паролю.
+
 g.	Установите cisco в качестве пароля виртуального терминала и активируйте вход.
+
 h.	Зашифруйте открытые пароли.
+
 i.	Создайте баннер с предупреждением о запрете несанкционированного доступа к устройству.
+
 j.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
+
 k.	Настройте на маршрутизаторе время.
 
 ```
@@ -74,13 +84,22 @@ R1#clock set 12:00:00 28 Nov 2025
 ```
 ### Шаг 3. Настройте базовые параметры каждого коммутатора.
 a.	Присвойте коммутатору имя устройства.
+
 b.	Отключите поиск DNS, чтобы предотвратить попытки маршрутизатора неверно преобразовывать введенные команды таким образом, как будто они являются именами узлов.
+
 c.	Назначьте class в качестве зашифрованного пароля привилегированного режима EXEC.
+
 d.	Назначьте cisco в качестве пароля консоли и включите вход в систему по паролю.
+
 e.	Установите cisco в качестве пароля виртуального терминала и активируйте вход.
+
 f.	Зашифруйте открытые пароли.
+
+
 g.	Создайте баннер с предупреждением о запрете несанкционированного доступа к устройству.
+
 h.	Настройте на коммутаторах время.
+
 i.	Сохранение текущей конфигурации в качестве начальной.
 ```
 Switch>enable
@@ -106,6 +125,7 @@ S1#write memory
 Building configuration...
 [OK]
 ```
+То же самое на S2.
 ### Шаг 4. Настройте узлы ПК.
 <img width="700" height="294" alt="image" src="https://github.com/user-attachments/assets/1823f2ed-685a-489f-9e84-f25da4c23276" />
 <img width="691" height="296" alt="image" src="https://github.com/user-attachments/assets/c6773969-6a45-488c-93d7-633338c0de01" />
@@ -113,6 +133,180 @@ Building configuration...
 ## Часть 2. Создание сетей VLAN и назначение портов коммутатора
 Во второй части вы создадите VLAN, как указано в таблице выше, на обоих коммутаторах. Затем вы назначите VLAN соответствующему интерфейсу и проверите настройки конфигурации. Выполните следующие задачи на каждом коммутаторе.
 
+### Шаг 1. Создайте сети VLAN на коммутаторах.
+a.	Создайте и назовите необходимые VLAN на каждом коммутаторе из таблицы выше.
+Откройте окно конфигурации
+```
+S1>enable
+S1#configure terminal
+S1(config)#vlan 10
+S1(config-vlan)#name Management
+S1(config-vlan)#vlan 20
+S1(config-vlan)#name Sales
+S1(config-vlan)#vlan 30
+S1(config-vlan)#name Operations
+S1(config-vlan)#vlan 999
+S1(config-vlan)#name Parking_Lot
+S1(config-vlan)#vlan 1000
+S1(config-vlan)#name Native
+S1(config-vlan)#exit
+```
+На S2 аналогичные операции.
+
+#### b.	Настройте интерфейс управления и шлюз по умолчанию на каждом коммутаторе, используя информацию об IP-адресе в таблице адресации. 
+```
+S1(config)#interface vlan 10
+S1(config-if)#
+%LINK-5-CHANGED: Interface Vlan10, changed state to up
+S1(config-if)#ip address 192.168.10.11 255.255.255.0
+S1(config-if)#no shutdown
+S1(config-if)#exit
+S1(config)#ip default-gateway 192.168.10.1
+```
+```
+S2(config)#interface vlan 10
+S2(config-if)#
+%LINK-5-CHANGED: Interface Vlan10, changed state to up
+S2(config-if)#ip address 192.168.10.12 255.255.255.0
+S2(config-if)#no shutdown
+S2(config-if)#exit
+S2(config)#ip default-gateway 192.168.10.1
+```
+#### c.	Назначьте все неиспользуемые порты коммутатора VLAN Parking_Lot, настройте их для статического режима доступа и административно деактивируйте их.
+Примечание. Команда interface range полезна для выполнения этой задачи с минимальным количеством команд.
+```
+S1
+Неиспользуемые порты:
+F0/2-4, F0/7-24, G0/1-2
+```
+```
+S1(config)#interface range f0/2 - 4 , f0/7 - 24 , g0/1 - 2
+S1(config-if-range)#switchport mode access
+S1(config-if-range)#switchport access vlan 999
+S1(config-if-range)#shutdown
+%LINK-5-CHANGED: Interface FastEthernet0/2, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/3, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/18, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/24, changed state to administratively down
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+%LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+S1(config-if-range)#exit
+```
+
+```
+S1
+Неиспользуемые порты:
+F0/2-17, F0/19-24, G0/1-2
+```
+```
+S2(config)#interface range f0/2 - 17 , f0/19 - 24 , g0/1 - 2
+S2(config-if-range)#switchport mode access
+S2(config-if-range)#switchport access vlan 999
+S2(config-if-range)#shutdown
+%LINK-5-CHANGED: Interface FastEthernet0/2, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/3, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/4, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/5, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/6, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/7, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/8, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/9, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/10, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/11, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/12, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/13, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/14, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/15, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/16, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/17, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/19, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/20, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/21, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/22, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/23, changed state to administratively down
+%LINK-5-CHANGED: Interface FastEthernet0/24, changed state to administratively down
+%LINK-5-CHANGED: Interface GigabitEthernet0/1, changed state to administratively down
+%LINK-5-CHANGED: Interface GigabitEthernet0/2, changed state to administratively down
+S2(config-if-range)#exit
+```
+### Шаг 2. Назначьте сети VLAN соответствующим интерфейсам коммутатора.
+
+a.	Назначьте используемые порты соответствующей VLAN (указанной в таблице VLAN выше) и настройте их для режима статического доступа.
+```
+S1(config)#interface f0/6
+S1(config-if)#switchport mode access
+S1(config-if)#switchport access vlan 20
+S1(config-if)#exit
+```
+```
+S2(config)#interface f0/18
+S2(config-if)#switchport mode access
+S2(config-if)#switchport access vlan 30
+S2(config-if)#exit
+```
+b.	Убедитесь, что VLAN назначены на правильные интерфейсы.
+
+S1
+```
+S1#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/5
+10   Management                       active    
+20   Sales                            active    Fa0/6
+30   Operations                       active    
+999  Parking_Lot                      active    Fa0/2, Fa0/3, Fa0/4, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Fa0/24, Gig0/1, Gig0/2
+1000 Native                           active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active
+```
+S2
+```
+S2#show vlan brief 
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1
+10   Management                       active    
+20   Sales                            active    
+30   Operations                       active    Fa0/18
+999  Parking_Lot                      active    Fa0/2, Fa0/3, Fa0/4, Fa0/5
+                                                Fa0/6, Fa0/7, Fa0/8, Fa0/9
+                                                Fa0/10, Fa0/11, Fa0/12, Fa0/13
+                                                Fa0/14, Fa0/15, Fa0/16, Fa0/17
+                                                Fa0/19, Fa0/20, Fa0/21, Fa0/22
+                                                Fa0/23, Fa0/24, Gig0/1, Gig0/2
+1000 Native                           active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active
+```
 
 
 

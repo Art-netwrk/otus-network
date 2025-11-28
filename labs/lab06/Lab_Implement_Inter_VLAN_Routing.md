@@ -466,28 +466,28 @@ GigabitEthernet0/0/1.30192.168.30.1    YES manual up                    up
 GigabitEthernet0/0/1.1000unassigned      YES unset  up                    up 
 Vlan1                  unassigned      YES unset  administratively down down
 ```
+## Часть 5. Проверьте, работает ли маршрутизация между VLAN
+### Шаг 1. Выполните следующие тесты с PC-A. Все должно быть успешно.
 
+Примечание. Возможно, вам придется отключить брандмауэр ПК для работы ping
 
+a.	Отправьте эхо-запрос с PC-A на шлюз по умолчанию.
 
+<img width="689" height="415" alt="image" src="https://github.com/user-attachments/assets/50a12897-ee4a-414c-9472-130934362fc2" />
 
+b.	Отправьте эхо-запрос с PC-A на PC-B.
+<img width="695" height="371" alt="image" src="https://github.com/user-attachments/assets/01aea980-6598-45cb-ab23-dd32e5eeb4dd" />
 
+c.	Отправьте команду ping с компьютера PC-A на коммутатор S2.
+<img width="691" height="360" alt="image" src="https://github.com/user-attachments/assets/5daa3516-abdf-4a21-9cc9-b84f1db8062e" />
 
+### Шаг 2. Пройдите следующий тест с PC-B
+В окне командной строки на PC-B выполните команду tracert на адрес PC-A.
+<img width="688" height="296" alt="image" src="https://github.com/user-attachments/assets/1d6b6f73-e5e4-4f2e-9af7-875f28f66863" />
 
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
-
+Вопрос:
+Какие промежуточные IP-адреса отображаются в результатах?
+```
+В маршруте появляется шлюз по умолчанию для VLAN 30 -
+192.168.30.1, т.е. подинтерфейс R1 g0/0/1.30
+```

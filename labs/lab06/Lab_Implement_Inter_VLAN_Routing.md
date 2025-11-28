@@ -83,3 +83,43 @@ g.	Создайте баннер с предупреждением о запре
 h.	Настройте на коммутаторах время.
 i.	Сохранение текущей конфигурации в качестве начальной.
 ```
+Switch>enable
+Switch#configure terminal
+Switch(config)#hostname S1
+S1(config)#no ip domain-lookup
+S1(config)#enable secret class
+S1(config)#line console 0
+S1(config-line)#password cisco
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)#line vty 0 4
+S1(config-line)#password cisco
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)#service password-encryption
+S1(config)#banner motd "ADMIN ONLY"
+S1(config)#end
+S1#
+%SYS-5-CONFIG_I: Configured from console by console
+S1#clock set 12:05:00 28 Nov 2025
+S1#write memory 
+Building configuration...
+[OK]
+```
+### Шаг 4. Настройте узлы ПК.
+<img width="700" height="294" alt="image" src="https://github.com/user-attachments/assets/1823f2ed-685a-489f-9e84-f25da4c23276" />
+<img width="691" height="296" alt="image" src="https://github.com/user-attachments/assets/c6773969-6a45-488c-93d7-633338c0de01" />
+
+## Часть 2. Создание сетей VLAN и назначение портов коммутатора
+Во второй части вы создадите VLAN, как указано в таблице выше, на обоих коммутаторах. Затем вы назначите VLAN соответствующему интерфейсу и проверите настройки конфигурации. Выполните следующие задачи на каждом коммутаторе.
+
+
+
+
+
+
+
+
+
+
+

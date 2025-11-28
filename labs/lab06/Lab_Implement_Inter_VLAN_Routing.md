@@ -28,7 +28,6 @@
 
 ### Шаг 2. Настройте базовые параметры для маршрутизатора.
 a.	Подключитесь к маршрутизатору с помощью консоли и активируйте привилегированный режим EXEC.
-Откройте окно конфигурации
 
 b.	Войдите в режим конфигурации.
 
@@ -135,7 +134,6 @@ Building configuration...
 
 ### Шаг 1. Создайте сети VLAN на коммутаторах.
 a.	Создайте и назовите необходимые VLAN на каждом коммутаторе из таблицы выше.
-Откройте окно конфигурации
 ```
 S1>enable
 S1#configure terminal
@@ -308,10 +306,99 @@ VLAN Name                             Status    Ports
 1005 trnet-default                    active
 ```
 
+## Часть 3. Конфигурация магистрального канала стандарта 802.1Q между коммутаторами
 
+В части 3 вы вручную настроите интерфейс F0/1 как транк.
 
+### Шаг 1. Вручную настройте магистральный интерфейс F0/1 на коммутаторах S1 и S2.
+a.	Настройка статического транкинга на интерфейсе F0/1 для обоих коммутаторов.
 
+b.	Установите native VLAN 1000 на обоих коммутаторах.
 
+c.	Укажите, что VLAN 10, 20, 30 и 1000 могут проходить по транку.
+
+d.	Проверьте транки, native VLAN и разрешенные VLAN через транк.
+```
+S1(config)#interface fa0/1
+S1(config-if)#switchport mode trunk
+S1(config-if)#
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan10, changed state to up
+S1(config-if)#switchport trunk native vlan 1000
+S1(config-if)#switchport trunk allowed vlan 10,20,30,1000
+S1(config-if)#exit
+S1#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+
+Port        Vlans allowed on trunk
+Fa0/1       10,20,30,1000
+
+Port        Vlans allowed and active in management domain
+Fa0/1       10,20,30,1000
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       10,20,30,1000
+```
+```
+S2(config)#interface fa0/1
+S2(config-if)#switchport mode trunk 
+S2(config-if)#switchport trunk native vlan 1000
+S2(config-if)#%SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet0/1 on VLAN1000. Port consistency restored.
+%SPANTREE-2-UNBLOCK_CONSIST_PORT: Unblocking FastEthernet0/1 on VLAN0001. Port consistency restored.
+S2(config-if)#switchport trunk allowed vlan 10,20,30,1000
+S2(config-if)#exit
+S2#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+
+Port        Vlans allowed on trunk
+Fa0/1       10,20,30,1000
+
+Port        Vlans allowed and active in management domain
+Fa0/1       10,20,30,1000
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       10,20,30,1000
+```
+### Шаг 2. Вручную настройте магистральный интерфейс F0/5 на коммутаторе S1.
+a.	Настройте интерфейс S1 F0/5 с теми же параметрами транка, что и F0/1. Это транк до маршрутизатора.
+
+b.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
+
+c.	Проверка транкинга.
+```
+S1(config)#interface fa0/5
+S1(config-if)#switchport mode trunk
+S1(config-if)#switchport trunk native vlan 1000
+S1(config-if)#switchport trunk allowed vlan 10,20,30,1000
+S1(config-if)#exit
+S1(config)#end
+S1#write memory 
+Building configuration...
+[OK]
+S1#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+Fa0/5       on           802.1q         trunking      1000
+
+Port        Vlans allowed on trunk
+Fa0/1       10,20,30,1000
+Fa0/5       10,20,30,1000
+
+Port        Vlans allowed and active in management domain
+Fa0/1       10,20,30,1000
+Fa0/5       10,20,30,1000
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       10,20,30,1000
+Fa0/5       10,20,30,1000
+```
+### Вопрос: Что произойдет, если G0/0/1 на R1 будет отключен?
+```
+При отключении G0/0/1 на R1 все подинтерфейсы для VLAN становятся недоступны, и маршрутизация между VLAN прекращается.
+```
 
 
 

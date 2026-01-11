@@ -124,7 +124,6 @@ S1(config-if-range)#
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan1, changed state to down
 S1(config-if-range)#end
 ```
-<img width="424" height="225" alt="image" src="https://github.com/user-attachments/assets/c3f1c842-b8fb-43fe-9a63-211ed1fbfab4" />
 
 ### Шаг 2:	Настройте подключенные порты в качестве транковых.
 ```

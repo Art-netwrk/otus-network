@@ -13,7 +13,6 @@
 
 #### a.	Загрузите следующий конфигурационный скрипт на R1.
 
-#### Откройте окно конфигурации
 ```
 enable
 configure terminal
@@ -40,18 +39,71 @@ line con 0
  logging synchronous
  exec-timeout 0 0
 ```
+#### Результат
+```
+R1(config-line)#
+%LINK-5-CHANGED: Interface Loopback0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Loopback0, changed state to up
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
+```
 #### b.	Проверьте текущую конфигурацию на R1, используя следующую команду:
 ```
 R1# show ip interface brief
 ```
 #### c.	Убедитесь, что IP-адресация и интерфейсы находятся в состоянии up / up (при необходимости устраните неполадки).
-
+```
+R1#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0/0   unassigned      YES unset  administratively down down 
+GigabitEthernet0/0/1   192.168.10.1    YES manual up                    down 
+GigabitEthernet0/0/2   unassigned      YES unset  administratively down down 
+Loopback0              10.10.1.1       YES manual up                    up 
+Vlan1                  unassigned      YES unset  administratively down down
+```
 ### Шаг 3. Настройка и проверка основных параметров коммутатора
 
 #### a.	Настройте имя хоста для коммутаторов S1 и S2.
 #### b.	Запретите нежелательный поиск в DNS.
 #### c.	Настройте описания интерфейса для портов, которые используются в S1 и S2.
 #### d.	Установите для шлюза по умолчанию для VLAN управления значение 192.168.10.1 на обоих коммутаторах.
+```
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname S1
+S1(config)#no ip domain lookup
+S1(config)#ip default-gateway 192.168.10.1
+S1(config)#interface fa0/1
+S1(config-if)#description Link to S2
+S1(config-if)#interface fa0/5
+S1(config-if)# description Link to R1
+S1(config-if)#interface fa0/6
+S1(config-if)# description Link to PC-A
+S1(config-if)#end
+S1#
+%SYS-5-CONFIG_I: Configured from console by console
+S1#wr
+Building configuration...
+[OK]
+```
+```
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname S2
+S2(config)#no ip domain lookup
+S2(config)#ip default-gateway 192.168.10.1
+S2(config)#interface fa0/1
+S2(config-if)# description Link to S1
+S2(config-if)#interface fa0/18
+S2(config-if)# description Link to PC-B
+S2(config-if)#end
+S2#write memory
+Building configuration...
+[OK]
+S2#
+%SYS-5-CONFIG_I: Configured from console by console
+```
 
 ## Часть 2. Настройка сетей VLAN на коммутаторах.
 
@@ -65,57 +117,167 @@ R1# show ip interface brief
 
 ### Шаг 4. Настройте VLAN 999 с именем ParkingLot на S1 и S2.
 
+#### Создание VLAN для S1 и S2
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#vlan 10
+S1(config-vlan)# name Management
+S1(config-vlan)#vlan 333
+S1(config-vlan)# name Native
+S1(config-vlan)#vlan 999
+S1(config-vlan)# name ParkingLot
+S1(config-vlan)#end
+S1#wr
+Building configuration...
+[OK]
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#vlan 10
+S2(config-vlan)# name Management
+S2(config-vlan)#vlan 333
+S2(config-vlan)# name Native
+S2(config-vlan)#vlan 999
+S2(config-vlan)# name ParkingLot
+S2(config-vlan)#end
+S2#wr
+Building configuration...
+[OK]
+```
+#### Конфигурация SVI для VLAN 10
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface vlan 10
+S1(config-if)# description Management SVI
+S1(config-if)# ip address 192.168.10.201 255.255.255.0
+S1(config-if)# no shutdown
+S1(config-if)#end
+S1#wr
+Building configuration...
+[OK]
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface vlan 10
+S2(config-if)# description Management SVI
+S2(config-if)# ip address 192.168.10.202 255.255.255.0
+S2(config-if)# no shutdown
+S2(config-if)#end
+S2#wr
+Building configuration...
+[OK]
+```
+
+
 ## Часть 3. Настройки безопасности коммутатора.
 
 ### Шаг 1. Релизация магистральных соединений 802.1Q.
 
 #### a.	Настройте все магистральные порты Fa0/1 на обоих коммутаторах для использования VLAN 333 в качестве native VLAN.
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface fa0/1
+S1(config-if)# switchport mode trunk
+S1(config-if)# switchport trunk native vlan 333
+S1(config-if)# switchport nonegotiate
+S1(config-if)#end
+S1#wr
+Building configuration...
+[OK]
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface fa0/1
+S2(config-if)# switchport mode trunk
+S2(config-if)# switchport trunk native vlan 333
+S2(config-if)# switchport nonegotiate
+S2(config-if)#end
+S2#wr
+Building configuration...
+[OK]
+```
 
 #### b.	Убедитесь, что режим транкинга успешно настроен на всех коммутаторах.
 ```
-S1# show interface trunk
-
-Port Mode Encapsulation Status Native vlan
-Fa0/1 on 802.1q trunking 333
-
-Port Vlans allowed on trunk
-Fa0/1 1-4094
-
-Port Vlans allowed and active in management domain
-Fa0/1 1,10,333,999
-
-Port Vlans in spanning tree forwarding state and not pruned
-Fa0/1 1,10,333,999
-
-S2# show interface trunk
-
-Port Mode Encapsulation Status Native vlan
-Fa0/1 on 802.1q trunking 333
-
-Port Vlans allowed on trunk
-Fa0/1 1-4094
-
-Port Vlans allowed and active in management domain
-Fa0/1 1,10,333,999
-
-Port Vlans in spanning tree forwarding state and not pruned
-Fa0/1 1,10,333,999
+S1#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      333
+Port        Vlans allowed on trunk
+Fa0/1       1-1005
+Port        Vlans allowed and active in management domain
+Fa0/1       1,10,333,999
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       1,10,333,999
+```
+```
+S2#show interface trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      333
+Port        Vlans allowed on trunk
+Fa0/1       1-1005
+Port        Vlans allowed and active in management domain
+Fa0/1       1,10,333,999
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       1,10,333,999
 ```
 #### c.	Отключить согласование DTP F0/1 на S1 и S2. 
+```
+S1(config-if)# switchport nonegotiate
+```
+```
+S2(config-if)# switchport nonegotiate
+```
 #### d.	Проверьте с помощью команды show interfaces.
 ```
 S1# show interfaces f0/1 switchport | include Negotiation
 Negotiation of Trunking: Off
-
-S1# show interfaces f0/1 switchport | include Negotiation
+```
+```
+S2# show interfaces f0/1 switchport | include Negotiation
 Negotiation of Trunking: Off
 ```
 ### Шаг 2. Настройка портов доступа
 #### a.	На S1 настройте F0/5 и F0/6 в качестве портов доступа и свяжите их с VLAN 10.
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface range f0/5 - 6
+S1(config-if-range)# switchport mode access
+S1(config-if-range)# switchport access vlan 10
+S1(config-if-range)#end
+S1#wr
+Building configuration...
+[OK]
+```
 #### b.	На S2 настройте порт доступа Fa0/18 и свяжите его с VLAN 10.
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface f0/18
+S2(config-if)# switchport mode access
+S2(config-if)# switchport access vlan 10
+S2(config-if)#end
+S2#wr
+Building configuration...
+[OK]
+```
 
 ### Шаг 3. Безопасность неиспользуемых портов коммутатора
 #### a.	На S1 и S2 переместите неиспользуемые порты из VLAN 1 в VLAN 999 и отключите неиспользуемые порты.
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface range f0/2 - 4, f0/7 - 24, gi0/1 - 2
+S1(config-if-range)# switchport mode access
+S1(config-if-range)# switchport access vlan 999
+S1(config-if-range)# shutdown
+```
 #### b.	Убедитесь, что неиспользуемые порты отключены и связаны с VLAN 999, введя команду  show.
 ```
 S1# show interfaces status

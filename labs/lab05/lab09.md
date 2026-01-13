@@ -55,7 +55,7 @@ R1# show ip interface brief
 R1#show ip interface brief
 Interface              IP-Address      OK? Method Status                Protocol 
 GigabitEthernet0/0/0   unassigned      YES unset  administratively down down 
-GigabitEthernet0/0/1   192.168.10.1    YES manual up                    down 
+GigabitEthernet0/0/1   192.168.10.1    YES manual up                    up 
 GigabitEthernet0/0/2   unassigned      YES unset  administratively down down 
 Loopback0              10.10.1.1       YES manual up                    up 
 Vlan1                  unassigned      YES unset  administratively down down

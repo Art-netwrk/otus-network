@@ -288,12 +288,12 @@ Building configuration...
 [OK]
 ```
 ```
+S2:
 conf t
 interface range f0/1-4, f0/6-17, f0/19-24, g0/1-2
  shutdown
 end
 write memory
-```
 ```
 #### Шаг 8.	Назначьте сети VLAN соответствующим интерфейсам коммутатора.
 

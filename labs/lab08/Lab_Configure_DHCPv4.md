@@ -460,6 +460,9 @@ R1(dhcp-config)# exit
 R1(dhcp-config)#lease ?
 % Unrecognized command
 ```
+```
+В используемой версии IOS/Packet Tracer команда lease недоступна, поэтому время аренды остаётся по умолчанию
+```
 c.	Укажите сеть, поддерживающую этот DHCP-сервер.
 
 d.	В качестве имени домена укажите CCNA-lab.com.

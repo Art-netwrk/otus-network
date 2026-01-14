@@ -530,7 +530,62 @@ a.	Из командной строки компьютера PC-A выполни
 b.	После завершения процесса обновления выполните команду ipconfig для просмотра новой информации об IP-адресе.
 
 c.	Проверьте подключение с помощью пинга IP-адреса интерфейса R0 G0/0/1.
+```
+C:\>ipconfig /all
 
+FastEthernet0 Connection:(default port)
+
+   Connection-specific DNS Suffix..: 
+   Physical Address................: 00D0.FFD0.617B
+   Link-local IPv6 Address.........: FE80::2D0:FFFF:FED0:617B
+   IPv6 Address....................: ::
+   IPv4 Address....................: 0.0.0.0
+   Subnet Mask.....................: 0.0.0.0
+   Default Gateway.................: ::
+                                     0.0.0.0
+   DHCP Servers....................: 0.0.0.0
+   DHCPv6 IAID.....................: 
+   DHCPv6 Client DUID..............: 00-01-00-01-36-CE-2D-CD-00-D0-FF-D0-61-7B
+   DNS Servers.....................: ::
+                                     0.0.0.0
+```
+```
+C:\>ipconfig /renew
+
+   IP Address......................: 192.168.1.6
+   Subnet Mask.....................: 255.255.255.192
+   Default Gateway.................: 192.168.1.1
+   DNS Server......................: 0.0.0.0
+```
+```
+C:\>ipconfig
+
+FastEthernet0 Connection:(default port)
+
+   Connection-specific DNS Suffix..: CCNA-lab.com
+   Link-local IPv6 Address.........: FE80::2D0:FFFF:FED0:617B
+   IPv6 Address....................: ::
+   IPv4 Address....................: 192.168.1.6
+   Subnet Mask.....................: 255.255.255.192
+   Default Gateway.................: ::
+                                     192.168.1.1
+```
+```
+
+C:\>ping 192.168.1.1
+
+Pinging 192.168.1.1 with 32 bytes of data:
+
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.1: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.1.1:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+```
 ### Часть 3.	Настройка и проверка DHCP-ретрансляции на R2
 В части 3 настраивается R2 для ретрансляции DHCP-запросов из локальной сети на интерфейсе G0/0/1 на DHCP-сервер (R1). 
 
@@ -539,7 +594,16 @@ c.	Проверьте подключение с помощью пинга IP-а�
 a.	Настройте команду ip helper-address на G0/0/1, указав IP-адрес G0/0/0 R1.
 
 b.	Сохраните конфигурацию.
-
+```
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#interface g0/0/1
+R2(config-if)# ip helper-address 10.0.0.1
+R2(config-if)#end
+R2#write memory
+Building configuration...
+[OK]
+```
 #### Шаг 2.	Попытка получить IP-адрес от DHCP на PC-B
 
 a.	Из командной строки компьютера PC-B выполните команду ipconfig /all.
@@ -551,9 +615,60 @@ c.	Проверьте подключение с помощью пинга IP-а�
 d.	Выполните show ip dhcp binding для R1 для проверки назначений адресов в DHCP.
 
 e.	Выполните команду show ip dhcp server statistics для проверки сообщений DHCP.
+```
+C:\>ipconfig /all
 
+FastEthernet0 Connection:(default port)
 
+   Connection-specific DNS Suffix..: 
+   Physical Address................: 0006.2A31.2D87
+   Link-local IPv6 Address.........: FE80::206:2AFF:FE31:2D87
+   IPv6 Address....................: ::
+   IPv4 Address....................: 0.0.0.0
+   Subnet Mask.....................: 0.0.0.0
+   Default Gateway.................: ::
+                                     0.0.0.0
+   DHCP Servers....................: 0.0.0.0
+   DHCPv6 IAID.....................: 
+   DHCPv6 Client DUID..............: 00-01-00-01-25-30-55-C0-00-06-2A-31-2D-87
+   DNS Servers.....................: ::
+                                     0.0.0.0
+```
+```
+C:\>ipconfig
 
+FastEthernet0 Connection:(default port)
+
+   Connection-specific DNS Suffix..: CCNA-lab.com
+   Link-local IPv6 Address.........: FE80::206:2AFF:FE31:2D87
+   IPv6 Address....................: ::
+   IPv4 Address....................: 192.168.1.102
+   Subnet Mask.....................: 255.255.255.240
+   Default Gateway.................: ::
+                                     192.168.1.97
+```
+```
+C:\>ping 192.168.1.97
+
+Pinging 192.168.1.97 with 32 bytes of data:
+
+Reply from 192.168.1.97: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.97: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.97: bytes=32 time<1ms TTL=255
+Reply from 192.168.1.97: bytes=32 time<1ms TTL=255
+
+Ping statistics for 192.168.1.97:
+    Packets: Sent = 4, Received = 4, Lost = 0 (0% loss),
+Approximate round trip times in milli-seconds:
+    Minimum = 0ms, Maximum = 0ms, Average = 0ms
+```
+```
+R1#show ip dhcp binding
+IP address       Client-ID/              Lease expiration        Type
+                 Hardware address
+192.168.1.6      00D0.FFD0.617B           --                     Automatic
+192.168.1.102    0006.2A31.2D87           --                     Automatic
+```
 
 
 

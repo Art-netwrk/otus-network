@@ -546,16 +546,32 @@ R1(config)# ip http secure-server
 
 b.	Настройте R1 для проверки подлинности пользователей, пытающихся подключиться к веб-серверу.
 R1(config)# ip http authentication local
-
+```
+На используемой модели маршрутизатора/образе IOS в Packet Tracer отсутствует поддержка встроенного HTTP/HTTPS сервера. Поэтому включение HTTPS и локальной аутентификации веб-сервера выполнить невозможно. Удалённый доступ реализован через SSH (Шаг 1), а политики по WEB (HTTP/HTTPS) будут проверяться и обеспечиваться ACL по портам 80/443.
+```
 ## Часть 6. Проверка подключения
 
 ### Шаг 1. Настройте узлы ПК.
 Адреса ПК можно посмотреть в таблице адресации.
 
+<img width="458" height="301" alt="image" src="https://github.com/user-attachments/assets/335e1730-51d6-42ae-9c14-5d60804406e3" />
+
+<img width="460" height="303" alt="image" src="https://github.com/user-attachments/assets/eb749c85-db6a-4955-8bc4-32bb63ff1251" />
+
 ### Шаг 2. Выполните следующие тесты. Эхозапрос должен пройти успешно.
 Примечание. Возможно, вам придется отключить брандмауэр ПК для работы ping
 
 <img width="665" height="272" alt="image" src="https://github.com/user-attachments/assets/d58f8bf7-b20e-4085-aa04-88a9f715f31a" />
+
+### PC-A
+
+<img width="405" height="191" alt="image" src="https://github.com/user-attachments/assets/c8ea5bad-6c1c-4202-8f2b-75cc8d4e124c" />
+
+<img width="426" height="209" alt="image" src="https://github.com/user-attachments/assets/3d81d4d1-6c87-494b-bbb4-6edb75362292" />
+
+### PC-B
+
+<img width="408" height="610" alt="image" src="https://github.com/user-attachments/assets/08fab593-8189-4c4e-b13f-9aef889d8065" />
 
 ## Часть 7. Настройка и проверка списков контроля доступа (ACL)
 При проверке базового подключения компания требует реализации следующих политик безопасности:

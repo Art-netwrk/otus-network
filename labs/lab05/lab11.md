@@ -276,6 +276,41 @@ S1(config-if)#switchport trunk allowed vlan 20,30,40,1000
 S1(config-if)#no shutdown
 S1(config-if)#end
 ```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface fa0/1
+S2(config-if)#switchport mode trunk
+S2(config-if)#switchport trunk native vlan 1000
+S2(config-if)#switchport trunk allowed vlan 20,30,40,1000
+S2(config-if)#no shutdown
+S2(config-if)#end
+```
+```
+S1>en
+Password: 
+S1#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+Port        Vlans allowed on trunk
+Fa0/1       20,30,40,1000
+Port        Vlans allowed and active in management domain
+Fa0/1       20,30,40,1000
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       20,30,40,1000
+```
+```
+S2#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+Port        Vlans allowed on trunk
+Fa0/1       20,30,40,1000
+Port        Vlans allowed and active in management domain
+Fa0/1       20,30,40,1000
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       20,30,40,1000
+```
+
 ### Шаг 2. Вручную настройте магистральный интерфейс F0/5 на коммутаторе S1.
 
 a.	Настройте интерфейс S1 F0/5 с теми же параметрами транка, что и F0/1. Это транк до маршрутизатора.
@@ -283,21 +318,113 @@ a.	Настройте интерфейс S1 F0/5 с теми же парамет
 b.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 
 c.	Используйте команду show interfaces trunk для проверки настроек транка.
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface fa0/5
+S1(config-if)#switchport mode trunk
+S1(config-if)#switchport trunk native vlan 1000
+S1(config-if)#switchport trunk allowed vlan 20,30,40,1000
+S1(config-if)#no shutdown
+S1(config-if)#end
+S1#wr
+Building configuration...
+[OK]
+```
+
 
 ## Часть 4. Настройте маршрутизацию.
 
 ### Шаг 1. Настройка маршрутизации между сетями VLAN на R1.
 
 a.	Активируйте интерфейс G0/0/1 на маршрутизаторе.
-
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface g0/0/1
+R1(config-if)#no ip address
+R1(config-if)#no shutdown
+R1(config-if)#end
+```
 b.	Настройте подинтерфейсы для каждой VLAN, как указано в таблице IP-адресации. Все подинтерфейсы используют инкапсуляцию 802.1Q. Убедитесь, что подинтерфейс для собственной VLAN не имеет назначенного IP-адреса. Включите описание для каждого подинтерфейса.
-
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface g0/0/1.20
+R1(config-subif)#description VLAN20_Management
+R1(config-subif)#encapsulation dot1Q 20
+R1(config-subif)#ip address 10.20.0.1 255.255.255.0
+R1(config-subif)#exit
+R1(config)#interface g0/0/1.30
+R1(config-subif)#description VLAN30_Operations
+R1(config-subif)#encapsulation dot1Q 30
+R1(config-subif)#ip address 10.30.0.1 255.255.255.0
+R1(config-subif)#exit
+R1(config)#interface g0/0/1.40
+R1(config-subif)#description VLAN40_Sales
+R1(config-subif)#encapsulation dot1Q 40
+R1(config-subif)#ip address 10.40.0.1 255.255.255.0
+R1(config-subif)#exit
+R1(config)#interface g0/0/1.1000
+R1(config-subif)#description Native_VLAN1000
+R1(config-subif)#encapsulation dot1Q 1000 native
+R1(config-subif)#no ip address
+R1(config-subif)#exit
+R1(config)#end
+```
 c.	Настройте интерфейс Loopback 1 на R1 с адресацией из приведенной выше таблицы.
-
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#interface loopback1
+R1(config-if)#ip address 172.16.1.1 255.255.255.0
+R1(config-if)#end
+R1#wr
+```
 d.	С помощью команды show ip interface brief проверьте конфигурацию подынтерфейса.
+```
+R1#show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol 
+GigabitEthernet0/0/0   unassigned      YES unset  administratively down down 
+GigabitEthernet0/0/1   unassigned      YES unset  up                    up 
+GigabitEthernet0/0/1.2010.20.0.1       YES manual up                    up 
+GigabitEthernet0/0/1.3010.30.0.1       YES manual up                    up 
+GigabitEthernet0/0/1.4010.40.0.1       YES manual up                    up 
+GigabitEthernet0/0/1.1000unassigned      YES unset  up                    up 
+Loopback1              172.16.1.1      YES manual up                    up 
+Vlan1                  unassigned      YES unset  administratively down down
+```
 
 ### Шаг 2. Настройка интерфейса R2 g0/0/1 с использованием адреса из таблицы и маршрута по умолчанию с адресом следующего перехода 10.20.0.1
+```
+R2#enable
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#interface g0/0/1
+R2(config-if)#ip address 10.20.0.4 255.255.255.0
+R2(config-if)#no shutdown
+R2(config-if)#exit
+R2(config)#ip route 0.0.0.0 0.0.0.0 10.20.0.1
+R2(config)#end
+R2#wr
+```
+```
+R2#show ip route
+Codes: L - local, C - connected, S - static, R - RIP, M - mobile, B - BGP
+       D - EIGRP, EX - EIGRP external, O - OSPF, IA - OSPF inter area
+       N1 - OSPF NSSA external type 1, N2 - OSPF NSSA external type 2
+       E1 - OSPF external type 1, E2 - OSPF external type 2, E - EGP
+       i - IS-IS, L1 - IS-IS level-1, L2 - IS-IS level-2, ia - IS-IS inter area
+       * - candidate default, U - per-user static route, o - ODR
+       P - periodic downloaded static route
 
+Gateway of last resort is 10.20.0.1 to network 0.0.0.0
+
+     10.0.0.0/8 is variably subnetted, 2 subnets, 2 masks
+C       10.20.0.0/24 is directly connected, GigabitEthernet0/0/1
+L       10.20.0.4/32 is directly connected, GigabitEthernet0/0/1
+S*   0.0.0.0/0 [1/0] via 10.20.0.1
+```
 ## Часть 5. Настройте удаленный доступ
 
 ### Шаг 1. Настройте все сетевые устройства для базовой поддержки SSH.
@@ -310,7 +437,108 @@ c.	Генерируйте криптоключи с помощью 1024 битн
 
 d.	Настройте первые пять линий VTY на каждом устройстве, чтобы поддерживать только SSH-соединения и с локальной 
 аутентификацией.
-
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#username SSHadmin secret $cisco123!
+R1(config)#ip domain-name ccna-lab.com
+R1(config)#end
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#crypto key generate rsa
+The name for the keys will be: R1.ccna-lab.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+R1(config)#ip ssh version 2
+*Mar 2 3:29:36.171: %SSH-5-ENABLED: SSH 2 has been enabled
+R1(config)#line vty 0 4
+R1(config-line)#transport input ssh
+R1(config-line)#login local
+R1(config-line)#end
+R1#wr
+```
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#username SSHadmin secret $cisco123!
+S1(config)#ip domain-name ccna-lab.com
+S1(config)#end
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#crypto key generate rsa
+The name for the keys will be: S1.ccna-lab.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+S1(config)#ip ssh version 2
+S1(config)#
+S1(config)#line vty 0 4
+S1(config-line)#transport input ssh
+S1(config-line)#login local
+S1(config-line)#end
+S1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+S1#wr
+```
+```
+S2#enable
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#username SSHadmin secret $cisco123!
+S2(config)#ip domain-name ccna-lab.com
+S2(config)#end
+S2#
+%SYS-5-CONFIG_I: Configured from console by console
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#crypto key generate rsa
+The name for the keys will be: S2.ccna-lab.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+S2(config)#ip ssh version 2
+*Mar 2 3:40:2.551: %SSH-5-ENABLED: SSH 2 has been enabled
+S2(config)#line vty 0 4
+S2(config-line)#transport input ssh
+S2(config-line)#login local
+S2(config-line)#end
+S2#wr
+Building configuration...
+[OK]
+```
+```
+R2#enable
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#username SSHadmin secret $cisco123!
+R2(config)#ip domain-name ccna-lab.com
+R2(config)#end
+R2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R2(config)#crypto key generate rsa
+The name for the keys will be: R2.ccna-lab.com
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+R2(config)#ip ssh version 2
+*Mar 2 3:42:57.800: %SSH-5-ENABLED: SSH 1.99 has been enabled
+R2(config)#line vty 0 4
+R2(config-line)#transport input ssh
+R2(config-line)#login local
+R2(config-line)#end
+R2#wr
+Building configuration...
+[OK]
+```
 ### Шаг 2. Включите защищенные веб-службы с проверкой подлинности на R1.
 
 a.	Включите сервер HTTPS на R1.

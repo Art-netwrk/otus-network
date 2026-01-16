@@ -573,6 +573,10 @@ R1(config)# ip http authentication local
 
 <img width="408" height="610" alt="image" src="https://github.com/user-attachments/assets/08fab593-8189-4c4e-b13f-9aef889d8065" />
 
+<img width="223" height="100" alt="image" src="https://github.com/user-attachments/assets/f9bc20e8-8664-4d44-bec1-f9b78de44486" />
+
+<img width="231" height="99" alt="image" src="https://github.com/user-attachments/assets/77474a48-a477-4cdc-baeb-9690eeecf1d2" />
+
 ## Часть 7. Настройка и проверка списков контроля доступа (ACL)
 При проверке базового подключения компания требует реализации следующих политик безопасности:
 
@@ -588,9 +592,90 @@ R1(config)# ip http authentication local
 ### Шаг 1. Проанализируйте требования к сети и политике безопасности для планирования реализации ACL.
  
 ### Шаг 2. Разработка и применение расширенных списков доступа, которые будут соответствовать требованиям политики безопасности.
-
+```
+R1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+R1(config)#ip access-list extended SALES-IN
+R1(config-ext-nacl)#remark Policy1: block SSH from Sales to Management
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22
+R1(config-ext-nacl)#remark Policy2: block HTTP/HTTPS from Sales to Management
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 80
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 443
+R1(config-ext-nacl)#remark Policy2: block HTTP/HTTPS from Sales to R1 routed interfaces (SVIs on router-on-a-stick)
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 80
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 443
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 80
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 443
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 80
+R1(config-ext-nacl)#deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 443
+R1(config-ext-nacl)#remark Policy3: block ICMP echo from Sales to Operations and Management
+R1(config-ext-nacl)#deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255 echo
+R1(config-ext-nacl)#deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 echo
+R1(config-ext-nacl)#remark Allow everything else (includes SSH to other nets and web/ssh to 172.16.1.1)
+R1(config-ext-nacl)#permit ip 10.40.0.0 0.0.0.255 any
+R1(config-ext-nacl)#exit
+```
+```
+R1(config)#ip access-list extended OPERATIONS-IN
+R1(config-ext-nacl)#remark Policy4: block ICMP echo from Operations to Sales
+R1(config-ext-nacl)#deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255 echo
+R1(config-ext-nacl)#remark Allow everything else
+R1(config-ext-nacl)#permit ip 10.30.0.0 0.0.0.255 any
+R1(config-ext-nacl)#exit
+```
+```
+R1(config)#interface g0/0/1.40
+R1(config-subif)#ip access-group SALES-IN in
+R1(config-subif)#exit
+R1(config)#interface g0/0/1.30
+R1(config-subif)#ip access-group OPERATIONS-IN in
+R1(config-subif)#end
+R1#wr
+Building configuration...
+[OK]
+```
 ### Шаг 3. Убедитесь, что политики безопасности применяются развернутыми списками доступа.
 Выполните следующие тесты. Ожидаемые результаты показаны в таблице:
 
 <img width="677" height="270" alt="image" src="https://github.com/user-attachments/assets/4600cad5-ea21-4536-8a75-7e64e2f29c95" />
 
+### PC-A
+
+<img width="415" height="164" alt="image" src="https://github.com/user-attachments/assets/f3a4e00f-5cb9-4c5b-931b-cb763f64a2ff" />
+
+<img width="402" height="190" alt="image" src="https://github.com/user-attachments/assets/17a763b5-b0ae-4d07-b42c-8ec5080c8606" />
+
+### PC-B
+
+<img width="411" height="162" alt="image" src="https://github.com/user-attachments/assets/51dd32ef-0094-48d5-991d-343c4d3f9d81" />
+
+<img width="415" height="166" alt="image" src="https://github.com/user-attachments/assets/4472450f-00fb-46f1-9c4c-623b3cb83dcd" />
+
+<img width="398" height="189" alt="image" src="https://github.com/user-attachments/assets/57861196-c4f2-4bfa-88b6-f216c6f86a3e" />
+
+<img width="360" height="47" alt="image" src="https://github.com/user-attachments/assets/44d9e20f-eb90-476d-895b-f962af212f1e" />
+
+<img width="220" height="155" alt="image" src="https://github.com/user-attachments/assets/17e5ca9a-bde8-402c-82f1-e5b6e15a7bef" />
+
+```
+R1#show access-lists
+Extended IP access list SALES-IN
+    10 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 22 (12 match(es))
+    20 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq www
+    30 deny tcp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 eq 443
+    40 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq www
+    50 deny tcp 10.40.0.0 0.0.0.255 host 10.20.0.1 eq 443
+    60 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq www
+    70 deny tcp 10.40.0.0 0.0.0.255 host 10.30.0.1 eq 443
+    80 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq www
+    90 deny tcp 10.40.0.0 0.0.0.255 host 10.40.0.1 eq 443
+    100 deny icmp 10.40.0.0 0.0.0.255 10.30.0.0 0.0.0.255 echo (4 match(es))
+    110 deny icmp 10.40.0.0 0.0.0.255 10.20.0.0 0.0.0.255 echo (4 match(es))
+    120 permit ip 10.40.0.0 0.0.0.255 any (29 match(es))
+Extended IP access list OPERATIONS-IN
+    10 deny icmp 10.30.0.0 0.0.0.255 10.40.0.0 0.0.0.255 echo (4 match(es))
+    20 permit ip 10.30.0.0 0.0.0.255 any (4 match(es))
+```
+```
+HTTPS: На используемой модели R1 команды включения HTTPS-сервера (ip http secure-server, ip http authentication local) не поддерживаются (Invalid input), поэтому проверка через браузер ограничена. Политика 2 подтверждается ACL SALES-IN: HTTPS (tcp/443) из сети Sales 10.40.0.0/24 в сеть Management 10.20.0.0/24 и к интерфейсу R1 10.20.0.1 запрещён, при этом доступ к Loopback1 172.16.1.1 не запрещён и разрешается правилом permit ip.
+```

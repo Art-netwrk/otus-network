@@ -331,7 +331,24 @@ S1#wr
 Building configuration...
 [OK]
 ```
+```
+S1#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Fa0/1       on           802.1q         trunking      1000
+Fa0/5       on           802.1q         trunking      1000
 
+Port        Vlans allowed on trunk
+Fa0/1       20,30,40,1000
+Fa0/5       20,30,40,1000
+
+Port        Vlans allowed and active in management domain
+Fa0/1       20,30,40,1000
+Fa0/5       20,30,40,1000
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Fa0/1       20,30,40,1000
+Fa0/5       20,30,40,1000
+```
 
 ## Часть 4. Настройте маршрутизацию.
 
@@ -677,5 +694,5 @@ Extended IP access list OPERATIONS-IN
     20 permit ip 10.30.0.0 0.0.0.255 any (4 match(es))
 ```
 ```
-HTTPS: На используемой модели R1 команды включения HTTPS-сервера (ip http secure-server, ip http authentication local) не поддерживаются (Invalid input), поэтому проверка через браузер ограничена. Политика 2 подтверждается ACL SALES-IN: HTTPS (tcp/443) из сети Sales 10.40.0.0/24 в сеть Management 10.20.0.0/24 и к интерфейсу R1 10.20.0.1 запрещён, при этом доступ к Loopback1 172.16.1.1 не запрещён и разрешается правилом permit ip.
+HTTPS: На данном образе/модели R1 в Packet Tracer команды ip http secure-server и ip http authentication local не поддерживаются, поэтому HTTPS-проверка через браузер ограничена. Политика 2 подтверждена ACL SALES-IN: tcp/443 из 10.40.0.0/24 в 10.20.0.0/24 (и к 10.20.0.1) запрещён, доступ к 172.16.1.1 не запрещён (permit ip).
 ```

@@ -34,6 +34,30 @@ g.	Создайте баннер с предупреждением о запре
 
 h.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 
+#### R1 и R2 аналогично
+```
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname R1
+R1(config)#no ip domain-lookup
+R1(config)#enable secret class
+R1(config)#line con 0
+R1(config-line)#password cisco
+R1(config-line)#login
+R1(config-line)#logging synchronous
+R1(config-line)#exit
+R1(config)#line vty 0 15
+R1(config-line)#password cisco
+R1(config-line)#login
+R1(config-line)#exit
+R1(config)#service password-encryption
+R1(config)#banner motd "ADMIN ONLY"
+R1(config)#end
+%SYS-5-CONFIG_I: Configured from console by console
+R1#wr
+Building configuration...
+[OK]
+```
 ### Шаг 3. Настройте базовые параметры каждого коммутатора.
 
 a.	Присвойте коммутатору имя устройства.
@@ -52,22 +76,184 @@ g.	Создайте баннер с предупреждением о запре
 
 h.	Сохраните текущую конфигурацию в файл загрузочной конфигурации.
 
+#### S1 и S2 аналогично
+```
+S1#enable
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#hostname S1
+S1(config)#no ip domain-lookup
+S1(config)#enable secret class
+S1(config)#line con 0
+S1(config-line)#password cisco
+S1(config-line)#login
+S1(config-line)#logging synchronous
+S1(config-line)#exit
+S1(config)#line vty 0 15
+S1(config-line)#password cisco
+S1(config-line)#login
+S1(config-line)#exit
+S1(config)#service password-encryption
+S1(config)#banner motd "ADMIN ONLY"
+S1(config)#end
+S1#wr
+Building configuration...
+[OK]
+```
 ## Часть 2. Настройка сетей VLAN на коммутаторах.
 
 ### Шаг 1. Создайте сети VLAN на коммутаторах.
 
 a.	Создайте необходимые VLAN и назовите их на каждом коммутаторе из приведенной выше таблицы.
 
+#### S1 и S2 аналогично
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#vlan 20
+S1(config-vlan)#name Management
+S1(config-vlan)#vlan 30
+S1(config-vlan)#name Operations
+S1(config-vlan)#vlan 40
+S1(config-vlan)#name Sales
+S1(config-vlan)#vlan 999
+S1(config-vlan)#name ParkingLot
+S1(config-vlan)#vlan 1000
+S1(config-vlan)#name Native
+S1(config-vlan)#end
+```
 b.	Настройте интерфейс управления и шлюз по умолчанию на каждом коммутаторе, используя информацию об IP-адресе в таблице адресации. 
-
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface vlan 20
+S1(config-if)#ip address 10.20.0.2 255.255.255.0
+S1(config-if)#no shutdown
+S1(config-if)#exit
+S1(config)#ip default-gateway 10.20.0.1
+S1(config)#end
+S1#wr
+Building configuration...
+[OK]
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface vlan 20
+S2(config-if)#ip address 10.20.0.3 255.255.255.0
+S2(config-if)#no shutdown
+S2(config-if)#exit
+S2(config)#ip default-gateway 10.20.0.1
+S2(config)#end
+S2#wr
+```
 c.	Назначьте все неиспользуемые порты коммутатора VLAN Parking Lot, настройте их для статического режима доступа и административно деактивируйте их.
 Примечание. Команда interface range полезна для выполнения этой задачи с помощью необходимого количества команд. 
-
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface range fa0/2-4, fa0/7-24, gi0/1-2
+S1(config-if-range)#switchport mode access
+S1(config-if-range)#switchport access vlan 999
+S1(config-if-range)#shutdown
+S1(config-if-range)#end
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface range fa0/2-4, fa0/6-17, fa0/19-24, gi0/1-2
+S2(config-if-range)#switchport mode access
+S2(config-if-range)#switchport access vlan 999
+S2(config-if-range)#shutdown
+S2(config-if-range)#end
+```
 ### Шаг 2. Назначьте сети VLAN соответствующим интерфейсам коммутатора.
 
 a.	Назначьте используемые порты соответствующей VLAN (указанной в таблице VLAN выше) и настройте их для режима статического доступа.
-
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface fa0/6
+S1(config-if)#switchport mode access
+S1(config-if)#switchport access vlan 30
+S1(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+%Portfast has been configured on FastEthernet0/6 but will only
+have effect when the interface is in a non-trunking mode.
+S1(config-if)#no shutdown
+S1(config-if)#end
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface fa0/18
+S2(config-if)#switchport mode access
+S2(config-if)#switchport access vlan 40
+S2(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+%Portfast has been configured on FastEthernet0/18 but will only
+have effect when the interface is in a non-trunking mode.
+S2(config-if)#no shutdown
+S2(config-if)#end
+```
+```
+S2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S2(config)#interface fa0/5
+S2(config-if)#switchport mode access
+S2(config-if)#switchport access vlan 20
+S2(config-if)#no shutdown
+S2(config-if)#end
+```
 b.	Выполните команду show vlan brief, чтобы убедиться, что сети VLAN назначены правильным интерфейсам.
+```
+S1#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1, Fa0/5
+20   Management                       active    
+30   Operations                       active    Fa0/6
+40   Sales                            active    
+999  ParkingLot                       active    Fa0/2, Fa0/3, Fa0/4, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Fa0/24, Gig0/1, Gig0/2
+1000 Native                           active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active
+```
+```
+S2#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/1
+20   Management                       active    Fa0/5
+30   Operations                       active    
+40   Sales                            active    Fa0/18
+999  ParkingLot                       active    Fa0/2, Fa0/3, Fa0/4, Fa0/6
+                                                Fa0/7, Fa0/8, Fa0/9, Fa0/10
+                                                Fa0/11, Fa0/12, Fa0/13, Fa0/14
+                                                Fa0/15, Fa0/16, Fa0/17, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Fa0/24, Gig0/1, Gig0/2
+1000 Native                           active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active
+```
 
 ## Часть 3. ·Настройте транки (магистральные каналы).
 
@@ -80,7 +266,16 @@ b.	В рамках конфигурации транка установите д
 c.	В качестве другой части конфигурации транка укажите, что VLAN 20, 30, 40 и 1000 разрешены в транке.
 
 d.	Выполните команду show interfaces trunk для проверки портов магистрали, собственной VLAN и разрешенных VLAN через магистраль.
-
+```
+S1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+S1(config)#interface fa0/1
+S1(config-if)#switchport mode trunk
+S1(config-if)#switchport trunk native vlan 1000
+S1(config-if)#switchport trunk allowed vlan 20,30,40,1000
+S1(config-if)#no shutdown
+S1(config-if)#end
+```
 ### Шаг 2. Вручную настройте магистральный интерфейс F0/5 на коммутаторе S1.
 
 a.	Настройте интерфейс S1 F0/5 с теми же параметрами транка, что и F0/1. Это транк до маршрутизатора.

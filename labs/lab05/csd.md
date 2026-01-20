@@ -1,6 +1,7 @@
 <img width="443" height="213" alt="image" src="https://github.com/user-attachments/assets/b45f145b-7085-47d6-92da-2634f2705f46" />
 
 <img width="433" height="210" alt="image" src="https://github.com/user-attachments/assets/6709ec48-071f-447e-b012-4cc152445729" />
+
 ```
 Switch3#show spanning-tree vlan 999
 VLAN0999
@@ -21,6 +22,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 Po23             Altn BLK 9         128.29   Shr
 Po13             Root FWD 9         128.28   Shr
 ```
+
 ```
 Switch2#show spanning-tree vlan 999
 VLAN0999
@@ -42,6 +44,7 @@ Po12             Root FWD 9         128.27   Shr
 Po23             Desg FWD 9         128.29   Shr
 
 ```
+
 ```
 Switch1#show spanning-tree vlan 999
 VLAN0999
@@ -61,6 +64,7 @@ Interface        Role Sts Cost      Prio.Nbr Type
 Po13             Desg FWD 9         128.29   Shr
 Po12             Desg FWD 9         128.27   Shr
 ```
+
 ```
 Switch1#show etherchannel summary
 Flags:  D - down        P - in port-channel
@@ -98,6 +102,7 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Po12        999
 Po13        999
 ```
+
 ```
 Switch2#show etherchannel summary
 Flags:  D - down        P - in port-channel
@@ -135,6 +140,7 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Po12        999
 Po23        999
 ```
+
 ```
 Switch3#show etherchannel summary
 Flags:  D - down        P - in port-channel
@@ -172,6 +178,7 @@ Port        Vlans in spanning tree forwarding state and not pruned
 Po13        999
 Po23        none
 ```
+
 ```
 Switch1#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -185,6 +192,7 @@ Switch1#wr
 Building configuration...
 [OK]
 ```
+
 ```
 Switch2#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -198,6 +206,7 @@ Switch2#wr
 Building configuration...
 [OK]
 ```
+
 ```
 Switch3#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.

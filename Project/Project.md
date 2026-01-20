@@ -501,8 +501,20 @@ Building configuration...
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan999, changed state to up
 %SYS-5-CONFIG_I: Configured from console by console
 ```
+# 3.7 Проверка и результаты
+## 3.7.1 Проверка EtherChannel на каждом коммутаторе
+```
+show etherchannel summary
+```
+<img width="408" height="280" alt="image" src="https://github.com/user-attachments/assets/fa110821-7f24-4aa4-8e38-ff654c8eacfc" />
+<img width="407" height="280" alt="image" src="https://github.com/user-attachments/assets/cd6418ad-4e81-4888-90a4-956b5e4f6371" />
+<img width="409" height="278" alt="image" src="https://github.com/user-attachments/assets/9f5e7a24-6fc0-47bb-a3f8-34f26a4d1532" />
+### Результат:
+#### На Switch1: Po12(SU) и Po13(SU), порты в составе помечены (P).
+#### На Switch2: Po12(SU) и Po23(SU), порты (P).
+#### На Switch3: Po13(SU) и Po23(SU), порты (P).
 
-
+#### Это означает, что порт-каналы работают на L2 (S) и находятся в использовании (U), а физические порты агрегированы (P).
 
 
 

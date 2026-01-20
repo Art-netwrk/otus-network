@@ -298,11 +298,12 @@ Switch1(config)#spanning-tree vlan 999 root primary
 ```
 ## 3.4.5 Management IP (SVI VLAN999)
 ```
+Switch1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
 Switch1(config)#interface vlan 999
-Switch1(config-if)# ip address 192.168.255.5 255.255.255.248
-Switch1(config-if)# no shutdown
-%LINK-5-CHANGED: Interface Vlan999, changed state to up
-%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan999, changed state to up
+Switch1(config-if)#no ip address
+Switch1(config-if)#ip address 192.168.255.11 255.255.255.240
+Switch1(config-if)#no shutdown
 Switch1(config-if)#exit
 Switch1(config)#ip default-gateway 192.168.255.1
 Switch1(config)#end
@@ -391,7 +392,7 @@ Switch2(config)#spanning-tree vlan 999 root secondary
 ## 3.5.5 Management IP (SVI VLAN999)
 ```
 Switch2(config)#interface vlan 999
-Switch2(config-if)#ip address 192.168.255.6 255.255.255.248
+Switch2(config-if)# ip address 192.168.255.12 255.255.255.240
 Switch2(config-if)#no shutdown
 Switch2(config-if)#exit
 Switch2(config)#ip default-gateway 192.168.255.1
@@ -404,10 +405,102 @@ Switch2#
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan999, changed state to up
 %SYS-5-CONFIG_I: Configured from console by console
 ```
-
-
-
-
+# 3.6 Конфигурация Switch3
+## 3.6.1 Базовая настройка + VLAN999
+```
+Switch>enable
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname Switch3
+Switch3(config)#no ip domain-lookup
+Switch3(config)#spanning-tree mode rapid-pvst
+Switch3(config)#vlan 999
+Switch3(config-vlan)#name TRANSIT_OSPF
+Switch3(config-vlan)#exit
+```
+## 3.6.2 EtherChannel S3↔S1 (Po13, Fa0/1-2)
+```
+Switch3(config)#interface port-channel 13
+Switch3(config-if)#switchport trunk encapsulation dot1q
+Switch3(config-if)#switchport mode trunk
+Switch3(config-if)#switchport trunk native vlan 999
+Switch3(config-if)#switchport trunk allowed vlan 999
+Switch3(config-if)#switchport nonegotiate
+Switch3(config-if)#no shutdown
+Switch3(config-if)#exit
+%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/3 (1), with Switch2 FastEthernet0/3 (999).
+%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/4 (1), with Switch2 FastEthernet0/4 (999).
+%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/1 (1), with Switch1 FastEthernet0/3 (999).
+%CDP-4-NATIVE_VLAN_MISMATCH: Native VLAN mismatch discovered on FastEthernet0/2 (1), with Switch1 FastEthernet0/4 (999).
+```
+```
+Switch3(config)#interface range fa0/1 - 2
+Switch3(config-if-range)#switchport trunk encapsulation dot1q
+Switch3(config-if-range)#switchport mode trunk
+Switch3(config-if-range)#switchport trunk native vlan 999
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to up
+Switch3(config-if-range)#switchport trunk allowed vlan 999
+Switch3(config-if-range)#switchport nonegotiate
+Switch3(config-if-range)#channel-group 13 mode active
+Switch3(config-if-range)#no shutdown
+Switch3(config-if-range)#exit
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/2, changed state to up
+%LINK-5-CHANGED: Interface Port-channel13, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel13, changed state to up
+```
+## 3.6.3 EtherChannel S3↔S2 (Po23, Fa0/3-4)
+```
+Switch3(config)#interface port-channel 23
+Switch3(config-if)#switchport trunk encapsulation dot1q
+Switch3(config-if)#switchport mode trunk
+Switch3(config-if)#switchport trunk native vlan 999
+Switch3(config-if)#switchport trunk allowed vlan 999
+Switch3(config-if)#switchport nonegotiate
+Switch3(config-if)#no shutdown
+Switch3(config-if)#exit
+```
+```
+Switch3(config)#interface range fa0/3 - 4
+Switch3(config-if-range)# switchport trunk encapsulation dot1q
+Switch3(config-if-range)# switchport mode trunk
+Switch3(config-if-range)# switchport trunk native vlan 999
+Switch3(config-if-range)# switchport trunk allowed vlan 999
+Switch3(config-if-range)# switchport nonegotiate
+Switch3(config-if-range)# channel-group 23 mode active
+Switch3(config-if-range)# no shutdown
+Switch3(config-if-range)#exit
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/3, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/3, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/4, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/4, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/3, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/3, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/4, changed state to down
+%LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/4, changed state to up
+%LINK-5-CHANGED: Interface Port-channel23, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel23, changed state to up
+```
+## 3.6.4 Management IP (SVI VLAN999)
+```
+Switch3(config)#interface vlan 999
+Switch3(config-if)# ip address 192.168.255.13 255.255.255.240
+Switch3(config-if)#no shutdown
+Switch3(config-if)#exit
+Switch3(config)#ip default-gateway 192.168.255.1
+Switch3(config)#end
+Switch3#wr
+Building configuration...
+[OK]
+%LINK-5-CHANGED: Interface Vlan999, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface Vlan999, changed state to up
+%SYS-5-CONFIG_I: Configured from console by console
+```
 
 
 

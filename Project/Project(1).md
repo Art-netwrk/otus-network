@@ -1160,7 +1160,7 @@ Router1(config-if)#no shut
 Router1(config-if)#exit
 Router1(config)#interface g0/0/0.999
 Router1(config-subif)#encapsulation dot1Q 999 native
-Router1(config-subif)#ip address 192.168.255.1 255.255.255.248
+Router1(config-subif)#ip address 192.168.255.1 255.255.255.240
 Router1(config-subif)#ip nat inside
 Router1(config-subif)#exit
 %LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
@@ -1182,7 +1182,7 @@ Router1(config-if)#exit
 ```
 Router1(config)#router ospf 1
 Router1(config-router)#router-id 1.1.1.1
-Router1(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router1(config-router)#network 192.168.255.0 0.0.0.15 area 0
 Router1(config-router)#network 203.0.113.0 0.0.0.255 area 0
 Router1(config-router)#exit
 ```

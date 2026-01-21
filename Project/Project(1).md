@@ -569,9 +569,7 @@ show etherchannel summary
 show interfaces trunk
 ```
 <img width="470" height="230" alt="image" src="https://github.com/user-attachments/assets/d56a6468-9402-41ea-abbd-326cacfc84dc" />
-
 <img width="471" height="255" alt="image" src="https://github.com/user-attachments/assets/4f0c2a5d-d109-4941-b929-2248e9910f40" />
-
 <img width="470" height="223" alt="image" src="https://github.com/user-attachments/assets/da335f73-23fe-4e9e-8d32-5c9b2dc4488c" />
 
 Результат:
@@ -586,9 +584,7 @@ show spanning-tree vlan 999
 Результат:
 
 <img width="487" height="266" alt="image" src="https://github.com/user-attachments/assets/785620c0-b086-4c05-add2-caa7b69aac94" />
-
 <img width="486" height="256" alt="image" src="https://github.com/user-attachments/assets/df7465e3-d455-482c-82d4-7c54c057176c" />
-
 <img width="484" height="254" alt="image" src="https://github.com/user-attachments/assets/924e84f6-ba03-49a2-a5de-2b277a09a4b9" />
 
 * Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 находятся в роли Designated Forwarding.

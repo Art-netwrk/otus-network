@@ -698,6 +698,8 @@ Switch4#conf t
 Switch4(config)#hostname Switch4
 Switch4(config)#no ip domain-lookup
 Switch4(config)#spanning-tree mode rapid-pvst
+```
+```
 Switch4(config)#vlan 10
 Switch4(config-vlan)#name ADMIN
 Switch4(config-vlan)#vlan 20
@@ -723,7 +725,8 @@ Use with CAUTION
 have effect when the interface is in a non-trunking mode.
 Switch4(config-if)#spanning-tree bpduguard enable
 Switch4(config-if)#exit
-Switch4(config)#
+```
+```
 Switch4(config)#interface fa0/2
 Switch4(config-if)#switchport mode access
 Switch4(config-if)#switchport access vlan 20
@@ -737,7 +740,8 @@ Use with CAUTION
 have effect when the interface is in a non-trunking mode.
 Switch4(config-if)#spanning-tree bpduguard enable
 Switch4(config-if)#exit
-Switch4(config)#
+```
+```
 Switch4(config)#interface fa0/3
 Switch4(config-if)#switchport mode access
 Switch4(config-if)#switchport access vlan 30
@@ -751,7 +755,8 @@ Use with CAUTION
 have effect when the interface is in a non-trunking mode.
 Switch4(config-if)#spanning-tree bpduguard enable
 Switch4(config-if)#exit
-Switch4(config)#
+```
+```
 Switch4(config)#interface fa0/4
 Switch4(config-if)#switchport mode access
 Switch4(config-if)#switchport access vlan 30
@@ -787,6 +792,7 @@ Switch4#wr
 ```
 ### 4.1.5 Проверки
 ```show vlan brief```
+
 VLAN 10/20/30/99 есть:
 
 <img width="571" height="259" alt="image" src="https://github.com/user-attachments/assets/a68c5023-c884-4e3a-8065-111e33046588" />
@@ -805,7 +811,8 @@ Switch#conf t
 Switch(config)#hostname Switch5
 Switch5(config)#no ip domain-lookup
 Switch5(config)#spanning-tree mode rapid-pvst
-Switch5(config)#
+```
+```
 Switch5(config)#vlan 10
 Switch5(config-vlan)#name ADMIN
 Switch5(config-vlan)#vlan 20
@@ -829,7 +836,7 @@ Use with CAUTION
 
 %Portfast has been configured on FastEthernet0/1 but will only
 have effect when the interface is in a non-trunking mode.
-Switch5(config-if)# spanning-tree bpduguard enable
+Switch5(config-if)#spanning-tree bpduguard enable
 Switch5(config-if)#exit
 ```
 ```
@@ -885,15 +892,99 @@ Switch5#wr
 ### 4.2.5 Проверки
 ```show vlan brief```
 
+VLAN 10/20/30/99 есть:
+
 <img width="567" height="255" alt="image" src="https://github.com/user-attachments/assets/c7315d20-6bf0-44da-b87c-59a660d1448b" />
 
 ```show interfaces status```
 
+Fa0/1-3 в нужных VLAN:
+
 <img width="572" height="403" alt="image" src="https://github.com/user-attachments/assets/78175dcc-bf17-4291-b1fc-95f5fd5630b7" />
 
 
+## 4.3 Switch6 (Branch2)
+### 4.3.1 Базовая настройка + VLAN’ы
+```
+Switch>en
+Switch#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch(config)#hostname Switch6
+Switch6(config)#no ip domain-lookup
+Switch6(config)#spanning-tree mode rapid-pvst
+```
+```
+Switch6(config)#vlan 10
+Switch6(config-vlan)#name ADMIN
+Switch6(config-vlan)#vlan 20
+Switch6(config-vlan)#name USERS
+Switch6(config-vlan)#vlan 99
+Switch6(config-vlan)#name MGMT
+Switch6(config-vlan)#exit
+```
+### 4.3.2 Access-порты
+```
+Switch6(config)#interface fa0/1
+Switch6(config-if)#switchport mode access
+Switch6(config-if)#switchport access vlan 10
+Switch6(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/1 but will only
+have effect when the interface is in a non-trunking mode.
+Switch6(config-if)#spanning-tree bpduguard enable
+Switch6(config-if)#exit
+```
+```
+Switch6(config)#interface fa0/2
+Switch6(config-if)#switchport mode access
+Switch6(config-if)#switchport access vlan 20
+Switch6(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/2 but will only
+have effect when the interface is in a non-trunking mode.
+Switch6(config-if)#spanning-tree bpduguard enable
+Switch6(config-if)#exit
+```
+### 4.3.3 Trunk к Router4
+```
+Switch6(config)#interface gi0/1
+Switch6(config-if)#switchport mode trunk
+Switch6(config-if)#switchport trunk allowed vlan 10,20,99
+Switch6(config-if)#switchport nonegotiate
+Switch6(config-if)#no shutdown
+Switch6(config-if)#exit
+```
+### 4.3.4 MGMT SVI VLAN99
+```
+Switch6(config)#interface vlan 99
+Switch6(config-if)#ip address 192.168.32.2 255.255.255.0
+Switch6(config-if)#no shutdown
+Switch6(config-if)#exit
+Switch6(config)#ip default-gateway 192.168.32.1
+Switch6(config)#end
+Switch6#wr
+```
+### 4.3.5 Проверки
+```show vlan brief```
+
+VLAN 10/20/99 есть:
+
+<img width="571" height="244" alt="image" src="https://github.com/user-attachments/assets/c46f0751-8a4f-4dc4-924b-e0692dc8d613" />
 
 
+```show interfaces status```
+
+Fa0/1-2 в нужных VLAN:
+
+<img width="569" height="401" alt="image" src="https://github.com/user-attachments/assets/2b7ef4d3-25d1-4bce-aa17-befcbd57d1fa" />
 
 
 

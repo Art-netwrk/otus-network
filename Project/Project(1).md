@@ -1237,3 +1237,96 @@ Router1#wr
 Building configuration...
 [OK]
 ```
+
+# Этап 7. DHCP (на Router2) + статические адреса серверов
+## 7.1 На серверах (в PT вручную Static)
+
+DNS: 192.168.12.10/24, GW 192.168.12.1
+WEB: 192.168.12.20/24, GW 192.168.12.1
+
+## 7.2 DHCP на Router2 (выдаёт адреса всем VLAN’ам)
+```
+Router2>en
+Router2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+```
+### 7.2.1 Исключения (шлюзы, сервера, mgmt IP свитчей)
+```
+Router2(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.30
+Router2(config)#ip dhcp excluded-address 192.168.11.1 192.168.11.30
+Router2(config)#ip dhcp excluded-address 192.168.12.1 192.168.12.50
+Router2(config)#ip dhcp excluded-address 192.168.13.1 192.168.13.20
+```
+```
+Router2(config)#ip dhcp excluded-address 192.168.20.1 192.168.20.30
+Router2(config)#ip dhcp excluded-address 192.168.21.1 192.168.21.30
+Router2(config)#ip dhcp excluded-address 192.168.22.1 192.168.22.30
+Router2(config)#ip dhcp excluded-address 192.168.23.1 192.168.23.20
+```
+```
+Router2(config)#ip dhcp excluded-address 192.168.30.1 192.168.30.30
+Router2(config)#ip dhcp excluded-address 192.168.31.1 192.168.31.30
+Router2(config)#ip dhcp excluded-address 192.168.32.1 192.168.32.20
+```
+### 7.2.2 HQ
+```
+Router2(config)#ip dhcp pool HQ_ADMIN
+Router2(dhcp-config)#network 192.168.10.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.10.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#
+Router2(config)#ip dhcp pool HQ_USERS
+Router2(dhcp-config)#network 192.168.11.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.11.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+```
+### 7.2.3 Branch1 (  Router3!
+```
+Router2(config)#ip dhcp pool BR1_ADMIN
+Router2(dhcp-config)#network 192.168.20.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.20.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#
+Router2(config)#ip dhcp pool BR1_USERS
+Router2(dhcp-config)#network 192.168.21.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.21.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#
+Router2(config)#ip dhcp pool BR1_GUEST
+Router2(dhcp-config)#network 192.168.22.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.22.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+```
+### 7.2.4 Branch2 (  Router4!)
+```
+Router2(config)#ip dhcp pool BR2_ADMIN
+Router2(dhcp-config)#network 192.168.30.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.30.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#
+Router2(config)#ip dhcp pool BR2_USERS
+Router2(dhcp-config)#network 192.168.31.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.31.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#
+Router2(config)#end
+Router2#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Router2#
+```

@@ -1136,6 +1136,9 @@ Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 established
 Router1(config-ext-nacl)#remark Allow inbound to published WEB (port-forward)
 Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 80
 Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 443
+Router1(config-ext-nacl)#permit icmp any host 203.0.113.2 echo-reply
+Router1(config-ext-nacl)#permit udp any host 203.0.113.2 eq 53
+Router1(config-ext-nacl)#permit udp any host 203.0.113.2 gt 1023
 Router1(config-ext-nacl)#deny ip any any
 Router1(config-ext-nacl)#exit
 Router1(config)#interface g0/0/1
@@ -1144,6 +1147,20 @@ Router1(config-if)#exit
 Router1(config)#end
 Router1#wr
 %SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+```
+## CDP на Router1
+```
+Router1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router1(config)#cdp run
+Router1(config)#interface g0/0/0
+Router1(config-if)#cdp enable
+Router1(config-if)#end
+Router1#
+%SYS-5-CONFIG_I: Configured from console by console
+Router1#wr
 Building configuration...
 [OK]
 ```

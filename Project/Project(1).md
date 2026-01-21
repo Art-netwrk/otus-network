@@ -1213,7 +1213,7 @@ Router1(config)#interface g0/0/0
 Router1(config-if)#no shut
 Router1(config-if)#exit
 Router1(config)#interface g0/0/0.999
-Router1(config-subif)#encapsulation dot1Q 999 native
+Router1(config-subif)#encapsulation dot1Q 999
 Router1(config-subif)#ip address 192.168.255.1 255.255.255.240
 Router1(config-subif)#ip nat inside
 Router1(config-subif)#exit
@@ -1253,6 +1253,9 @@ Router1(config)#ip nat inside source static tcp 192.168.12.20 443 203.0.113.2 44
 ## 6.6 WAN ACL: разрешаем вход только 80/443 на публичный IP
 ```
 Router1(config)#ip access-list extended WAN_IN
+Router1(config-ext-nacl)#remark Allow return TCP (established) to NAT/PAT
+Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 established
+Router1(config-ext-nacl)#remark Allow inbound to published WEB (port-forward)
 Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 80
 Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 443
 Router1(config-ext-nacl)#deny ip any any
@@ -1315,6 +1318,12 @@ Router2(config)#
 Router2(config)#ip dhcp pool HQ_USERS
 Router2(dhcp-config)#network 192.168.11.0 255.255.255.0
 Router2(dhcp-config)#default-router 192.168.11.1
+Router2(dhcp-config)#dns-server 192.168.12.10
+Router2(dhcp-config)#domain-name diploma.local
+Router2(dhcp-config)#exit
+Router2(config)#ip dhcp pool HQ_SERVERS
+Router2(dhcp-config)#network 192.168.12.0 255.255.255.0
+Router2(dhcp-config)#default-router 192.168.12.1
 Router2(dhcp-config)#dns-server 192.168.12.10
 Router2(dhcp-config)#domain-name diploma.local
 Router2(dhcp-config)#exit

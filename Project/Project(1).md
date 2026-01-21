@@ -553,9 +553,6 @@ show etherchannel summary
 ```
 
 <img width="408" height="280" alt="image" src="https://github.com/user-attachments/assets/fa110821-7f24-4aa4-8e38-ff654c8eacfc" />
-
-
-
 <img width="407" height="280" alt="image" src="https://github.com/user-attachments/assets/cd6418ad-4e81-4888-90a4-956b5e4f6371" />
 <img width="409" height="278" alt="image" src="https://github.com/user-attachments/assets/9f5e7a24-6fc0-47bb-a3f8-34f26a4d1532" />
 

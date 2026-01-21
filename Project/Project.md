@@ -224,6 +224,94 @@ Building configuration...
 
 
 
+
+
+
+
+
+
+
+
+
+
+
+Шаг 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
+3.0 Цель и ожидаемый результат
+
+Цель: построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
+Ожидаемый результат:
+
+VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
+
+Между коммутаторами настроены агрегированные каналы EtherChannel:
+
+S1↔S2: Po12 (2 физ. линии)
+
+S1↔S3: Po13 (2 физ. линии)
+
+S2↔S3: Po23 (2 физ. линии)
+
+Все Port-Channel интерфейсы работают как trunk 802.1Q, пропускают только VLAN 999, native vlan 999.
+
+Включён Rapid-PVST (RSTP), задан корневой мост STP для VLAN 999:
+
+Root Primary: Switch1
+
+Root Secondary: Switch2
+
+Для управления ядром настроены IP-адреса на SVI VLAN 999 и default-gateway (для удалённого SSH далее в проекте).
+
+3.1 Обоснование выбора оборудования (почему использованы 3560)
+
+В ходе реализации выяснилось, что отдельные модели коммутаторов в Packet Tracer (особенно упрощённые/урезанные) могут:
+
+отклонять перевод порта в trunk при encapsulation auto;
+
+некорректно собирать EtherChannel из-за несовпадений trunk-параметров и ограничений CLI.
+
+Коммутаторы Cisco Catalyst 3560 обеспечили корректную поддержку:
+
+trunk encapsulation 802.1Q (dot1q),
+
+EtherChannel с протоколом LACP,
+
+SVI для Management-адресов,
+
+стабильные выводы диагностических команд (show etherchannel, show spanning-tree).
+
+3.2 Топология соединений ядра (EtherChannel)
+
+(по данным CDP и фактической схемы)
+
+S1 ↔ S2 (Po12):
+
+Switch1 Fa0/1–Fa0/2 ↔ Switch2 Fa0/1–Fa0/2
+
+S1 ↔ S3 (Po13):
+
+Switch1 Fa0/3–Fa0/4 ↔ Switch3 Fa0/1–Fa0/2
+
+S2 ↔ S3 (Po23):
+
+Switch2 Fa0/3–Fa0/4 ↔ Switch3 Fa0/3–Fa0/4
+
+3.3 Требования к порт-каналам (критические настройки)
+
+Чтобы EtherChannel корректно агрегировался и не происходило ошибок типа VLAN mask is different / Native VLAN mismatch, параметры должны быть одинаковыми на обеих сторонах:
+
+switchport trunk encapsulation dot1q
+
+switchport mode trunk
+
+switchport trunk native vlan 999
+
+switchport trunk allowed vlan 999
+
+switchport nonegotiate
+
+channel-group <id> mode active (LACP)
+
+
 # 3.4 Конфигурация Switch1 (Root Primary)
 ## 3.4.1 Базовая настройка + VLAN999
 
@@ -552,9 +640,7 @@ show etherchannel summary
 ```
 
 <img width="408" height="280" alt="image" src="https://github.com/user-attachments/assets/fa110821-7f24-4aa4-8e38-ff654c8eacfc" />
-
 <img width="407" height="280" alt="image" src="https://github.com/user-attachments/assets/cd6418ad-4e81-4888-90a4-956b5e4f6371" />
-
 <img width="409" height="278" alt="image" src="https://github.com/user-attachments/assets/9f5e7a24-6fc0-47bb-a3f8-34f26a4d1532" />
 
 #### Результат:
@@ -597,7 +683,6 @@ Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 
 На Switch3 корневой порт Po13 Root FWD, а Po23 Altn BLK.
 
 Ядро имеет топологию треугольника, что создаёт потенциальную L2-петлю. RSTP блокирует один из путей (на Switch3 — Po23 в состоянии Alternate/Blocking), предотвращая петли, но оставляя резервный маршрут. При отказе канала Po13 ожидается переведение Po23 в Forwarding, сохраняя связность сети.
-
 
 
 

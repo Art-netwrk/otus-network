@@ -242,18 +242,14 @@ Building configuration...
 
 * VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
 * Между коммутаторами настроены агрегированные каналы EtherChannel:
-** S1↔S2: Po12 (2 физ. линии)
-** S1↔S3: Po13 (2 физ. линии)
-** S2↔S3: Po23 (2 физ. линии)
+  * S1↔S2: Po12 (2 физ. линии)
+  * S1↔S3: Po13 (2 физ. линии)
+  * S2↔S3: Po23 (2 физ. линии)
 * Все Port-Channel интерфейсы работают как trunk 802.1Q, пропускают только VLAN 999, native vlan 999.
-
-Включён Rapid-PVST (RSTP), задан корневой мост STP для VLAN 999:
-
-Root Primary: Switch1
-
-Root Secondary: Switch2
-
-Для управления ядром настроены IP-адреса на SVI VLAN 999 и default-gateway (для удалённого SSH далее в проекте).
+* Включён Rapid-PVST (RSTP), задан корневой мост STP для VLAN 999:
+  * Root Primary: Switch1
+  * Root Secondary: Switch2
+* Для управления ядром настроены IP-адреса на SVI VLAN 999 и default-gateway (для удалённого SSH далее в проекте).
 
 3.1 Обоснование выбора оборудования (почему использованы 3560)
 

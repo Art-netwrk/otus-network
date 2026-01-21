@@ -379,8 +379,33 @@ Switch1(config-if-range)#exit
 ```
 Switch1(config)#spanning-tree vlan 999 root primary
 ```
-
-### 3.4.5 Management IP (SVI VLAN999)
+### 3.4.5 Trunk к Router1-2
+```
+Switch1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch1(config)#interface gi0/1
+Switch1(config-if)#switchport mode trunk
+Command rejected: An interface whose trunk encapsulation is "Auto" can not be configured to "trunk" mode.
+Switch1(config-if)#switchport trunk native vlan 999
+Switch1(config-if)#switchport trunk allowed vlan 999
+Switch1(config-if)#switchport nonegotiate
+Command rejected: Conflict between 'nonegotiate' and 'dynamic' status.
+Switch1(config-if)#no shut
+Switch1(config-if)#exit
+```
+```
+Switch1(config)#interface gi0/2
+Switch1(config-if)#switchport mode access
+Switch1(config-if)#switchport access vlan 999
+Switch1(config-if)#no shut
+Switch1(config-if)#exit
+Switch1(config)#end
+Switch1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+```
+### 3.4.6 Management IP (SVI VLAN999)
 
 ```
 Switch1#conf t
@@ -484,8 +509,22 @@ Switch2(config-if-range)#exit
 ```
 Switch2(config)#spanning-tree vlan 999 root secondary
 ```
-
-### 3.5.5 Management IP (SVI VLAN999)
+### 3.5.5 Trunk к Router3
+```
+Switch2#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch2(config)#interface gi0/1
+Switch2(config-if)#switchport mode access
+Switch2(config-if)#switchport access vlan 999
+Switch2(config-if)#no shut
+Switch2(config-if)#end
+Switch2#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Switch2#
+```
+### 3.5.6 Management IP (SVI VLAN999)
 
 ```
 Switch2(config)#interface vlan 999
@@ -591,8 +630,22 @@ Switch3(config-if-range)#exit
 %LINK-5-CHANGED: Interface Port-channel23, changed state to up
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel23, changed state to up
 ```
-
-### 3.6.4 Management IP (SVI VLAN999)
+### 3.6.5 Trunk к Router4
+```
+Switch3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch3(config)#interface gi0/1
+Switch3(config-if)#switchport mode access
+Switch3(config-if)#switchport access vlan 999
+Switch3(config-if)#no shut
+Switch3(config-if)#end
+Switch3#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Switch3#
+```
+### 3.6.6 Management IP (SVI VLAN999)
 
 ```
 Switch3(config)#interface vlan 999
@@ -747,7 +800,7 @@ have effect when the interface is in a non-trunking mode.
 Switch4(config-if)#spanning-tree bpduguard enable
 Switch4(config-if)#exit
 ```
-### 4.1.3 Trunk к Router2 (ROAS будет в Этапе 5)
+### 4.1.3 Trunk к Router2
 ```
 Switch4(config)#interface gi0/1
 Switch4(config-if)#switchport mode trunk

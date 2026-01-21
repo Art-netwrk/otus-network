@@ -224,8 +224,99 @@ Building configuration...
 ```
 
 
+# Этап 1. Подключения и адресный план
+## 1.1 Ядро: Switch1 / Switch2 / Switch3 (EtherChannel)
+### S1 ↔ S2 (Port-Channel 12, 2 линка)
+* S1 Fa0/1 ↔ S2 Fa0/1
+* S1 Fa0/2 ↔ S2 Fa0/2
+### S1 ↔ S3 (Port-Channel 13, 2 линка)
+* S1 Fa0/3 ↔ S3 Fa0/1
+* S1 Fa0/4 ↔ S3 Fa0/2
+### S2 ↔ S3 (Port-Channel 23, 2 линка)
+* S2 Fa0/3 ↔ S3 Fa0/3
+* S2 Fa0/4 ↔ S3 Fa0/4
 
+## 1.2 Роутеры в ядро (Transit VLAN 999)
+### Router1 (EDGE) ↔ Switch1 (trunk)
+* Router1 G0/0/0 ↔ Switch1 Gi0/1
+* Режим: TRUNK
+* VLAN: 999
+### Router2 (HQ) ↔ Switch1 (access vlan 999)
+* Router2 G0/0/0 ↔ Switch1 Gi0/2
+* Режим: ACCESS VLAN 999
+### Router3 (BR1) ↔ Switch2 (access vlan 999)
+* Router3 G0/0/0 ↔ Switch2 Gi0/1
+* Режим: ACCESS VLAN 999
+### Router4 (BR2) ↔ Switch3 (access vlan 999)
+* Router4 G0/0/0 ↔ Switch3 Gi0/1
+* Режим: ACCESS VLAN 999
 
+## 1.3 Площадки (Access-switch ↔ Router trunk)
+### HQ
+* Router2 G0/0/1 ↔ Switch4 Gi0/1
+* Режим: TRUNK
+* VLAN’ы: 10 / 20 / 30 / 99
+### Branch1
+* Router3 G0/0/1 ↔ Switch5 Gi0/1
+* Режим: TRUNK
+* VLAN’ы: 10 / 20 / 40 / 99
+### Branch2
+* Router4 G0/0/1 ↔ Switch6 Gi0/1
+* Режим: TRUNK
+* VLAN’ы: 10 / 20 / 99
+
+## 1.4 Конечные устройства (пример раскладки портов)
+### Switch4 (HQ)
+* Fa0/1 → PC-ADMIN1 (VLAN10)
+* Fa0/2 → PC-USER1 (VLAN20)
+* Fa0/3 → Server-DNS (VLAN30)
+* Fa0/4 → Server-WEB (VLAN30)
+### Switch5 (Branch1)
+* Fa0/1 → PC-ADMIN2 (VLAN10)
+* Fa0/2 → PC-USER2 (VLAN20)
+* Fa0/3 → AccessPoint0 (VLAN40)
+* Laptop подключается к AP по Wi-Fi (в гостевой VLAN40)
+### Switch6 (Branch2)
+* Fa0/1 → PC-ADMIN3 (VLAN10)
+* Fa0/2 → PC-USER3 (VLAN20)
+
+## 1.5 “Интернет” для NAT (чтобы был нормальный тест)
+* Router1 G0/0/1 ↔ InternetServer Fa0 (прямое соединение)
+
+## 1.6 VLAN сети (по площадкам)
+HQ (Router2 ↔ Switch4)
+
+* VLAN10 ADMIN: 192.168.10.0/24, GW 192.168.10.1
+* VLAN20 USERS: 192.168.11.0/24, GW 192.168.11.1
+* VLAN30 SERVERS: 192.168.12.0/24, GW 192.168.12.1
+* VLAN99 MGMT: 192.168.13.0/24, GW 192.168.13.1
+
+Branch1 (Router3 ↔ Switch5)
+
+* VLAN10 ADMIN: 192.168.20.0/24, GW 192.168.20.1
+* VLAN20 USERS: 192.168.21.0/24, GW 192.168.21.1
+* VLAN40 GUEST: 192.168.22.0/24, GW 192.168.22.1
+* VLAN99 MGMT: 192.168.23.0/24, GW 192.168.23.1
+Branch2 (Router4 ↔ Switch6)
+* VLAN10 ADMIN: 192.168.30.0/24, GW 192.168.30.1
+* VLAN20 USERS: 192.168.31.0/24, GW 192.168.31.1
+* VLAN99 MGMT: 192.168.32.0/24, GW 192.168.32.1
+
+## 1.6 Transit VLAN 999 (OSPF между роутерами) — ОБЯЗАТЕЛЬНО /29
+Сеть: 192.168.255.0/29 (255.255.255.248)
+* Router1: 192.168.255.1/29
+* Router2: 192.168.255.2/29
+* Router3: 192.168.255.3/29
+* Router4: 192.168.255.4/29
+Управление ядром (SVI VLAN999 на коммутаторах):
+* Switch1: 192.168.255.5/29
+* Switch2: 192.168.255.6/29
+* Switch3: 192.168.255.7/29
+* Default-gateway на S1/S2/S3: 192.168.255.1
+  
+## 1.7 Серверы HQ (VLAN30) — статикой
+* DNS: 192.168.12.10/24, GW 192.168.12.1
+* WEB: 192.168.12.20/24, GW 192.168.12.1
 
 
 

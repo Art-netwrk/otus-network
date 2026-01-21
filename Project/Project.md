@@ -564,7 +564,17 @@ show etherchannel summary
 
 #### Это означает, что порт-каналы работают на L2 (S) и находятся в использовании (U), а физические порты агрегированы (P).
 
+## 3.7.2 Проверка trunk на Port-Channel
+```
+show interfaces trunk
+```
+<img width="470" height="230" alt="image" src="https://github.com/user-attachments/assets/d56a6468-9402-41ea-abbd-326cacfc84dc" />
+<img width="471" height="255" alt="image" src="https://github.com/user-attachments/assets/4f0c2a5d-d109-4941-b929-2248e9910f40" />
+<img width="470" height="223" alt="image" src="https://github.com/user-attachments/assets/da335f73-23fe-4e9e-8d32-5c9b2dc4488c" />
 
+#### Результат:
+
+Po12/Po13/Po23 работают в режиме trunking, encapsulation 802.1Q, native VLAN 999, allowed VLAN 999.
 
 
 

@@ -384,6 +384,7 @@ Switch1(config)#spanning-tree vlan 999 root primary
 Switch1#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
 Switch1(config)#interface gi0/1
+Switch1(config-if)#switchport trunk encapsulation dot1q
 Switch1(config-if)#switchport mode trunk
 Command rejected: An interface whose trunk encapsulation is "Auto" can not be configured to "trunk" mode.
 Switch1(config-if)#switchport trunk native vlan 999

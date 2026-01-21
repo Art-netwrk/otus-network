@@ -237,22 +237,15 @@ Building configuration...
 
 
 Шаг 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
-3.0 Цель и ожидаемый результат
-
-Цель: построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
+Необходимо построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
 Ожидаемый результат:
 
-VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
-
-Между коммутаторами настроены агрегированные каналы EtherChannel:
-
-S1↔S2: Po12 (2 физ. линии)
-
-S1↔S3: Po13 (2 физ. линии)
-
-S2↔S3: Po23 (2 физ. линии)
-
-Все Port-Channel интерфейсы работают как trunk 802.1Q, пропускают только VLAN 999, native vlan 999.
+* VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
+* Между коммутаторами настроены агрегированные каналы EtherChannel:
+** S1↔S2: Po12 (2 физ. линии)
+** S1↔S3: Po13 (2 физ. линии)
+** S2↔S3: Po23 (2 физ. линии)
+* Все Port-Channel интерфейсы работают как trunk 802.1Q, пропускают только VLAN 999, native vlan 999.
 
 Включён Rapid-PVST (RSTP), задан корневой мост STP для VLAN 999:
 
@@ -1419,37 +1412,4 @@ Building configuration...
 Router1#
 ```
 
-
-```
-en
-C1sco123!
-conf t
-ip domain-name diploma.local
-username admin privilege 15 secret Admin12345
-crypto key generate rsa
-1024
-ip ssh version 2
-
-line vty 0 4
- login local
- transport input ssh
- exec-timeout 10 0
-exit
-end
-wr
-
-conf t
-ip access-list standard VTY_ADMIN_ONLY
- permit 192.168.10.0 0.0.0.255
- permit 192.168.20.0 0.0.0.255
- permit 192.168.30.0 0.0.0.255
- deny any
-exit
-
-line vty 0 4
- access-class VTY_ADMIN_ONLY in
-exit
-end
-wr
-```
 В итоге: SSH на любое устройство будет работать только если подключиться с ПК из VLAN10 (ADMIN) на любой площадке.

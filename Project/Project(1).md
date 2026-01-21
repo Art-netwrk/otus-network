@@ -1169,3 +1169,71 @@ Router4#wr
 Building configuration...
 [OK]
 ```
+
+### Этап 6. Router1 (EDGE): trunk VLAN999 + внешняя сеть + OSPF + NAT + WAN ACL
+```
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname Router1
+Router1(config)#no ip domain-lookup
+```
+## 6.1 Внутрь в ядро: trunk на Switch1 Gi0/1
+```
+Router1(config)#interface g0/0/0
+Router1(config-if)#no shut
+Router1(config-if)#exit
+Router1(config)#interface g0/0/0.999
+Router1(config-subif)#encapsulation dot1Q 999
+Router1(config-subif)#ip address 192.168.255.1 255.255.255.248
+Router1(config-subif)#ip nat inside
+Router1(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0.999, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0.999, changed state to up
+```
+## 6.2 Наружу (к InternetServer/ISP-SW)
+```
+Router1(config)#interface g0/0/1
+Router1(config-if)#ip address 203.0.113.2 255.255.255.0
+Router1(config-if)#ip nat outside
+Router1(config-if)#no shut
+Router1(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1, changed state to up
+```
+## 6.3 OSPF (чтобы все знали как идти к 203.0.113.0/24 через R1)
+```
+Router1(config)#router ospf 1
+Router1(config-router)#router-id 1.1.1.1
+Router1(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router1(config-router)#network 203.0.113.0 0.0.0.255 area 0
+Router1(config-router)#exit
+```
+## 6.4 NAT overload для всего 192.168.0.0/16
+```
+Router1(config)#access-list 1 permit 192.168.0.0 0.0.255.255
+Router1(config)#ip nat inside source list 1 interface g0/0/1 overload
+```
+## 6.5 Порт-форвардинг наружу на внутренний WEB (для демонстрации)
+```
+Router1(config)#ip nat inside source static tcp 192.168.12.20 80 203.0.113.2 80
+Router1(config)#ip nat inside source static tcp 192.168.12.20 443 203.0.113.2 443
+```
+## 6.6 WAN ACL: разрешаем вход только 80/443 на публичный IP
+```
+Router1(config)#ip access-list extended WAN_IN
+Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 80
+Router1(config-ext-nacl)#permit tcp any host 203.0.113.2 eq 443
+Router1(config-ext-nacl)#deny ip any any
+Router1(config-ext-nacl)#exit
+Router1(config)#interface g0/0/1
+Router1(config-if)#ip access-group WAN_IN in
+Router1(config-if)#exit
+Router1(config)#end
+Router1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+```

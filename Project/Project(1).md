@@ -1242,7 +1242,13 @@ Building configuration...
 ## 7.1 На серверах (в PT вручную Static)
 
 DNS: 192.168.12.10/24, GW 192.168.12.1
+
+<img width="704" height="266" alt="image" src="https://github.com/user-attachments/assets/382c338e-2599-44a5-847f-14a38d804d9b" />
+
 WEB: 192.168.12.20/24, GW 192.168.12.1
+
+<img width="703" height="266" alt="image" src="https://github.com/user-attachments/assets/4e0cdbf5-acaa-43e4-a0c8-d578a09fae61" />
+
 
 ## 7.2 DHCP на Router2 (выдаёт адреса всем VLAN’ам)
 ```

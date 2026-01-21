@@ -1,228 +1,4 @@
 
-<img width="443" height="213" alt="image" src="https://github.com/user-attachments/assets/b45f145b-7085-47d6-92da-2634f2705f46" />
-
-<img width="433" height="210" alt="image" src="https://github.com/user-attachments/assets/6709ec48-071f-447e-b012-4cc152445729" />
-
-```
-Switch3#show spanning-tree vlan 999
-VLAN0999
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    25575
-             Address     00D0.9799.12AA
-             Cost        9
-             Port        28(Port-channel13)
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    33767  (priority 32768 sys-id-ext 999)
-             Address     0004.9A98.5207
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  20
-
-Interface        Role Sts Cost      Prio.Nbr Type
----------------- ---- --- --------- -------- --------------------------------
-Po23             Altn BLK 9         128.29   Shr
-Po13             Root FWD 9         128.28   Shr
-```
-
-```
-Switch2#show spanning-tree vlan 999
-VLAN0999
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    25575
-             Address     00D0.9799.12AA
-             Cost        9
-             Port        27(Port-channel12)
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    29671  (priority 28672 sys-id-ext 999)
-             Address     000B.BE6C.D00D
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  20
-
-Interface        Role Sts Cost      Prio.Nbr Type
----------------- ---- --- --------- -------- --------------------------------
-Po12             Root FWD 9         128.27   Shr
-Po23             Desg FWD 9         128.29   Shr
-
-```
-
-```
-Switch1#show spanning-tree vlan 999
-VLAN0999
-  Spanning tree enabled protocol rstp
-  Root ID    Priority    25575
-             Address     00D0.9799.12AA
-             This bridge is the root
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-
-  Bridge ID  Priority    25575  (priority 24576 sys-id-ext 999)
-             Address     00D0.9799.12AA
-             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
-             Aging Time  20
-
-Interface        Role Sts Cost      Prio.Nbr Type
----------------- ---- --- --------- -------- --------------------------------
-Po13             Desg FWD 9         128.29   Shr
-Po12             Desg FWD 9         128.27   Shr
-```
-
-```
-Switch1#show etherchannel summary
-Flags:  D - down        P - in port-channel
-        I - stand-alone s - suspended
-        H - Hot-standby (LACP only)
-        R - Layer3      S - Layer2
-        U - in use      f - failed to allocate aggregator
-        u - unsuitable for bundling
-        w - waiting to be aggregated
-        d - default port
-
-
-Number of channel-groups in use: 2
-Number of aggregators:           2
-
-Group  Port-channel  Protocol    Ports
-------+-------------+-----------+----------------------------------------------
-
-12     Po12(SU)           LACP   Fa0/1(P) Fa0/2(P) 
-13     Po13(SU)           LACP   Fa0/3(P) Fa0/4(P) 
-Switch1#show interfaces trunk
-Port        Mode         Encapsulation  Status        Native vlan
-Po12        on           802.1q         trunking      999
-Po13        on           802.1q         trunking      999
-
-Port        Vlans allowed on trunk
-Po12        999
-Po13        999
-
-Port        Vlans allowed and active in management domain
-Po12        999
-Po13        999
-
-Port        Vlans in spanning tree forwarding state and not pruned
-Po12        999
-Po13        999
-```
-
-```
-Switch2#show etherchannel summary
-Flags:  D - down        P - in port-channel
-        I - stand-alone s - suspended
-        H - Hot-standby (LACP only)
-        R - Layer3      S - Layer2
-        U - in use      f - failed to allocate aggregator
-        u - unsuitable for bundling
-        w - waiting to be aggregated
-        d - default port
-
-
-Number of channel-groups in use: 2
-Number of aggregators:           2
-
-Group  Port-channel  Protocol    Ports
-------+-------------+-----------+----------------------------------------------
-
-12     Po12(SU)           LACP   Fa0/1(P) Fa0/2(P) 
-23     Po23(SU)           LACP   Fa0/3(P) Fa0/4(P) 
-Switch2#show interfaces trunk
-Port        Mode         Encapsulation  Status        Native vlan
-Po12        on           802.1q         trunking      999
-Po23        on           802.1q         trunking      999
-
-Port        Vlans allowed on trunk
-Po12        999
-Po23        999
-
-Port        Vlans allowed and active in management domain
-Po12        999
-Po23        999
-
-Port        Vlans in spanning tree forwarding state and not pruned
-Po12        999
-Po23        999
-```
-
-```
-Switch3#show etherchannel summary
-Flags:  D - down        P - in port-channel
-        I - stand-alone s - suspended
-        H - Hot-standby (LACP only)
-        R - Layer3      S - Layer2
-        U - in use      f - failed to allocate aggregator
-        u - unsuitable for bundling
-        w - waiting to be aggregated
-        d - default port
-
-
-Number of channel-groups in use: 2
-Number of aggregators:           2
-
-Group  Port-channel  Protocol    Ports
-------+-------------+-----------+----------------------------------------------
-
-13     Po13(SU)           LACP   Fa0/1(P) Fa0/2(P) 
-23     Po23(SU)           LACP   Fa0/3(P) Fa0/4(P) 
-Switch3#show interfaces trunk
-Port        Mode         Encapsulation  Status        Native vlan
-Po13        on           802.1q         trunking      999
-Po23        on           802.1q         trunking      999
-
-Port        Vlans allowed on trunk
-Po13        999
-Po23        999
-
-Port        Vlans allowed and active in management domain
-Po13        999
-Po23        999
-
-Port        Vlans in spanning tree forwarding state and not pruned
-Po13        999
-Po23        none
-```
-
-```
-Switch1#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Switch1(config)#interface vlan 999
-Switch1(config-if)# ip address 192.168.255.5 255.255.255.248
-Switch1(config-if)# no shut
-Switch1(config-if)#exit
-Switch1(config)#ip default-gateway 192.168.255.1
-Switch1(config)#end
-Switch1#wr
-Building configuration...
-[OK]
-```
-
-```
-Switch2#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Switch2(config)#interface vlan 999
-Switch2(config-if)# ip address 192.168.255.6 255.255.255.248
-Switch2(config-if)# no shut
-Switch2(config-if)#exit
-Switch2(config)#ip default-gateway 192.168.255.1
-Switch2(config)#end
-Switch2#wr
-Building configuration...
-[OK]
-```
-
-```
-Switch3#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-Switch3(config)#interface vlan 999
-Switch3(config-if)# ip address 192.168.255.7 255.255.255.248
-Bad mask /29 for address 192.168.255.7
-Switch3(config-if)# no shut
-Switch3(config-if)#exit
-Switch3(config)#ip default-gateway 192.168.255.1
-Switch3(config)#end
-Switch3#wr
-Building configuration...
-[OK]
-```
-
 
 # Этап 1. Подключения и адресный план
 ## 1.1 Ядро: Switch1 / Switch2 / Switch3 (EtherChannel)
@@ -265,7 +41,7 @@ Building configuration...
 * Режим: TRUNK
 * VLAN’ы: 10 / 20 / 99
 
-## 1.4 Конечные устройства (пример раскладки портов)
+## 1.4 Конечные устройства
 ### Switch4 (HQ)
 * Fa0/1 → PC-ADMIN1 (VLAN10)
 * Fa0/2 → PC-USER1 (VLAN20)
@@ -280,19 +56,17 @@ Building configuration...
 * Fa0/1 → PC-ADMIN3 (VLAN10)
 * Fa0/2 → PC-USER3 (VLAN20)
 
-## 1.5 “Интернет” для NAT (чтобы был нормальный тест)
+## 1.5 “Интернет” для NAT
 * Router1 G0/0/1 ↔ InternetServer Fa0 (прямое соединение)
 
 ## 1.6 VLAN сети (по площадкам)
 ### HQ (Router2 ↔ Switch4)
-
 * VLAN10 ADMIN: 192.168.10.0/24, GW 192.168.10.1
 * VLAN20 USERS: 192.168.11.0/24, GW 192.168.11.1
 * VLAN30 SERVERS: 192.168.12.0/24, GW 192.168.12.1
 * VLAN99 MGMT: 192.168.13.0/24, GW 192.168.13.1
 
 ### Branch1 (Router3 ↔ Switch5)
-
 * VLAN10 ADMIN: 192.168.20.0/24, GW 192.168.20.1
 * VLAN20 USERS: 192.168.21.0/24, GW 192.168.21.1
 * VLAN40 GUEST: 192.168.22.0/24, GW 192.168.22.1
@@ -303,16 +77,16 @@ Building configuration...
 * VLAN20 USERS: 192.168.31.0/24, GW 192.168.31.1
 * VLAN99 MGMT: 192.168.32.0/24, GW 192.168.32.1
 
-## 1.6 Transit VLAN 999 (OSPF между роутерами) — ОБЯЗАТЕЛЬНО /29
+## 1.6 Transit VLAN 999 (OSPF между роутерами)
 ### Сеть: 192.168.255.0/29 (255.255.255.248)
-* Router1: 192.168.255.1/29
-* Router2: 192.168.255.2/29
-* Router3: 192.168.255.3/29
-* Router4: 192.168.255.4/29
+* Router1: 192.168.255.1/28
+* Router2: 192.168.255.2/28
+* Router3: 192.168.255.3/28
+* Router4: 192.168.255.4/28
 ### Управление ядром (SVI VLAN999 на коммутаторах):
-* Switch1: 192.168.255.5/29
-* Switch2: 192.168.255.6/29
-* Switch3: 192.168.255.7/29
+* Switch1: 192.168.255.11/28
+* Switch2: 192.168.255.12/28
+* Switch3: 192.168.255.13/28
 * Default-gateway на S1/S2/S3: 192.168.255.1
   
 ## 1.7 Серверы HQ (VLAN30) — статикой
@@ -326,14 +100,27 @@ WEB: 192.168.12.20/24, GW 192.168.12.1
 
 
 
+# Этап 2. Базовая настройка 
+
+На всех роутерах/свитчах необходимо выполнить базовые настройки. Пример для Switch1:
+```
+Switch1>en
+Switch1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Switch1(config)#no ip domain-lookup
+Switch1(config)#service password-encryption
+Switch1(config)#enable secret C1sco123!
+Switch1(config)#banner motd ^CUnauthorized access prohibited^C
+Switch1(config)#end
+Switch1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Switch1#
+```
 
 
-
-
-
-
-
-№ Этап 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
+# Этап 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
 Необходимо построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
 
 Ожидаемый результат:

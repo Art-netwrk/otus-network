@@ -1282,6 +1282,8 @@ Router3>en
 Router3#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
 Router3(config)#ip access-list extended GUEST_IN
+Router3(config-ext-nacl)#permit udp any eq bootpc any eq bootps
+Router3(config-ext-nacl)#permit udp any eq bootps any eq bootpc
 Router3(config-ext-nacl)#permit udp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq 53
 Router3(config-ext-nacl)#permit tcp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq 53
 Router3(config-ext-nacl)#permit tcp 192.168.22.0 0.0.0.255 host 203.0.113.10 eq 80

@@ -1364,3 +1364,92 @@ Building configuration...
 [OK]
 Router3#
 ```
+
+# ЭТАП 9. SSH + ограничение доступа (VTY ACL)
+## 9.1 Включаем SSH (вводить на ВСЕХ роутерах и свитчах)
+
+Повторяем на всех устройствах:
+```
+Router1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router1(config)#hostname Router1
+Router1(config)#ip domain-name diploma.local
+Router1(config)#username admin privilege 15 secret Admin12345
+Router1(config)#crypto key generate rsa
+The name for the keys will be: Router1.diploma.local
+Choose the size of the key modulus in the range of 360 to 2048 for your
+  General Purpose Keys. Choosing a key modulus greater than 512 may take
+  a few minutes.
+
+How many bits in the modulus [512]: 1024
+% Generating 1024 bit RSA keys, keys will be non-exportable...[OK]
+Router1(config)#ip ssh version 2
+*Mar 1 3:37:7.747: %SSH-5-ENABLED: SSH 2 has been enabled
+Router1(config)#line vty 0 4
+Router1(config-line)#login local
+Router1(config-line)#transport input ssh
+Router1(config-line)#exec-timeout 10 0
+Router1(config-line)#end
+Router1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Router1#
+```
+## 9.2 Ограничиваем SSH только с ADMIN VLAN (VTY ACL)
+Повторяем на всех устройствах:
+```
+Router1#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router1(config)#ip access-list standard VTY_ADMIN_ONLY
+Router1(config-std-nacl)#permit 192.168.10.0 0.0.0.255
+Router1(config-std-nacl)#permit 192.168.20.0 0.0.0.255
+Router1(config-std-nacl)#permit 192.168.30.0 0.0.0.255
+Router1(config-std-nacl)#deny any
+Router1(config-std-nacl)#exit
+Router1(config)#
+Router1(config)#line vty 0 4
+Router1(config-line)#access-class VTY_ADMIN_ONLY in
+Router1(config-line)#exit
+Router1(config)#end
+Router1#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Router1#
+```
+
+
+```
+en
+C1sco123!
+conf t
+ip domain-name diploma.local
+username admin privilege 15 secret Admin12345
+crypto key generate rsa
+1024
+ip ssh version 2
+
+line vty 0 4
+ login local
+ transport input ssh
+ exec-timeout 10 0
+exit
+end
+wr
+
+conf t
+ip access-list standard VTY_ADMIN_ONLY
+ permit 192.168.10.0 0.0.0.255
+ permit 192.168.20.0 0.0.0.255
+ permit 192.168.30.0 0.0.0.255
+ deny any
+exit
+
+line vty 0 4
+ access-class VTY_ADMIN_ONLY in
+exit
+end
+wr
+```
+В итоге: SSH на любое устройство будет работать только если подключиться с ПК из VLAN10 (ADMIN) на любой площадке.

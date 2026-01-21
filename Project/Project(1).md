@@ -688,8 +688,9 @@ Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 
 
 
 
-
-
+# Этап 4. Access-switch’и: VLAN’ы + access-порты + trunk к роутеру + MGMT VLAN99
+## 4.1 Switch4 (HQ)
+### 4.1.1 Базовая настройка + VLAN’ы
 
 
 

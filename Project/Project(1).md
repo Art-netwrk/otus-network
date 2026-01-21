@@ -987,6 +987,185 @@ Fa0/1-2 в нужных VLAN:
 
 <img width="569" height="401" alt="image" src="https://github.com/user-attachments/assets/2b7ef4d3-25d1-4bce-aa17-befcbd57d1fa" />
 
-
-
-
+# Этап 5. Роутеры: интерфейсы + ROAS (sub-interfaces) + OSPFv2
+## 5.1 Router2 (HQ)
+## 5.1.1 Шлюзы HQ VLAN + DHCP сервер
+```
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname Router2
+Router2(config)#no ip domain-lookup
+```
+```
+Router2(config)#interface g0/0/0
+Router2(config-if)#ip address 192.168.255.2 255.255.255.248
+Router2(config-if)#no shut
+Router2(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+Router2(config)#interface g0/0/1
+Router2(config-if)#no shut
+Router2(config-if)#exit
+```
+```
+Router2(config)#interface g0/0/1.10
+Router2(config-subif)#encapsulation dot1Q 10
+Router2(config-subif)#ip address 192.168.10.1 255.255.255.0
+Router2(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.10, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.10, changed state to up
+Router2(config)#interface g0/0/1.20
+Router2(config-subif)#encapsulation dot1Q 20
+Router2(config-subif)#ip address 192.168.11.1 255.255.255.0
+Router2(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.20, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.20, changed state to up
+Router2(config)#interface g0/0/1.30
+Router2(config-subif)#encapsulation dot1Q 30
+Router2(config-subif)#ip address 192.168.12.1 255.255.255.0
+Router2(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.30, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.30, changed state to up
+Router2(config)#interface g0/0/1.99
+Router2(config-subif)#encapsulation dot1Q 99
+Router2(config-subif)#ip address 192.168.13.1 255.255.255.0
+Router2(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.99, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.99, changed state to up
+```
+```
+Router2(config)#router ospf 1
+Router2(config-router)#router-id 2.2.2.2
+Router2(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router2(config-router)#network 192.168.10.0 0.0.0.255 area 0
+Router2(config-router)#network 192.168.11.0 0.0.0.255 area 0
+Router2(config-router)#network 192.168.12.0 0.0.0.255 area 0
+Router2(config-router)#network 192.168.13.0 0.0.0.255 area 0
+Router2(config-router)#exit
+Router2(config)#end
+Router2#wr
+```
+## 5.2 Router3 (Branch1)
+### 5.2.1 Шлюзы BR1 VLAN + DHCP relay + ACL guest
+```
+Router>en
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname Router3
+Router3(config)#no ip domain-lookup
+```
+```
+Router3(config)#interface g0/0/0
+Router3(config-if)#ip address 192.168.255.3 255.255.255.248
+Router3(config-if)#no shut
+Router3(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+Router3(config)#interface g0/0/1
+Router3(config-if)#no shut
+Router3(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1, changed state to up
+```
+```
+Router3(config)#interface g0/0/1.10
+Router3(config-subif)#encapsulation dot1Q 10
+Router3(config-subif)#ip address 192.168.20.1 255.255.255.0
+Router3(config-subif)#ip helper-address 192.168.255.2
+Router3(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.10, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.10, changed state to up
+Router3(config)#interface g0/0/1.20
+Router3(config-subif)#encapsulation dot1Q 20
+Router3(config-subif)#ip address 192.168.21.1 255.255.255.0
+Router3(config-subif)#ip helper-address 192.168.255.2
+Router3(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.20, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.20, changed state to up
+Router3(config)#interface g0/0/1.40
+Router3(config-subif)#encapsulation dot1Q 40
+Router3(config-subif)#ip address 192.168.22.1 255.255.255.0
+Router3(config-subif)#ip helper-address 192.168.255.2
+Router3(config-subif)#ip access-group GUEST_IN in
+Router3(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.40, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.40, changed state to up
+Router3(config)#interface g0/0/1.99
+Router3(config-subif)#encapsulation dot1Q 99
+Router3(config-subif)#ip address 192.168.23.1 255.255.255.0
+Router3(config-subif)#ip helper-address 192.168.255.2
+Router3(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.99, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.99, changed state to up
+```
+```
+Router3(config)#router ospf 1
+Router3(config-router)#router-id 3.3.3.3
+Router3(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router3(config-router)#network 192.168.20.0 0.0.0.255 area 0
+Router3(config-router)#network 192.168.21.0 0.0.0.255 area 0
+Router3(config-router)#network 192.168.22.0 0.0.0.255 area 0
+Router3(config-router)#network 192.168.23.0 0.0.0.255 area 0
+Router3(config-router)#exit
+Router3(config)#end
+Router3#wr
+```
+## 5.3 Router4 (Branch2)
+### 5.3.1 Шлюзы BR2 VLAN + DHCP relay
+```
+Router#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router(config)#hostname Router4
+Router4(config)#no ip domain-lookup
+```
+```
+Router4(config)#interface g0/0/0
+Router4(config-if)#ip address 192.168.255.4 255.255.255.248
+Router4(config-if)#no shut
+Router4(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/0, changed state to up
+Router4(config)#interface g0/0/1
+Router4(config-if)#no shut
+Router4(config-if)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1, changed state to up
+```
+```
+Router4(config)#interface g0/0/1.10
+Router4(config-subif)#encapsulation dot1Q 10
+Router4(config-subif)#ip address 192.168.30.1 255.255.255.0
+Router4(config-subif)#ip helper-address 192.168.255.2
+Router4(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.10, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.10, changed state to up
+Router4(config)#interface g0/0/1.20
+Router4(config-subif)#encapsulation dot1Q 20
+Router4(config-subif)#ip address 192.168.31.1 255.255.255.0
+Router4(config-subif)#ip helper-address 192.168.255.2
+Router4(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.20, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.20, changed state to up
+Router4(config)#interface g0/0/1.99
+Router4(config-subif)#encapsulation dot1Q 99
+Router4(config-subif)#ip address 192.168.32.1 255.255.255.0
+Router4(config-subif)#ip helper-address 192.168.255.2
+Router4(config-subif)#exit
+%LINK-5-CHANGED: Interface GigabitEthernet0/0/1.99, changed state to up
+%LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1.99, changed state to up
+```
+```
+Router4(config)#router ospf 1
+Router4(config-router)#router-id 4.4.4.4
+Router4(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router4(config-router)#network 192.168.30.0 0.0.0.255 area 0
+Router4(config-router)#network 192.168.31.0 0.0.0.255 area 0
+Router4(config-router)#network 192.168.32.0 0.0.0.255 area 0
+Router4(config-router)#exit
+Router4(config)#end
+Router4#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+```

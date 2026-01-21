@@ -787,9 +787,11 @@ Switch4#wr
 ```
 ### 4.1.5 Проверки
 VLAN 10/20/30/99 есть:
+
 <img width="571" height="259" alt="image" src="https://github.com/user-attachments/assets/a68c5023-c884-4e3a-8065-111e33046588" />
 
 Fa0/1-4 в нужных VLAN:
+
 <img width="572" height="398" alt="image" src="https://github.com/user-attachments/assets/436ce954-57a7-441c-8786-10e5f173c775" />
 
 

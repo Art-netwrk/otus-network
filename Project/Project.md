@@ -557,10 +557,13 @@ show etherchannel summary
 
 <img width="409" height="278" alt="image" src="https://github.com/user-attachments/assets/9f5e7a24-6fc0-47bb-a3f8-34f26a4d1532" />
 
-### Результат:
-#### На Switch1: Po12(SU) и Po13(SU), порты в составе помечены (P).
-#### На Switch2: Po12(SU) и Po23(SU), порты (P).
-#### На Switch3: Po13(SU) и Po23(SU), порты (P).
+#### Результат:
+
+На Switch1: Po12(SU) и Po13(SU), порты в составе помечены (P).
+
+На Switch2: Po12(SU) и Po23(SU), порты (P).
+
+На Switch3: Po13(SU) и Po23(SU), порты (P).
 
 #### Это означает, что порт-каналы работают на L2 (S) и находятся в использовании (U), а физические порты агрегированы (P).
 
@@ -576,9 +579,24 @@ show interfaces trunk
 
 Po12/Po13/Po23 работают в режиме trunking, encapsulation 802.1Q, native VLAN 999, allowed VLAN 999.
 
+## 3.7.3 Проверка STP VLAN999
 
+```
+show spanning-tree vlan 999
+```
+#### Результат:
 
+<img width="487" height="266" alt="image" src="https://github.com/user-attachments/assets/785620c0-b086-4c05-add2-caa7b69aac94" />
+<img width="486" height="256" alt="image" src="https://github.com/user-attachments/assets/df7465e3-d455-482c-82d4-7c54c057176c" />
+<img width="484" height="254" alt="image" src="https://github.com/user-attachments/assets/924e84f6-ba03-49a2-a5de-2b277a09a4b9" />
 
+Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 находятся в роли Designated Forwarding.
+
+На Switch2 корневой порт Po12 Root FWD, а Po23 Designated FWD.
+
+На Switch3 корневой порт Po13 Root FWD, а Po23 Altn BLK.
+
+Ядро имеет топологию треугольника, что создаёт потенциальную L2-петлю. RSTP блокирует один из путей (на Switch3 — Po23 в состоянии Alternate/Blocking), предотвращая петли, но оставляя резервный маршрут. При отказе канала Po13 ожидается переведение Po23 в Forwarding, сохраняя связность сети.
 
 
 

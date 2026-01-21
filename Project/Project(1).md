@@ -974,7 +974,7 @@ Router2(config)#no ip domain-lookup
 ```
 ```
 Router2(config)#interface g0/0/0
-Router2(config-if)#ip address 192.168.255.2 255.255.255.248
+Router2(config-if)#ip address 192.168.255.2 255.255.255.240
 Router2(config-if)#no shut
 Router2(config-if)#exit
 %LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
@@ -1012,7 +1012,7 @@ Router2(config-subif)#exit
 ```
 Router2(config)#router ospf 1
 Router2(config-router)#router-id 2.2.2.2
-Router2(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router2(config-router)#network 192.168.255.0 0.0.0.15 area 0
 Router2(config-router)#network 192.168.10.0 0.0.0.255 area 0
 Router2(config-router)#network 192.168.11.0 0.0.0.255 area 0
 Router2(config-router)#network 192.168.12.0 0.0.0.255 area 0
@@ -1032,7 +1032,7 @@ Router3(config)#no ip domain-lookup
 ```
 ```
 Router3(config)#interface g0/0/0
-Router3(config-if)#ip address 192.168.255.3 255.255.255.248
+Router3(config-if)#ip address 192.168.255.3 255.255.255.240
 Router3(config-if)#no shut
 Router3(config-if)#exit
 %LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
@@ -1077,7 +1077,7 @@ Router3(config-subif)#exit
 ```
 Router3(config)#router ospf 1
 Router3(config-router)#router-id 3.3.3.3
-Router3(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router3(config-router)#network 192.168.255.0 0.0.0.15 area 0
 Router3(config-router)#network 192.168.20.0 0.0.0.255 area 0
 Router3(config-router)#network 192.168.21.0 0.0.0.255 area 0
 Router3(config-router)#network 192.168.22.0 0.0.0.255 area 0
@@ -1096,7 +1096,7 @@ Router4(config)#no ip domain-lookup
 ```
 ```
 Router4(config)#interface g0/0/0
-Router4(config-if)#ip address 192.168.255.4 255.255.255.248
+Router4(config-if)#ip address 192.168.255.4 255.255.255.240
 Router4(config-if)#no shut
 Router4(config-if)#exit
 %LINK-5-CHANGED: Interface GigabitEthernet0/0/0, changed state to up
@@ -1133,7 +1133,7 @@ Router4(config-subif)#exit
 ```
 Router4(config)#router ospf 1
 Router4(config-router)#router-id 4.4.4.4
-Router4(config-router)#network 192.168.255.0 0.0.0.7 area 0
+Router4(config-router)#network 192.168.255.0 0.0.0.15 area 0
 Router4(config-router)#network 192.168.30.0 0.0.0.255 area 0
 Router4(config-router)#network 192.168.31.0 0.0.0.255 area 0
 Router4(config-router)#network 192.168.32.0 0.0.0.255 area 0

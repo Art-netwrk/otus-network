@@ -1290,7 +1290,7 @@ Router2(dhcp-config)#dns-server 192.168.12.10
 Router2(dhcp-config)#domain-name diploma.local
 Router2(dhcp-config)#exit
 ```
-### 7.2.3 Branch1 (  Router3!
+### 7.2.3 Branch1 (Router3)
 ```
 Router2(config)#ip dhcp pool BR1_ADMIN
 Router2(dhcp-config)#network 192.168.20.0 255.255.255.0
@@ -1313,7 +1313,7 @@ Router2(dhcp-config)#dns-server 192.168.12.10
 Router2(dhcp-config)#domain-name diploma.local
 Router2(dhcp-config)#exit
 ```
-### 7.2.4 Branch2 (  Router4!)
+### 7.2.4 Branch2 (Router4)
 ```
 Router2(config)#ip dhcp pool BR2_ADMIN
 Router2(dhcp-config)#network 192.168.30.0 255.255.255.0
@@ -1335,4 +1335,32 @@ Router2#wr
 Building configuration...
 [OK]
 Router2#
+```
+
+# Этап 8. ACL для гостевого Wi-Fi (на Router3)
+
+Guest (192.168.22.0/24) не должен ходить в 192.168.0.0/16, но должен:
+
+* спрашивать DNS (192.168.12.10)
+* ходить к “интернет” серверу (203.0.113.10) по 80/443
+* (опционально) ping до внешнего
+```
+Router3>en
+Router3#conf t
+Enter configuration commands, one per line.  End with CNTL/Z.
+Router3(config)#ip access-list extended GUEST_IN
+Router3(config-ext-nacl)#permit udp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq 53
+Router3(config-ext-nacl)#permit tcp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq 53
+Router3(config-ext-nacl)#permit tcp 192.168.22.0 0.0.0.255 host 203.0.113.10 eq 80
+Router3(config-ext-nacl)#permit tcp 192.168.22.0 0.0.0.255 host 203.0.113.10 eq 443
+Router3(config-ext-nacl)#permit icmp 192.168.22.0 0.0.0.255 host 203.0.113.10
+Router3(config-ext-nacl)#deny   ip 192.168.22.0 0.0.0.255 192.168.0.0 0.0.255.255
+Router3(config-ext-nacl)#permit ip 192.168.22.0 0.0.0.255 any
+Router3(config-ext-nacl)#exit
+Router3(config)#end
+Router3#wr
+%SYS-5-CONFIG_I: Configured from console by console
+Building configuration...
+[OK]
+Router3#
 ```

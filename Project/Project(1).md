@@ -236,8 +236,9 @@ Building configuration...
 
 
 
-Шаг 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
+№ Этап 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
 Необходимо построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
+
 Ожидаемый результат:
 
 * VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
@@ -251,59 +252,45 @@ Building configuration...
   * Root Secondary: Switch2
 * Для управления ядром настроены IP-адреса на SVI VLAN 999 и default-gateway (для удалённого SSH далее в проекте).
 
-3.1 Обоснование выбора оборудования (почему использованы 3560)
+№№ 3.1 Обоснование выбора оборудования (почему использованы 3560)
 
 В ходе реализации выяснилось, что отдельные модели коммутаторов в Packet Tracer (особенно упрощённые/урезанные) могут:
-
-отклонять перевод порта в trunk при encapsulation auto;
-
-некорректно собирать EtherChannel из-за несовпадений trunk-параметров и ограничений CLI.
+* отклонять перевод порта в trunk при encapsulation auto;
+* некорректно собирать EtherChannel из-за несовпадений trunk-параметров и ограничений CLI.
 
 Коммутаторы Cisco Catalyst 3560 обеспечили корректную поддержку:
 
-trunk encapsulation 802.1Q (dot1q),
+*trunk encapsulation 802.1Q (dot1q),
+*EtherChannel с протоколом LACP,
+*SVI для Management-адресов,
+*стабильные выводы диагностических команд (show etherchannel, show spanning-tree).
 
-EtherChannel с протоколом LACP,
-
-SVI для Management-адресов,
-
-стабильные выводы диагностических команд (show etherchannel, show spanning-tree).
-
-3.2 Топология соединений ядра (EtherChannel)
-
-(по данным CDP и фактической схемы)
+## 3.2 Топология соединений ядра (EtherChannel)
 
 S1 ↔ S2 (Po12):
 
-Switch1 Fa0/1–Fa0/2 ↔ Switch2 Fa0/1–Fa0/2
+* Switch1 Fa0/1–Fa0/2 ↔ Switch2 Fa0/1–Fa0/2
 
 S1 ↔ S3 (Po13):
 
-Switch1 Fa0/3–Fa0/4 ↔ Switch3 Fa0/1–Fa0/2
+* Switch1 Fa0/3–Fa0/4 ↔ Switch3 Fa0/1–Fa0/2
 
 S2 ↔ S3 (Po23):
 
-Switch2 Fa0/3–Fa0/4 ↔ Switch3 Fa0/3–Fa0/4
+* Switch2 Fa0/3–Fa0/4 ↔ Switch3 Fa0/3–Fa0/4
 
-3.3 Требования к порт-каналам (критические настройки)
+## 3.3 Требования к порт-каналам (критические настройки)
 
 Чтобы EtherChannel корректно агрегировался и не происходило ошибок типа VLAN mask is different / Native VLAN mismatch, параметры должны быть одинаковыми на обеих сторонах:
+* switchport trunk encapsulation dot1q
+* switchport mode trunk
+* switchport trunk native vlan 999
+* switchport trunk allowed vlan 999
+* switchport nonegotiate
+* channel-group <id> mode active (LACP)
 
-switchport trunk encapsulation dot1q
-
-switchport mode trunk
-
-switchport trunk native vlan 999
-
-switchport trunk allowed vlan 999
-
-switchport nonegotiate
-
-channel-group <id> mode active (LACP)
-
-
-# 3.4 Конфигурация Switch1 (Root Primary)
-## 3.4.1 Базовая настройка + VLAN999
+## 3.4 Конфигурация Switch1 (Root Primary)
+### 3.4.1 Базовая настройка + VLAN999
 
 ```
 Switch>enable
@@ -318,7 +305,7 @@ Switch1(config-vlan)# name TRANSIT_OSPF
 Switch1(config-vlan)#exit
 ```
 
-## 3.4.2 EtherChannel S1↔S2 (Po12, Fa0/1-2)
+### 3.4.2 EtherChannel S1↔S2 (Po12, Fa0/1-2)
 
 ```
 Switch1(config)#interface port-channel 12
@@ -353,7 +340,7 @@ Switch1(config-if-range)#no shutdown
 Switch1(config-if-range)#exit
 ```
 
-## 3.4.3 EtherChannel S1↔S3 (Po13, Fa0/3-4)
+### 3.4.3 EtherChannel S1↔S3 (Po13, Fa0/3-4)
 
 ```
 Switch1(config)#interface port-channel 13
@@ -387,13 +374,13 @@ Switch1(config-if-range)#no shutdown
 Switch1(config-if-range)#exit
 ```
 
-## 3.4.4 STP Root Primary VLAN999
+### 3.4.4 STP Root Primary VLAN999
 
 ```
 Switch1(config)#spanning-tree vlan 999 root primary
 ```
 
-## 3.4.5 Management IP (SVI VLAN999)
+### 3.4.5 Management IP (SVI VLAN999)
 
 ```
 Switch1#conf t
@@ -411,8 +398,8 @@ Building configuration...
 [OK]
 ```
 
-# 3.5 Конфигурация Switch2 (Root Secondary)
-## 3.5.1 Базовая настройка + VLAN999
+## 3.5 Конфигурация Switch2 (Root Secondary)
+### 3.5.1 Базовая настройка + VLAN999
 
 ```
 Switch(config)#hostname Switch2
@@ -423,7 +410,7 @@ Switch2(config-vlan)# name TRANSIT_OSPF
 Switch2(config-vlan)#exit
 ```
 
-## 3.5.2 EtherChannel S2↔S1 (Po12, Fa0/1-2)
+### 3.5.2 EtherChannel S2↔S1 (Po12, Fa0/1-2)
 
 ```
 Switch2(config)#interface port-channel 12
@@ -459,7 +446,7 @@ Switch2(config-if-range)#no shutdown
 Switch2(config-if-range)#exit
 ```
 
-## 3.5.3 EtherChannel S2↔S3 (Po23, Fa0/3-4)
+### 3.5.3 EtherChannel S2↔S3 (Po23, Fa0/3-4)
 
 ```
 Switch2(config)#interface port-channel 23
@@ -492,13 +479,13 @@ Switch2(config-if-range)#exit
 %LINEPROTO-5-UPDOWN: Line protocol on Interface FastEthernet0/4, changed state to up
 ```
 
-## 3.5.4 STP Root Secondary VLAN999
+### 3.5.4 STP Root Secondary VLAN999
 
 ```
 Switch2(config)#spanning-tree vlan 999 root secondary
 ```
 
-## 3.5.5 Management IP (SVI VLAN999)
+### 3.5.5 Management IP (SVI VLAN999)
 
 ```
 Switch2(config)#interface vlan 999
@@ -516,8 +503,8 @@ Switch2#
 %SYS-5-CONFIG_I: Configured from console by console
 ```
 
-# 3.6 Конфигурация Switch3
-## 3.6.1 Базовая настройка + VLAN999
+## 3.6 Конфигурация Switch3
+### 3.6.1 Базовая настройка + VLAN999
 
 ```
 Switch>enable
@@ -531,7 +518,7 @@ Switch3(config-vlan)#name TRANSIT_OSPF
 Switch3(config-vlan)#exit
 ```
 
-## 3.6.2 EtherChannel S3↔S1 (Po13, Fa0/1-2)
+### 3.6.2 EtherChannel S3↔S1 (Po13, Fa0/1-2)
 
 ```
 Switch3(config)#interface port-channel 13
@@ -570,7 +557,7 @@ Switch3(config-if-range)#exit
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel13, changed state to up
 ```
 
-## 3.6.3 EtherChannel S3↔S2 (Po23, Fa0/3-4)
+### 3.6.3 EtherChannel S3↔S2 (Po23, Fa0/3-4)
 
 ```
 Switch3(config)#interface port-channel 23
@@ -605,7 +592,7 @@ Switch3(config-if-range)#exit
 %LINEPROTO-5-UPDOWN: Line protocol on Interface Port-channel23, changed state to up
 ```
 
-## 3.6.4 Management IP (SVI VLAN999)
+### 3.6.4 Management IP (SVI VLAN999)
 
 ```
 Switch3(config)#interface vlan 999
@@ -622,8 +609,8 @@ Building configuration...
 %SYS-5-CONFIG_I: Configured from console by console
 ```
 
-# 3.7 Проверка и результаты
-## 3.7.1 Проверка EtherChannel на каждом коммутаторе
+## 3.7 Проверка и результаты
+### 3.7.1 Проверка EtherChannel на каждом коммутаторе
 
 ```
 show etherchannel summary
@@ -633,47 +620,46 @@ show etherchannel summary
 <img width="407" height="280" alt="image" src="https://github.com/user-attachments/assets/cd6418ad-4e81-4888-90a4-956b5e4f6371" />
 <img width="409" height="278" alt="image" src="https://github.com/user-attachments/assets/9f5e7a24-6fc0-47bb-a3f8-34f26a4d1532" />
 
-#### Результат:
+Результат:
 
-На Switch1: Po12(SU) и Po13(SU), порты в составе помечены (P).
+* На Switch1: Po12(SU) и Po13(SU), порты в составе помечены (P).
+* На Switch2: Po12(SU) и Po23(SU), порты (P).
+* На Switch3: Po13(SU) и Po23(SU), порты (P).
 
-На Switch2: Po12(SU) и Po23(SU), порты (P).
+Это означает, что порт-каналы работают на L2 (S) и находятся в использовании (U), а физические порты агрегированы (P).
 
-На Switch3: Po13(SU) и Po23(SU), порты (P).
-
-#### Это означает, что порт-каналы работают на L2 (S) и находятся в использовании (U), а физические порты агрегированы (P).
-
-## 3.7.2 Проверка trunk на Port-Channel
+### 3.7.2 Проверка trunk на Port-Channel
 ```
 show interfaces trunk
 ```
 <img width="470" height="230" alt="image" src="https://github.com/user-attachments/assets/d56a6468-9402-41ea-abbd-326cacfc84dc" />
+
 <img width="471" height="255" alt="image" src="https://github.com/user-attachments/assets/4f0c2a5d-d109-4941-b929-2248e9910f40" />
+
 <img width="470" height="223" alt="image" src="https://github.com/user-attachments/assets/da335f73-23fe-4e9e-8d32-5c9b2dc4488c" />
 
-#### Результат:
+Результат:
 
-Po12/Po13/Po23 работают в режиме trunking, encapsulation 802.1Q, native VLAN 999, allowed VLAN 999.
+* Po12/Po13/Po23 работают в режиме trunking, encapsulation 802.1Q, native VLAN 999, allowed VLAN 999.
 
-## 3.7.3 Проверка STP VLAN999
+### 3.7.3 Проверка STP VLAN999
 
 ```
 show spanning-tree vlan 999
 ```
-#### Результат:
+Результат:
 
 <img width="487" height="266" alt="image" src="https://github.com/user-attachments/assets/785620c0-b086-4c05-add2-caa7b69aac94" />
+
 <img width="486" height="256" alt="image" src="https://github.com/user-attachments/assets/df7465e3-d455-482c-82d4-7c54c057176c" />
+
 <img width="484" height="254" alt="image" src="https://github.com/user-attachments/assets/924e84f6-ba03-49a2-a5de-2b277a09a4b9" />
 
-Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 находятся в роли Designated Forwarding.
-
-На Switch2 корневой порт Po12 Root FWD, а Po23 Designated FWD.
-
-На Switch3 корневой порт Po13 Root FWD, а Po23 Altn BLK.
+* Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 находятся в роли Designated Forwarding.
+* На Switch2 корневой порт Po12 Root FWD, а Po23 Designated FWD.
+* На Switch3 корневой порт Po13 Root FWD, а Po23 Altn BLK.
 
 Ядро имеет топологию треугольника, что создаёт потенциальную L2-петлю. RSTP блокирует один из путей (на Switch3 — Po23 в состоянии Alternate/Blocking), предотвращая петли, но оставляя резервный маршрут. При отказе канала Po13 ожидается переведение Po23 в Forwarding, сохраняя связность сети.
-
 
 
 

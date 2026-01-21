@@ -786,14 +786,110 @@ Switch4(config)#end
 Switch4#wr
 ```
 ### 4.1.5 Проверки
+```show vlan brief```
 VLAN 10/20/30/99 есть:
 
 <img width="571" height="259" alt="image" src="https://github.com/user-attachments/assets/a68c5023-c884-4e3a-8065-111e33046588" />
+
+```show interfaces status```
 
 Fa0/1-4 в нужных VLAN:
 
 <img width="572" height="398" alt="image" src="https://github.com/user-attachments/assets/436ce954-57a7-441c-8786-10e5f173c775" />
 
+## 4.2 Switch5 (Branch1)
+### 4.2.1 Базовая настройка + VLAN’ы
+```
+Switch>en
+Switch#conf t
+Switch(config)#hostname Switch5
+Switch5(config)#no ip domain-lookup
+Switch5(config)#spanning-tree mode rapid-pvst
+Switch5(config)#
+Switch5(config)#vlan 10
+Switch5(config-vlan)#name ADMIN
+Switch5(config-vlan)#vlan 20
+Switch5(config-vlan)#name USERS
+Switch5(config-vlan)#vlan 40
+Switch5(config-vlan)#name GUEST
+Switch5(config-vlan)#vlan 99
+Switch5(config-vlan)#name MGMT
+Switch5(config-vlan)#exit
+```
+### 4.2.2 Access-порты
+```
+Switch5(config)#interface fa0/1
+Switch5(config-if)#switchport mode access
+Switch5(config-if)#switchport access vlan 10
+Switch5(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/1 but will only
+have effect when the interface is in a non-trunking mode.
+Switch5(config-if)# spanning-tree bpduguard enable
+Switch5(config-if)#exit
+```
+```
+Switch5(config)#interface fa0/2
+Switch5(config-if)#switchport mode access
+Switch5(config-if)#switchport access vlan 20
+Switch5(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/2 but will only
+have effect when the interface is in a non-trunking mode.
+Switch5(config-if)#spanning-tree bpduguard enable
+Switch5(config-if)#exit
+```
+```
+Switch5(config)#interface fa0/3
+Switch5(config-if)#switchport mode access
+Switch5(config-if)#switchport access vlan 40
+Switch5(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/3 but will only
+have effect when the interface is in a non-trunking mode.
+Switch5(config-if)#spanning-tree bpduguard enable
+Switch5(config-if)#exit
+```
+### 4.2.3 Trunk к Router3
+```
+Switch5(config)#interface gi0/1
+Switch5(config-if)#switchport mode trunk
+Switch5(config-if)#switchport trunk allowed vlan 10,20,40,99
+Switch5(config-if)#switchport nonegotiate
+Switch5(config-if)#no shutdown
+Switch5(config-if)#exit
+Switch5(config)#
+```
+### 4.2.4 MGMT SVI VLAN99
+```
+Switch5(config)#interface vlan 99
+Switch5(config-if)#ip address 192.168.23.2 255.255.255.0
+Switch5(config-if)#no shutdown
+Switch5(config-if)#exit
+Switch5(config)#ip default-gateway 192.168.23.1
+Switch5(config)#end
+Switch5#wr
+```
+### 4.2.5 Проверки
+```show vlan brief```
+
+<img width="567" height="255" alt="image" src="https://github.com/user-attachments/assets/c7315d20-6bf0-44da-b87c-59a660d1448b" />
+
+```show interfaces status```
+
+<img width="572" height="403" alt="image" src="https://github.com/user-attachments/assets/78175dcc-bf17-4291-b1fc-95f5fd5630b7" />
 
 
 

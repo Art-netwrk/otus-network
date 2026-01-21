@@ -692,9 +692,99 @@ Switch1 является Root Bridge (This bridge is the root), а Po12 и Po13 
 ## 4.1 Switch4 (HQ)
 ### 4.1.1 Базовая настройка + VLAN’ы
 
+```
+Switch4>enable
+Switch4#conf t
+Switch4(config)#hostname Switch4
+Switch4(config)#no ip domain-lookup
+Switch4(config)#spanning-tree mode rapid-pvst
+Switch4(config)#vlan 10
+Switch4(config-vlan)#name ADMIN
+Switch4(config-vlan)#vlan 20
+Switch4(config-vlan)#name USERS
+Switch4(config-vlan)#vlan 30
+Switch4(config-vlan)#name SERVERS
+Switch4(config-vlan)#vlan 99
+Switch4(config-vlan)#name MGMT
+Switch4(config-vlan)#exit
+```
+### 4.1.2 Access-порты (ПК/Сервера) + PortFast/BPDUguard
+```
+Switch4(config)#interface fa0/1
+Switch4(config-if)#switchport mode access
+Switch4(config-if)#switchport access vlan 10
+Switch4(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
 
+%Portfast has been configured on FastEthernet0/1 but will only
+have effect when the interface is in a non-trunking mode.
+Switch4(config-if)#spanning-tree bpduguard enable
+Switch4(config-if)#exit
+Switch4(config)#
+Switch4(config)#interface fa0/2
+Switch4(config-if)#switchport mode access
+Switch4(config-if)#switchport access vlan 20
+Switch4(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
 
+%Portfast has been configured on FastEthernet0/2 but will only
+have effect when the interface is in a non-trunking mode.
+Switch4(config-if)#spanning-tree bpduguard enable
+Switch4(config-if)#exit
+Switch4(config)#
+Switch4(config)#interface fa0/3
+Switch4(config-if)#switchport mode access
+Switch4(config-if)#switchport access vlan 30
+Switch4(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
 
+%Portfast has been configured on FastEthernet0/3 but will only
+have effect when the interface is in a non-trunking mode.
+Switch4(config-if)#spanning-tree bpduguard enable
+Switch4(config-if)#exit
+Switch4(config)#
+Switch4(config)#interface fa0/4
+Switch4(config-if)#switchport mode access
+Switch4(config-if)#switchport access vlan 30
+Switch4(config-if)#spanning-tree portfast
+%Warning: portfast should only be enabled on ports connected to a single
+host. Connecting hubs, concentrators, switches, bridges, etc... to this
+interface  when portfast is enabled, can cause temporary bridging loops.
+Use with CAUTION
+
+%Portfast has been configured on FastEthernet0/4 but will only
+have effect when the interface is in a non-trunking mode.
+Switch4(config-if)#spanning-tree bpduguard enable
+Switch4(config-if)#exit
+```
+### 4.1.3 Trunk к Router2 (ROAS будет в Этапе 5)
+```
+Switch4(config)#interface gi0/1
+Switch4(config-if)#switchport mode trunk
+Switch4(config-if)#switchport trunk allowed vlan 10,20,30,99
+Switch4(config-if)#switchport nonegotiate
+Switch4(config-if)#no shutdown
+Switch4(config-if)#exit
+```
+### 4.1.4 MGMT SVI VLAN99 + default-gateway
+```
+Switch4(config)#interface vlan 99
+Switch4(config-if)#ip address 192.168.13.2 255.255.255.0
+Switch4(config-if)#no shutdown
+Switch4(config-if)#exit
+Switch4(config)#ip default-gateway 192.168.13.1
+Switch4(config)#end
+Switch4#wr
+```
 
 
 

@@ -92,7 +92,7 @@
 * Fa0/2 → PC-USER3 (VLAN20)
 
 ## 1.5 “Интернет” для NAT
-* Router1 G0/0/1 ↔ InternetServer Fa0 (прямое соединение)
+* Router1 G0/0/1 ↔ InternetServer Fa0
 
 ## 1.6 VLAN сети (по площадкам)
 ### HQ (Router2 ↔ Switch4)

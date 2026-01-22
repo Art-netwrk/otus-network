@@ -124,7 +124,7 @@
 * Switch3: 192.168.255.13/28
 * Default-gateway на S1/S2/S3: 192.168.255.1
   
-## 1.8 Серверы HQ (VLAN30) — статикой
+## 1.8 Серверы HQ (VLAN30) - статический адрес
 * DNS: 192.168.12.10/24, GW 192.168.12.1
 WEB: 192.168.12.20/24, GW 192.168.12.1
 
@@ -140,7 +140,8 @@ WEB: 192.168.12.20/24, GW 192.168.12.1
 
 # Этап 2. Базовая настройка 
 
-На всех роутерах/свитчах необходимо выполнить базовые настройки. Пример для Switch1:
+На всех роутерах/свитчах необходимо выполнить базовые настройки. 
+На примере Switch1:
 ```
 Switch1>en
 Switch1#conf t
@@ -160,21 +161,7 @@ Switch1#
 
 # Этап 3. Настройка ядра сети (Switch1/Switch2/Switch3): VLAN 999 + EtherChannel + STP + Management
 Необходимо построить отказоустойчивое L2-ядро с транзитной VLAN для маршрутизаторов и OSPF, исключив петли и обеспечив резервирование каналов.
-
-Ожидаемый результат:
-
-* VLAN 999 (TRANSIT_OSPF) создана на всех коммутаторах ядра.
-* Между коммутаторами настроены агрегированные каналы EtherChannel:
-  * S1↔S2: Po12 (2 физ. линии)
-  * S1↔S3: Po13 (2 физ. линии)
-  * S2↔S3: Po23 (2 физ. линии)
-* Все Port-Channel интерфейсы работают как trunk 802.1Q, пропускают только VLAN 999, native vlan 999.
-* Включён Rapid-PVST (RSTP), задан корневой мост STP для VLAN 999:
-  * Root Primary: Switch1
-  * Root Secondary: Switch2
-* Для управления ядром настроены IP-адреса на SVI VLAN 999 и default-gateway (для удалённого SSH далее в проекте).
-
-№№ 3.1 Обоснование выбора оборудования (почему использованы 3560)
+## 3.1 Обоснование выбора оборудования Cisco Catalyst 3560
 
 В ходе реализации выяснилось, что отдельные модели коммутаторов в Packet Tracer (особенно упрощённые/урезанные) могут:
 * отклонять перевод порта в trunk при encapsulation auto;
@@ -182,10 +169,10 @@ Switch1#
 
 Коммутаторы Cisco Catalyst 3560 обеспечили корректную поддержку:
 
-*trunk encapsulation 802.1Q (dot1q),
-*EtherChannel с протоколом LACP,
-*SVI для Management-адресов,
-*стабильные выводы диагностических команд (show etherchannel, show spanning-tree).
+* trunk encapsulation 802.1Q (dot1q)
+* EtherChannel с протоколом LACP
+* SVI для Management-адресов
+* стабильные выводы диагностических команд (show etherchannel, show spanning-tree)
 
 ## 3.2 Топология соединений ядра (EtherChannel)
 
@@ -201,7 +188,7 @@ S2 ↔ S3 (Po23):
 
 * Switch2 Fa0/3–Fa0/4 ↔ Switch3 Fa0/3–Fa0/4
 
-## 3.3 Требования к порт-каналам (критические настройки)
+## 3.3 Требования к порт-каналам
 
 Чтобы EtherChannel корректно агрегировался и не происходило ошибок типа VLAN mask is different / Native VLAN mismatch, параметры должны быть одинаковыми на обеих сторонах:
 * switchport trunk encapsulation dot1q
@@ -629,14 +616,14 @@ show spanning-tree vlan 999
 * На Switch2 корневой порт Po12 Root FWD, а Po23 Designated FWD.
 * На Switch3 корневой порт Po13 Root FWD, а Po23 Altn BLK.
 
-Ядро имеет топологию треугольника, что создаёт потенциальную L2-петлю. RSTP блокирует один из путей (на Switch3 — Po23 в состоянии Alternate/Blocking), предотвращая петли, но оставляя резервный маршрут. При отказе канала Po13 ожидается переведение Po23 в Forwarding, сохраняя связность сети.
+Ядро имеет топологию треугольника, что создаёт потенциальную L2-петлю. RSTP блокирует один из путей (на Switch3 - Po23 в состоянии Alternate/Blocking), предотвращая петли, но оставляя резервный маршрут. При отказе канала Po13 ожидается переведение Po23 в Forwarding, сохраняя связность сети.
 
 
 
-# Этап 4. Access-switch’и: VLAN’ы + access-порты + trunk к роутеру + MGMT VLAN99
-На данном этапе выполняется логическая сегментация сети на уровне L2 с помощью VLAN, назначаются access-порты для конечных устройств (ПК и серверов), настраивается магистральный trunk-порт к маршрутизатору для последующей реализации "Роутер на палочке" (в Этапе 5), а также создаётся отдельная VLAN управления (VLAN 99) с SVI-интерфейсом для удалённого администрирования коммутатора. Дополнительно на портах доступа включаются механизмы PortFast и BPDU Guard для повышения устойчивости сети и защиты от петель.
+# Этап 4. Access-switch: VLAN + access-порты + trunk к роутеру + MGMT VLAN99
+На данном этапе выполняется логическая сегментация сети на уровне L2 с помощью VLAN, назначаются access-порты для конечных устройств (ПК и серверов), настраивается магистральный trunk-порт к маршрутизатору для последующей реализации "Роутер на палочке", а также создаётся отдельная VLAN управления (VLAN 99) с SVI-интерфейсом для удалённого администрирования коммутатора. Дополнительно на портах доступа включаются механизмы PortFast и BPDU Guard для повышения устойчивости сети и защиты от петель.
 ## 4.1 Switch4 (HQ)
-### 4.1.1 Базовая настройка + VLAN’ы
+### 4.1.1 Базовая настройка + VLAN
 
 ```
 Switch4>enable
@@ -750,7 +737,7 @@ Fa0/1-4 в нужных VLAN:
 <img width="572" height="398" alt="image" src="https://github.com/user-attachments/assets/436ce954-57a7-441c-8786-10e5f173c775" />
 
 ## 4.2 Switch5 (Branch1)
-### 4.2.1 Базовая настройка + VLAN’ы
+### 4.2.1 Базовая настройка + VLAN
 ```
 Switch>en
 Switch#conf t
@@ -850,7 +837,7 @@ Fa0/1-3 в нужных VLAN:
 
 
 ## 4.3 Switch6 (Branch2)
-### 4.3.1 Базовая настройка + VLAN’ы
+### 4.3.1 Базовая настройка + VLAN
 ```
 Switch>en
 Switch#conf t
@@ -1148,7 +1135,7 @@ Router1(config-if)#exit
 %LINK-5-CHANGED: Interface GigabitEthernet0/0/1, changed state to up
 %LINEPROTO-5-UPDOWN: Line protocol on Interface GigabitEthernet0/0/1, changed state to up
 ```
-## 6.3 OSPF (чтобы все знали как идти к 203.0.113.0/24 через R1)
+## 6.3 OSPF для назначения пути к 203.0.113.0/24 через R1
 ```
 Router1(config)#router ospf 1
 Router1(config-router)#router-id 1.1.1.1
@@ -1161,7 +1148,7 @@ Router1(config-router)#exit
 Router1(config)#access-list 1 permit 192.168.0.0 0.0.255.255
 Router1(config)#ip nat inside source list 1 interface g0/0/1 overload
 ```
-## 6.5 Порт-форвардинг наружу на внутренний WEB (для демонстрации)
+## 6.5 Порт-форвардинг наружу на внутренний WEB
 ```
 Router1(config)#ip nat inside source static tcp 192.168.12.20 80 203.0.113.2 80
 Router1(config)#ip nat inside source static tcp 192.168.12.20 443 203.0.113.2 443
@@ -1215,12 +1202,7 @@ WEB: 192.168.12.20/24, GW 192.168.12.1
 <img width="703" height="266" alt="image" src="https://github.com/user-attachments/assets/4e0cdbf5-acaa-43e4-a0c8-d578a09fae61" />
 
 
-## 7.2 DHCP на Router2 (выдаёт адреса всем VLAN’ам)
-```
-Router2>en
-Router2#conf t
-Enter configuration commands, one per line.  End with CNTL/Z.
-```
+## 7.2 DHCP на Router2 для VLAN
 ### 7.2.1 Исключения (шлюзы, сервера, mgmt IP свитчей)
 ```
 Router2(config)#ip dhcp excluded-address 192.168.10.1 192.168.10.30
@@ -1308,13 +1290,13 @@ Building configuration...
 Router2#
 ```
 
-# Этап 8. ACL для гостевого Wi-Fi (на Router3)
+# Этап 8. ACL для гостевого Wi-Fi на Router3
 
 Guest (192.168.22.0/24) не должен ходить в 192.168.0.0/16, но должен:
 
 * спрашивать DNS (192.168.12.10)
 * ходить к “интернет” серверу (203.0.113.10) по 80/443
-* (опционально) ping до внешнего
+* ping до внешней сети
 ```
 Router3>en
 Router3#conf t
@@ -1339,9 +1321,7 @@ Router3#
 ```
 
 # ЭТАП 9. SSH + ограничение доступа (VTY ACL)
-## 9.1 Включаем SSH (вводить на ВСЕХ роутерах и свитчах)
-
-Повторяем на всех устройствах:
+## 9.1 Включаем SSH на всех роутерах и свитчах
 ```
 Router1#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -1370,7 +1350,7 @@ Building configuration...
 Router1#
 ```
 ## 9.2 Ограничиваем SSH только с ADMIN VLAN (VTY ACL)
-Повторяем на всех устройствах:
+На всех устройствах:
 ```
 Router1#conf t
 Enter configuration commands, one per line.  End with CNTL/Z.
@@ -1396,7 +1376,6 @@ Router1#
 
 # Этап 10. Проверка работоспособности
 ## 10.1 L2: VLAN / Trunk / EtherChannel / STP
-
 #### Switch1/2/3:
 ```
 Switch1>en
@@ -1824,7 +1803,6 @@ Gi0/1            Desg FWD 4         128.25   P2p
 Switch6#
 ```
 ## 10.2 OSPFv2: соседство и маршруты
-
 #### R1–R4:
 ```
 Router1#show ip ospf neighbor
@@ -1984,7 +1962,6 @@ Routing Protocol is "ospf 1"
   Distance: (default is 110)
 ```
 ## 10.3 DHCP: выдача адресов + relay
-
 #### Router2 (DHCP сервер):
 ```
 Router2#show ip dhcp pool

@@ -133,6 +133,7 @@ WEB: 192.168.12.20/24, GW 192.168.12.1
 * Router1 outside: 203.0.113.2/24
 * InternetServer: 203.0.113.10/24, GW 203.0.113.2
 
+## 1.10 Схема топологии сети
 <img width="1125" height="746" alt="image" src="https://github.com/user-attachments/assets/b22a9776-b79d-49f7-acaf-ec80242c23ba" />
 
 

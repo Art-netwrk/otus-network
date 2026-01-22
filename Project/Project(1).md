@@ -77,7 +77,7 @@
 * VLAN20 USERS: 192.168.31.0/24, GW 192.168.31.1
 * VLAN99 MGMT: 192.168.32.0/24, GW 192.168.32.1
 
-## 1.6 Transit VLAN 999 (OSPF между роутерами)
+## 1.7 Transit VLAN 999 (OSPF между роутерами)
 ### Сеть: 192.168.255.0/28 (255.255.255.240)
 * Router1: 192.168.255.1/28
 * Router2: 192.168.255.2/28
@@ -89,11 +89,11 @@
 * Switch3: 192.168.255.13/28
 * Default-gateway на S1/S2/S3: 192.168.255.1
   
-## 1.7 Серверы HQ (VLAN30) — статикой
+## 1.8 Серверы HQ (VLAN30) — статикой
 * DNS: 192.168.12.10/24, GW 192.168.12.1
 WEB: 192.168.12.20/24, GW 192.168.12.1
 
-## 1.7 Внешняя сеть для NAT
+## 1.9 Внешняя сеть для NAT
 ### Сеть: 203.0.113.0/24
 * Router1 outside: 203.0.113.2/24
 * InternetServer: 203.0.113.10/24, GW 203.0.113.2
@@ -1077,7 +1077,7 @@ Building configuration...
 [OK]
 ```
 
-### Этап 6. Router1 (EDGE): trunk VLAN999 + внешняя сеть + OSPF + NAT + WAN ACL
+# Этап 6. Router1 (EDGE): trunk VLAN999 + внешняя сеть + OSPF + NAT + WAN ACL
 ```
 Router>en
 Router#conf t
@@ -1355,3 +1355,569 @@ Router1#
 ```
 
 В итоге: SSH на любое устройство будет работать только если подключиться с ПК из VLAN10 (ADMIN) на любой площадке.
+
+# Этап 10. Проверка работоспособности
+## 10.1 L2: VLAN / Trunk / EtherChannel / STP
+
+#### Switch1/2/3:
+```
+Switch1>en
+Password: 
+Switch1#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+Number of channel-groups in use: 2
+Number of aggregators:           2
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+12     Po12(SU)           LACP   Fa0/1(P) Fa0/2(P) 
+13     Po13(SU)           LACP   Fa0/3(P) Fa0/4(P) 
+Switch1#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po12        on           802.1q         trunking      999
+Po13        on           802.1q         trunking      999
+Gig0/1      on           802.1q         trunking      999
+
+Port        Vlans allowed on trunk
+Po12        999
+Po13        999
+Gig0/1      999
+
+Port        Vlans allowed and active in management domain
+Po12        999
+Po13        999
+Gig0/1      999
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po12        999
+Po13        999
+Gig0/1      999
+
+Switch1#show spanning-tree vlan 999
+VLAN0999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    25575
+             Address     00D0.9799.12AA
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    25575  (priority 24576 sys-id-ext 999)
+             Address     00D0.9799.12AA
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi0/1            Desg FWD 4         128.25   P2p
+Gi0/2            Desg FWD 4         128.26   P2p
+Po13             Desg FWD 9         128.28   Shr
+Po12             Desg FWD 9         128.27   Shr
+
+Switch1#show cdp neighbors
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
+Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
+Router2      Gig 0/2          159            R       ISR4300     Gig 0/0/0
+Router1      Gig 0/1          160            R       ISR4300     Gig 0/0/0
+Switch3      Por 13           160                    3560        Fas 0/1
+Switch3      Por 13           159                    3560        Fas 0/2
+Router1      Gig 0/1          160            R       ISR4300     Gig 0/0/0.999
+Switch3      Por 13           160                    3560        Por 13
+Switch2      Por 12           160                    3560        Fas 0/1
+Switch2      Por 12           160                    3560        Fas 0/2
+Switch2      Por 12           160                    3560        Por 12
+Switch1#
+```
+```
+Switch2#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+12     Po12(SU)           LACP   Fa0/1(P) Fa0/2(P) 
+23     Po23(SU)           LACP   Fa0/3(P) Fa0/4(P) 
+Switch2#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po12        on           802.1q         trunking      999
+Po23        on           802.1q         trunking      999
+
+Port        Vlans allowed on trunk
+Po12        999
+Po23        999
+
+Port        Vlans allowed and active in management domain
+Po12        999
+Po23        999
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po12        999
+Po23        999
+
+Switch2#show spanning-tree vlan 999
+VLAN0999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    25575
+             Address     00D0.9799.12AA
+             Cost        9
+             Port        27(Port-channel12)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    29671  (priority 28672 sys-id-ext 999)
+             Address     000B.BE6C.D00D
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi0/1            Desg FWD 4         128.25   P2p
+Po12             Root FWD 9         128.27   Shr
+Po23             Desg FWD 9         128.28   Shr
+
+Switch2#show cdp neighbors
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
+Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
+Router3      Gig 0/1          133            R       ISR4300     Gig 0/0/0
+Switch1      Por 12           133                    3560        Fas 0/1
+Switch1      Por 12           133                    3560        Fas 0/2
+Switch1      Por 12           133                    3560        Por 12
+Switch3      Por 23           133                    3560        Fas 0/3
+Switch3      Por 23           133                    3560        Fas 0/4
+Switch3      Por 23           133                    3560        Por 23
+Switch2#
+```
+```
+Switch3#show etherchannel summary
+Flags:  D - down        P - in port-channel
+        I - stand-alone s - suspended
+        H - Hot-standby (LACP only)
+        R - Layer3      S - Layer2
+        U - in use      f - failed to allocate aggregator
+        u - unsuitable for bundling
+        w - waiting to be aggregated
+        d - default port
+
+
+Number of channel-groups in use: 2
+Number of aggregators:           2
+
+Group  Port-channel  Protocol    Ports
+------+-------------+-----------+----------------------------------------------
+
+13     Po13(SU)           LACP   Fa0/1(P) Fa0/2(P) 
+23     Po23(SU)           LACP   Fa0/3(P) Fa0/4(P) 
+Switch3#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Po13        on           802.1q         trunking      999
+Po23        on           802.1q         trunking      999
+
+Port        Vlans allowed on trunk
+Po13        999
+Po23        999
+
+Port        Vlans allowed and active in management domain
+Po13        999
+Po23        999
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Po13        999
+Po23        none
+
+Switch3#show spanning-tree vlan 999
+VLAN0999
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    25575
+             Address     00D0.9799.12AA
+             Cost        9
+             Port        27(Port-channel13)
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    33767  (priority 32768 sys-id-ext 999)
+             Address     0004.9A98.5207
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Gi0/1            Desg FWD 4         128.25   P2p
+Po13             Root FWD 9         128.27   Shr
+Po23             Altn BLK 9         128.28   Shr
+
+Switch3#show cdp neighbors
+Capability Codes: R - Router, T - Trans Bridge, B - Source Route Bridge
+                  S - Switch, H - Host, I - IGMP, r - Repeater, P - Phone
+Device ID    Local Intrfce   Holdtme    Capability   Platform    Port ID
+Switch1      Por 13           121                    3560        Fas 0/3
+Switch1      Por 13           121                    3560        Fas 0/4
+Switch1      Por 13           121                    3560        Por 13
+Switch2      Por 23           121                    3560        Fas 0/3
+Switch2      Por 23           121                    3560        Fas 0/4
+Switch2      Por 23           121                    3560        Por 23
+Switch3#
+```
+
+#### Switch4/5/6:
+```
+Switch4#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/5, Fa0/6, Fa0/7, Fa0/8
+                                                Fa0/9, Fa0/10, Fa0/11, Fa0/12
+                                                Fa0/13, Fa0/14, Fa0/15, Fa0/16
+                                                Fa0/17, Fa0/18, Fa0/19, Fa0/20
+                                                Fa0/21, Fa0/22, Fa0/23, Fa0/24
+                                                Gig0/2
+10   ADMIN                            active    Fa0/1
+20   USERS                            active    Fa0/2
+30   SERVERS                          active    Fa0/3, Fa0/4
+99   MGMT                             active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+Switch4#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Gig0/1      on           802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gig0/1      10,20,30,99
+
+Port        Vlans allowed and active in management domain
+Gig0/1      10,20,30,99
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gig0/1      10,20,30,99
+
+Switch4#show spanning-tree vlan 10
+VLAN0010
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32778
+             Address     0001.42CC.0C93
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     0001.42CC.0C93
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/1            Desg FWD 19        128.1    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch4#show spanning-tree vlan 20
+VLAN0020
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32788
+             Address     0001.42CC.0C93
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32788  (priority 32768 sys-id-ext 20)
+             Address     0001.42CC.0C93
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Desg FWD 19        128.2    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch4#
+```
+```
+Switch5#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/4, Fa0/5, Fa0/6, Fa0/7
+                                                Fa0/8, Fa0/9, Fa0/10, Fa0/11
+                                                Fa0/12, Fa0/13, Fa0/14, Fa0/15
+                                                Fa0/16, Fa0/17, Fa0/18, Fa0/19
+                                                Fa0/20, Fa0/21, Fa0/22, Fa0/23
+                                                Fa0/24, Gig0/2
+10   ADMIN                            active    Fa0/1
+20   USERS                            active    Fa0/2
+40   GUEST                            active    Fa0/3
+99   MGMT                             active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+Switch5#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Gig0/1      on           802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gig0/1      10,20,40,99
+
+Port        Vlans allowed and active in management domain
+Gig0/1      10,20,40,99
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gig0/1      10,20,40,99
+
+Switch5#show spanning-tree vlan 10
+VLAN0010
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32778
+             Address     0006.2A1E.8574
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     0006.2A1E.8574
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/1            Desg FWD 19        128.1    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch5#show spanning-tree vlan 20
+VLAN0020
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32788
+             Address     0006.2A1E.8574
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32788  (priority 32768 sys-id-ext 20)
+             Address     0006.2A1E.8574
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Desg FWD 19        128.2    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch5#
+```
+```
+Switch6#show vlan brief
+
+VLAN Name                             Status    Ports
+---- -------------------------------- --------- -------------------------------
+1    default                          active    Fa0/3, Fa0/4, Fa0/5, Fa0/6
+                                                Fa0/7, Fa0/8, Fa0/9, Fa0/10
+                                                Fa0/11, Fa0/12, Fa0/13, Fa0/14
+                                                Fa0/15, Fa0/16, Fa0/17, Fa0/18
+                                                Fa0/19, Fa0/20, Fa0/21, Fa0/22
+                                                Fa0/23, Fa0/24, Gig0/2
+10   ADMIN                            active    Fa0/1
+20   USERS                            active    Fa0/2
+99   MGMT                             active    
+1002 fddi-default                     active    
+1003 token-ring-default               active    
+1004 fddinet-default                  active    
+1005 trnet-default                    active    
+Switch6#show interfaces trunk
+Port        Mode         Encapsulation  Status        Native vlan
+Gig0/1      on           802.1q         trunking      1
+
+Port        Vlans allowed on trunk
+Gig0/1      10,20,99
+
+Port        Vlans allowed and active in management domain
+Gig0/1      10,20,99
+
+Port        Vlans in spanning tree forwarding state and not pruned
+Gig0/1      10,20,99
+
+Switch6#show spanning-tree vlan 10
+VLAN0010
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32778
+             Address     00E0.8F12.DA21
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32778  (priority 32768 sys-id-ext 10)
+             Address     00E0.8F12.DA21
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/1            Desg FWD 19        128.1    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch6#show spanning-tree vlan 20
+VLAN0020
+  Spanning tree enabled protocol rstp
+  Root ID    Priority    32788
+             Address     00E0.8F12.DA21
+             This bridge is the root
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+
+  Bridge ID  Priority    32788  (priority 32768 sys-id-ext 20)
+             Address     00E0.8F12.DA21
+             Hello Time  2 sec  Max Age 20 sec  Forward Delay 15 sec
+             Aging Time  20
+
+Interface        Role Sts Cost      Prio.Nbr Type
+---------------- ---- --- --------- -------- --------------------------------
+Fa0/2            Desg FWD 19        128.2    P2p
+Gi0/1            Desg FWD 4         128.25   P2p
+
+Switch6#
+```
+## 10.2 OSPFv2: соседство и маршруты
+
+#### R1–R4:
+```
+Router1#show ip ospf neighbor
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   2WAY/DROTHER    00:00:38    192.168.255.2   GigabitEthernet0/0/0.999
+4.4.4.4           1   FULL/DR         00:00:38    192.168.255.4   GigabitEthernet0/0/0.999
+3.3.3.3           1   FULL/BDR        00:00:38    192.168.255.3   GigabitEthernet0/0/0.999
+Router1#show ip route ospf
+O    192.168.10.0 [110/2] via 192.168.255.2, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.11.0 [110/2] via 192.168.255.2, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.12.0 [110/2] via 192.168.255.2, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.13.0 [110/2] via 192.168.255.2, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.20.0 [110/2] via 192.168.255.3, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.21.0 [110/2] via 192.168.255.3, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.22.0 [110/2] via 192.168.255.3, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.23.0 [110/2] via 192.168.255.3, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.30.0 [110/2] via 192.168.255.4, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.31.0 [110/2] via 192.168.255.4, 00:16:53, GigabitEthernet0/0/0.999
+O    192.168.32.0 [110/2] via 192.168.255.4, 00:16:53, GigabitEthernet0/0/0.999
+
+Router1#show ip protocols
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 1.1.1.1
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    203.0.113.0 0.0.0.255 area 0
+    192.168.255.0 0.0.0.15 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:17:07
+    2.2.2.2              110      00:17:07
+    3.3.3.3              110      00:17:07
+    4.4.4.4              110      00:17:07
+  Distance: (default is 110)
+```
+```
+Router2#show ip ospf neighbor
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+4.4.4.4           1   FULL/DR         00:00:30    192.168.255.4   GigabitEthernet0/0/0
+3.3.3.3           1   FULL/BDR        00:00:30    192.168.255.3   GigabitEthernet0/0/0
+1.1.1.1           1   2WAY/DROTHER    00:00:30    192.168.255.1   GigabitEthernet0/0/0
+Router2#show ip route ospf
+O    192.168.20.0 [110/2] via 192.168.255.3, 00:18:01, GigabitEthernet0/0/0
+O    192.168.21.0 [110/2] via 192.168.255.3, 00:18:01, GigabitEthernet0/0/0
+O    192.168.22.0 [110/2] via 192.168.255.3, 00:18:01, GigabitEthernet0/0/0
+O    192.168.23.0 [110/2] via 192.168.255.3, 00:18:01, GigabitEthernet0/0/0
+O    192.168.30.0 [110/2] via 192.168.255.4, 00:18:01, GigabitEthernet0/0/0
+O    192.168.31.0 [110/2] via 192.168.255.4, 00:18:01, GigabitEthernet0/0/0
+O    192.168.32.0 [110/2] via 192.168.255.4, 00:18:01, GigabitEthernet0/0/0
+O    203.0.113.0 [110/2] via 192.168.255.1, 00:18:01, GigabitEthernet0/0/0
+
+Router2#show ip protocols
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 2.2.2.2
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    192.168.10.0 0.0.0.255 area 0
+    192.168.11.0 0.0.0.255 area 0
+    192.168.12.0 0.0.0.255 area 0
+    192.168.13.0 0.0.0.255 area 0
+    192.168.255.0 0.0.0.15 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:18:15
+    2.2.2.2              110      00:18:15
+    3.3.3.3              110      00:18:15
+    4.4.4.4              110      00:18:15
+  Distance: (default is 110)
+```
+Router3#show ip ospf neighbor
+
+
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DROTHER    00:00:31    192.168.255.2   GigabitEthernet0/0/0
+4.4.4.4           1   FULL/DR         00:00:31    192.168.255.4   GigabitEthernet0/0/0
+1.1.1.1           1   FULL/DROTHER    00:00:31    192.168.255.1   GigabitEthernet0/0/0
+Router3#show ip route ospf
+O    192.168.10.0 [110/2] via 192.168.255.2, 00:19:18, GigabitEthernet0/0/0
+O    192.168.11.0 [110/2] via 192.168.255.2, 00:19:18, GigabitEthernet0/0/0
+O    192.168.12.0 [110/2] via 192.168.255.2, 00:19:18, GigabitEthernet0/0/0
+O    192.168.13.0 [110/2] via 192.168.255.2, 00:19:18, GigabitEthernet0/0/0
+O    192.168.30.0 [110/2] via 192.168.255.4, 00:19:18, GigabitEthernet0/0/0
+O    192.168.31.0 [110/2] via 192.168.255.4, 00:19:18, GigabitEthernet0/0/0
+O    192.168.32.0 [110/2] via 192.168.255.4, 00:19:18, GigabitEthernet0/0/0
+O    203.0.113.0 [110/2] via 192.168.255.1, 00:19:18, GigabitEthernet0/0/0
+
+Router3#show ip protocols
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 3.3.3.3
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    192.168.20.0 0.0.0.255 area 0
+    192.168.21.0 0.0.0.255 area 0
+    192.168.22.0 0.0.0.255 area 0
+    192.168.23.0 0.0.0.255 area 0
+    192.168.255.0 0.0.0.15 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:19:32
+    2.2.2.2              110      00:19:32
+    3.3.3.3              110      00:19:32
+    4.4.4.4              110      00:19:32
+  Distance: (default is 110)
+```
+
+
+
+
+
+
+
+
+
+
+
+
+
+

@@ -2117,6 +2117,116 @@ Extended IP access list WAN_IN
     permit tcp any host 203.0.113.2 eq 443
     deny ip any any
 ```
+#### Тест:
+#### ping 203.0.113.10 (InternetServer)
 <img width="434" height="357" alt="image" src="https://github.com/user-attachments/assets/e6512987-2636-483f-b487-61c97e2bf5af" />
+
+#### С InternetServer открыть браузер на http://203.0.113.2 (проверка port-forward на WEB)
+<img width="695" height="301" alt="image" src="https://github.com/user-attachments/assets/0ea9db99-7dd1-43f0-bde9-0ef77cfe82e3" />
+
+## 10.5 ACL: GUEST ограничен, но интернет/DNS работает
+#### R3:
+```
+Router3#show access-lists GUEST_IN
+Extended IP access list GUEST_IN
+    permit udp any eq bootpc any eq bootps (3 match(es))
+    permit udp any eq bootps any eq bootpc
+    permit udp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq domain
+    permit tcp 192.168.22.0 0.0.0.255 host 192.168.12.10 eq domain
+    permit tcp 192.168.22.0 0.0.0.255 host 203.0.113.10 eq www
+    permit tcp 192.168.22.0 0.0.0.255 host 203.0.113.10 eq 443
+    permit icmp 192.168.22.0 0.0.0.255 host 203.0.113.10
+    deny ip 192.168.22.0 0.0.0.255 192.168.0.0 0.0.255.255
+    permit ip 192.168.22.0 0.0.0.255 any
+
+Router3#show ip interface g0/0/1.40
+GigabitEthernet0/0/1.40 is up, line protocol is up (connected)
+  Internet address is 192.168.22.1/24
+  Broadcast address is 255.255.255.255
+  Address determined by setup command
+  MTU is 1500 bytes
+  Helper address is 192.168.255.2
+  Directed broadcast forwarding is disabled
+  Outgoing access list is not set
+  Inbound  access list is GUEST_IN
+  Proxy ARP is enabled
+  Security level is default
+  Split horizon is enabled
+  ICMP redirects are always sent
+  ICMP unreachables are always sent
+  ICMP mask replies are never sent
+  IP fast switching is disabled
+  IP fast switching on the same interface is disabled
+  IP Flow switching is disabled
+  IP Fast switching turbo vector
+  IP multicast fast switching is disabled
+  IP multicast distributed fast switching is disabled
+  Router Discovery is disabled
+  IP output packet accounting is disabled
+  IP access violation accounting is disabled
+  TCP/IP header compression is disabled
+  RTP/IP header compression is disabled
+  Probe proxy name replies are disabled
+  Policy routing is disabled
+  Network address translation is disabled
+  BGP Policy Mapping is disabled
+  Input features: MCI Check
+  WCCP Redirect outbound is disabled
+  WCCP Redirect inbound is disabled
+  WCCP Redirect exclude is disabled
+```
+#### Тест с Laptop (VLAN40):
+ * ping до внутренних 192.168.x.x, пример 192.168.12.10 - запрещён
+ * ping до 203.0.113.10 - работает
+<img width="436" height="526" alt="image" src="https://github.com/user-attachments/assets/5339d507-5bf4-4dae-a629-b29efb16aa97" />
+
+## 10.6 SSH: доступ только с ADMIN VLAN
+```
+Switch4#show ip ssh
+SSH Enabled - version 2.0
+Authentication timeout: 120 secs; Authentication retries: 3
+Switch4#show running-config | section line vty
+line vty 0 4
+ access-class VTY_ADMIN_ONLY in
+ login local
+ transport input ssh
+line vty 5 15
+ login
+Switch4#show access-lists VTY_ADMIN_ONLY
+Standard IP access list VTY_ADMIN_ONLY
+    permit 192.168.10.0 0.0.0.255
+    permit 192.168.20.0 0.0.0.255
+    permit 192.168.30.0 0.0.0.255
+    deny any
+```
+#### Тест:
+#### С ПК ADMIN доступ есть, с ПК USER доступ закрыт.
+
+<img width="367" height="213" alt="image" src="https://github.com/user-attachments/assets/97f67ae1-8623-4bdf-9402-37b3dac90ce0" />
+<img width="357" height="159" alt="image" src="https://github.com/user-attachments/assets/85e9f87b-1c2e-4951-9953-06b9775eb223" />
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
 
 

@@ -1868,9 +1868,8 @@ Routing Protocol is "ospf 1"
     4.4.4.4              110      00:18:15
   Distance: (default is 110)
 ```
+```
 Router3#show ip ospf neighbor
-
-
 Neighbor ID     Pri   State           Dead Time   Address         Interface
 2.2.2.2           1   FULL/DROTHER    00:00:31    192.168.255.2   GigabitEthernet0/0/0
 4.4.4.4           1   FULL/DR         00:00:31    192.168.255.4   GigabitEthernet0/0/0
@@ -1886,7 +1885,6 @@ O    192.168.32.0 [110/2] via 192.168.255.4, 00:19:18, GigabitEthernet0/0/0
 O    203.0.113.0 [110/2] via 192.168.255.1, 00:19:18, GigabitEthernet0/0/0
 
 Router3#show ip protocols
-
 Routing Protocol is "ospf 1"
   Outgoing update filter list for all interfaces is not set 
   Incoming update filter list for all interfaces is not set 
@@ -1907,17 +1905,218 @@ Routing Protocol is "ospf 1"
     4.4.4.4              110      00:19:32
   Distance: (default is 110)
 ```
+```
+Router4#show ip ospf neighbor
 
 
+Neighbor ID     Pri   State           Dead Time   Address         Interface
+2.2.2.2           1   FULL/DROTHER    00:00:31    192.168.255.2   GigabitEthernet0/0/0
+3.3.3.3           1   FULL/BDR        00:00:31    192.168.255.3   GigabitEthernet0/0/0
+1.1.1.1           1   FULL/DROTHER    00:00:31    192.168.255.1   GigabitEthernet0/0/0
+Router4#show ip route ospf
+O    192.168.10.0 [110/2] via 192.168.255.2, 00:23:35, GigabitEthernet0/0/0
+O    192.168.11.0 [110/2] via 192.168.255.2, 00:23:35, GigabitEthernet0/0/0
+O    192.168.12.0 [110/2] via 192.168.255.2, 00:23:35, GigabitEthernet0/0/0
+O    192.168.13.0 [110/2] via 192.168.255.2, 00:23:35, GigabitEthernet0/0/0
+O    192.168.20.0 [110/2] via 192.168.255.3, 00:23:35, GigabitEthernet0/0/0
+O    192.168.21.0 [110/2] via 192.168.255.3, 00:23:35, GigabitEthernet0/0/0
+O    192.168.22.0 [110/2] via 192.168.255.3, 00:23:35, GigabitEthernet0/0/0
+O    192.168.23.0 [110/2] via 192.168.255.3, 00:23:35, GigabitEthernet0/0/0
+O    203.0.113.0 [110/2] via 192.168.255.1, 00:23:35, GigabitEthernet0/0/0
 
+Router4#show ip protocols
 
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set 
+  Incoming update filter list for all interfaces is not set 
+  Router ID 4.4.4.4
+  Number of areas in this router is 1. 1 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+    192.168.30.0 0.0.0.255 area 0
+    192.168.31.0 0.0.0.255 area 0
+    192.168.32.0 0.0.0.255 area 0
+    192.168.255.0 0.0.0.15 area 0
+  Routing Information Sources:  
+    Gateway         Distance      Last Update 
+    1.1.1.1              110      00:23:43
+    2.2.2.2              110      00:23:43
+    3.3.3.3              110      00:23:43
+    4.4.4.4              110      00:23:43
+  Distance: (default is 110)
+```
+## 10.3 DHCP: выдача адресов + relay
 
+#### Router2 (DHCP сервер):
+```
+Router2#show ip dhcp pool
 
+Pool HQ_ADMIN :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
 
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.10.1         192.168.10.1     - 192.168.10.254    1    / 11    / 254
 
+Pool HQ_USERS :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
 
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.11.1         192.168.11.1     - 192.168.11.254    1    / 11    / 254
 
+Pool BR1_ADMIN :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
 
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.20.1         192.168.20.1     - 192.168.20.254    1    / 11    / 254
 
+Pool BR1_USERS :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
+
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.21.1         192.168.21.1     - 192.168.21.254    1    / 11    / 254
+
+Pool BR1_GUEST :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
+
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.22.1         192.168.22.1     - 192.168.22.254    1    / 11    / 254
+
+Pool BR2_ADMIN :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
+
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.30.1         192.168.30.1     - 192.168.30.254    1    / 11    / 254
+
+Pool BR2_USERS :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Excluded addresses             : 11
+ Pending event                  : none
+
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.31.1         192.168.31.1     - 192.168.31.254    1    / 11    / 254
+
+Pool HQ_SERVERS :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 0
+ Excluded addresses             : 11
+ Pending event                  : none
+
+ 1 subnet is currently in the pool
+ Current index        IP address range                    Leased/Excluded/Total
+ 192.168.12.1         192.168.12.1     - 192.168.12.254    0    / 11    / 254
+Router2#show ip dhcp binding
+IP address       Client-ID/              Lease expiration        Type
+                 Hardware address
+192.168.10.31    00E0.8FCA.B709           --                     Automatic
+192.168.11.31    00E0.8F3A.C3E4           --                     Automatic
+192.168.20.33    0006.2A3D.2427           --                     Automatic
+192.168.21.33    0090.0C28.935C           --                     Automatic
+192.168.22.31    00D0.BA2E.7B8A           --                     Automatic
+192.168.30.31    0003.E4B3.BAB3           --                     Automatic
+192.168.31.31    0030.A39B.29E7           --                     Automatic
+```
+#### Router3/Router4 (relay):
+```
+Router3#show running-config | include helper-address
+ ip helper-address 192.168.255.2
+ ip helper-address 192.168.255.2
+ ip helper-address 192.168.255.2
+ ip helper-address 192.168.255.2
+Router3#show ip interface brief | include 0/0/1
+GigabitEthernet0/0/1   unassigned      YES unset  up                    up 
+GigabitEthernet0/0/1.10192.168.20.1    YES manual up                    up 
+GigabitEthernet0/0/1.20192.168.21.1    YES manual up                    up 
+GigabitEthernet0/0/1.40192.168.22.1    YES manual up                    up 
+GigabitEthernet0/0/1.99192.168.23.1    YES manual up                    up 
+```
+```
+Router4#show running-config | include helper-address
+ ip helper-address 192.168.255.2
+ ip helper-address 192.168.255.2
+ ip helper-address 192.168.255.2
+Router4#show ip interface brief | include 0/0/1
+GigabitEthernet0/0/1   unassigned      YES unset  up                    up 
+GigabitEthernet0/0/1.10192.168.30.1    YES manual up                    up 
+GigabitEthernet0/0/1.20192.168.31.1    YES manual up                    up 
+GigabitEthernet0/0/1.99192.168.32.1    YES manual up                    up
+```
+#### ПК/Ноутбуки получают IP/MASK/GW/DNS:
+<img width="367" height="294" alt="image" src="https://github.com/user-attachments/assets/c350c8cd-bc9c-4010-b1e0-1e81cd07f9f0" />
+<img width="353" height="291" alt="image" src="https://github.com/user-attachments/assets/60833cd2-9f0c-48c3-a00d-db4f4ab74784" />
+<img width="359" height="290" alt="image" src="https://github.com/user-attachments/assets/9878d883-c449-44fe-9aca-0e1a4467f87f" />
+<img width="346" height="292" alt="image" src="https://github.com/user-attachments/assets/48372d5a-3d7c-44f4-8b0a-6c0ea02a7da6" />
+
+## 10.4 NAT: PAT + port-forward
+#### R1:
+```
+Router1#show ip nat statistics
+Total translations: 2 (2 static, 0 dynamic, 2 extended)
+Outside Interfaces: GigabitEthernet0/0/1
+Inside Interfaces: GigabitEthernet0/0/0.999
+Hits: 0  Misses: 0
+Expired translations: 0
+Dynamic mappings:
+Router1#show ip nat translations
+Pro  Inside global     Inside local       Outside local      Outside global
+tcp 203.0.113.2:443    192.168.12.20:443  ---                ---
+tcp 203.0.113.2:80     192.168.12.20:80   ---                ---
+
+Router1#show access-lists 1
+Standard IP access list 1
+    permit 192.168.0.0 0.0.255.255
+
+Router1#show access-lists WAN_IN
+Extended IP access list WAN_IN
+    permit icmp any host 203.0.113.2 echo-reply
+    permit udp any host 203.0.113.2 eq domain
+    permit udp any host 203.0.113.2 gt 1023
+    permit tcp any host 203.0.113.2 established
+    permit tcp any host 203.0.113.2 eq www
+    permit tcp any host 203.0.113.2 eq 443
+    deny ip any any
+```
+<img width="434" height="357" alt="image" src="https://github.com/user-attachments/assets/e6512987-2636-483f-b487-61c97e2bf5af" />
 
 

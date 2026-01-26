@@ -5,7 +5,7 @@
 <img width="694" height="241" alt="image" src="https://github.com/user-attachments/assets/b2c6c24d-eb9e-4929-96b2-9cbe5c6929e4" />
 
 
-**Таблица адресации**
+### Таблица адресации
 
 | Устройство | Интерфейс | IP-адрес | Маска подсети |
 |---|---|---|---|

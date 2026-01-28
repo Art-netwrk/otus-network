@@ -48,7 +48,7 @@ en
 conf t
 no ip domain-lookup
 hostname R1
-banner motd #####R1 Router ############
+banner motd "ADMIN ONLY"
 line  0
 logging synchronous
 password cisco
@@ -93,7 +93,7 @@ en
 conf t
 no ip domain-lookup
 hostname S1
-banner motd "######## S1 Switch ########"
+banner motd "ADMIN ONLY"
 line  0
 logging synchronous
 password cisco
@@ -120,7 +120,7 @@ en
 conf t
 no ip domain-lookup
 hostname S2
-banner motd "######## S2 Switch ########"
+banner motd "ADMIN ONLY"
 line  0
 logging synchronous
 password cisco

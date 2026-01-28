@@ -1,7 +1,5 @@
 # Лабораторная работа - Настройка протоколов CDP, LLDP и NTP
 
-## Топология
-
 <img width="644" height="123" alt="image" src="https://github.com/user-attachments/assets/7e3f5742-b96e-4a2d-a908-c64068a9de0a" />
 
 ## Таблица адресации сетевой топологии.

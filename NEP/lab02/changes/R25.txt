@@ -1,0 +1,39 @@
+enable
+configure terminal
+ip route 10.254.0.50 255.255.255.255 Ethernet0/3 10.254.0.50
+ip route 10.254.0.50 255.255.255.255 Null0 254
+ip route 10.254.0.54 255.255.255.255 Ethernet0/2 10.254.0.34
+ip route 10.254.0.54 255.255.255.255 Null0 254
+ip route 10.255.0.26 255.255.255.255 Ethernet0/2 10.254.0.34
+ip route 10.255.0.27 255.255.255.255 Ethernet0/1 10.254.0.46
+ip route 10.254.0.52 255.255.255.252 Ethernet0/2 10.254.0.34
+ip sla 28
+ icmp-echo 10.254.0.50 source-interface Ethernet0/3
+ threshold 500
+ timeout 1000
+ frequency 5
+exit
+ip sla schedule 28 life forever start-time now
+track 28 ip sla 28 reachability
+ delay down 5 up 10
+exit
+ip sla 29
+ icmp-echo 10.254.0.54 source-interface Ethernet0/2
+ threshold 500
+ timeout 1000
+ frequency 5
+exit
+ip sla schedule 29 life forever start-time now
+track 29 ip sla 29 reachability
+ delay down 5 up 10
+exit
+ip route 10.30.10.0 255.255.255.0 Ethernet0/3 10.254.0.50 track 28
+ip route 10.30.10.0 255.255.255.0 Ethernet0/2 10.254.0.34 10 track 29
+ip route 10.30.20.0 255.255.255.0 Ethernet0/3 10.254.0.50 track 28
+ip route 10.30.20.0 255.255.255.0 Ethernet0/2 10.254.0.34 10 track 29
+ip route 10.30.99.0 255.255.255.0 Ethernet0/3 10.254.0.50 track 28
+ip route 10.30.99.0 255.255.255.0 Ethernet0/2 10.254.0.34 10 track 29
+ip route 10.255.0.28 255.255.255.255 Ethernet0/3 10.254.0.50 track 28
+ip route 10.255.0.28 255.255.255.255 Ethernet0/2 10.254.0.34 10 track 29
+end
+write memory

@@ -1,0 +1,5 @@
+enable
+configure terminal
+ip route 0.0.0.0 0.0.0.0 Ethernet0/0 10.254.0.45
+end
+write memory

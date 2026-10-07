@@ -1,0 +1,69 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+ip prefix-list OSPF-NO101-V4 seq 5 deny 10.10.0.8/30 le 32
+ip prefix-list OSPF-NO101-V4 seq 10 deny 10.255.0.19/32
+ip prefix-list OSPF-NO101-V4 seq 100 permit 0.0.0.0/0 le 32
+ipv6 prefix-list OSPF-NO101-V6 seq 5 deny fd10:10:10:3::/64 le 128
+ipv6 prefix-list OSPF-NO101-V6 seq 10 deny fd10:10:10:ffff::19/128
+ipv6 prefix-list OSPF-NO101-V6 seq 100 permit ::/0 le 128
+router ospf 1
+ router-id 10.255.0.15
+ passive-interface default
+ area 102 filter-list prefix OSPF-NO101-V4 in
+exit
+router ospfv3 1
+ router-id 10.255.0.15
+ address-family ipv6 unicast
+  passive-interface default
+  area 102 filter-list prefix OSPF-NO101-V6 in
+ exit-address-family
+exit
+interface Ethernet0/0
+ ipv6 address fd10:10:10:4::1/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 0
+ ospfv3 1 ipv6 area 0
+ no shutdown
+exit
+interface Ethernet0/1
+ ipv6 address fd10:10:10:5::1/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 0
+ ospfv3 1 ipv6 area 0
+ no shutdown
+exit
+interface Ethernet0/3
+ ipv6 address fd10:10:10:6::1/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 102
+ ospfv3 1 ipv6 area 102
+ no shutdown
+exit
+interface Loopback0
+ ipv6 address fd10:10:10:ffff::15/128
+ ip ospf 1 area 0
+ ospfv3 1 ipv6 area 0
+ no shutdown
+exit
+router ospf 1
+ passive-interface Loopback0
+ no passive-interface Ethernet0/0
+ no passive-interface Ethernet0/1
+ no passive-interface Ethernet0/3
+exit
+router ospfv3 1
+ address-family ipv6 unicast
+  passive-interface Loopback0
+  no passive-interface Ethernet0/0
+  no passive-interface Ethernet0/1
+  no passive-interface Ethernet0/3
+ exit-address-family
+exit
+end
+write memory

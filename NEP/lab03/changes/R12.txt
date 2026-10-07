@@ -1,0 +1,71 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+router ospf 1
+ router-id 10.255.0.12
+ passive-interface default
+exit
+router ospfv3 1
+ router-id 10.255.0.12
+ address-family ipv6 unicast
+  passive-interface default
+ exit-address-family
+exit
+interface Ethernet0/2
+ ipv6 address fd10:10:10:1::2/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 0
+ ospfv3 1 ipv6 area 0
+ no shutdown
+exit
+interface Ethernet0/3
+ ipv6 address fd10:10:10:5::2/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 0
+ ospfv3 1 ipv6 area 0
+ no shutdown
+exit
+interface Ethernet0/0
+ ipv6 address fd10:10:10:7::1/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 10
+ ospfv3 1 ipv6 area 10
+ no shutdown
+exit
+interface Ethernet0/1
+ ipv6 address fd10:10:10:8::1/64
+ ip ospf network point-to-point
+ ospfv3 network point-to-point
+ ip ospf 1 area 10
+ ospfv3 1 ipv6 area 10
+ no shutdown
+exit
+interface Loopback0
+ ipv6 address fd10:10:10:ffff::12/128
+ ip ospf 1 area 10
+ ospfv3 1 ipv6 area 10
+ no shutdown
+exit
+router ospf 1
+ passive-interface Loopback0
+ no passive-interface Ethernet0/2
+ no passive-interface Ethernet0/3
+ no passive-interface Ethernet0/0
+ no passive-interface Ethernet0/1
+exit
+router ospfv3 1
+ address-family ipv6 unicast
+  passive-interface Loopback0
+  no passive-interface Ethernet0/2
+  no passive-interface Ethernet0/3
+  no passive-interface Ethernet0/0
+  no passive-interface Ethernet0/1
+ exit-address-family
+exit
+end
+write memory

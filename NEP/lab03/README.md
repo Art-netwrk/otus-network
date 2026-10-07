@@ -23,25 +23,8 @@ R12 и R13 — пограничные маршрутизаторы ABR межд�
 Зона назначается интерфейсу: верхние интерфейсы этих маршрутизаторов входят
 в area 0, нижние и Loopback0 — в area 10. Магистраль связна через существующие линки.
 
-```mermaid
-flowchart TB
-    subgraph BACKBONE["Area 0"]
-        R14["R14"] --- R12["R12 · ABR"]
-        R14 --- R13["R13 · ABR"]
-        R15["R15"] --- R12
-        R15 --- R13
-    end
-    R14 ---|"Area 101"| R19["R19 · totally stub"]
-    R15 ---|"Area 102"| R20["R20 · фильтр на R15"]
-    subgraph ACCESS["Area 10"]
-        SW4["SW4"]
-        SW5["SW5"]
-    end
-    R12 --- SW4
-    R12 --- SW5
-    R13 --- SW4
-    R13 --- SW5
-```
+<img width="2212" height="1051" alt="image" src="https://github.com/user-attachments/assets/3b94221e-0bc5-40ca-8600-9104c3489b5a" />
+
 
 [Полная схема стенда](images/topology.png) · [Адреса и зоны интерфейсов](addressing.md).
 

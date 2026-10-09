@@ -1,0 +1,37 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+router isis TRIADA
+ net 49.0026.0000.0000.0026.00
+ is-type level-2-only
+ metric-style wide
+exit
+interface Loopback0
+ ipv6 address fd10:520:0:ffff::26/128
+ ip router isis TRIADA
+ ipv6 router isis TRIADA
+ no shutdown
+exit
+interface Ethernet0/0
+ ipv6 address fd10:520:0:3::2/64
+ ip router isis TRIADA
+ ipv6 router isis TRIADA
+ isis network point-to-point
+ isis circuit-type level-2-only
+ no shutdown
+exit
+interface Ethernet0/2
+ ipv6 address fd10:520:0:4::2/64
+ ip router isis TRIADA
+ ipv6 router isis TRIADA
+ isis network point-to-point
+ isis circuit-type level-2-only
+ no shutdown
+exit
+router isis TRIADA
+ passive-interface Loopback0
+exit
+end
+write memory

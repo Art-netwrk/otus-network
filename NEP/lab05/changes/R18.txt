@@ -1,0 +1,66 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+interface Loopback0
+ ip address 10.20.255.18 255.255.255.255
+ ipv6 address fd10:20:0:ffff::18/128
+ no shutdown
+exit
+interface Ethernet0/0
+ ipv6 address fd10:20:0:1::1/64
+ no shutdown
+exit
+interface Ethernet0/1
+ ipv6 address fd10:20:0:2::1/64
+ no shutdown
+exit
+ip route 0.0.0.0 0.0.0.0 Null0 254
+ipv6 route ::/0 Null0 254
+ip prefix-list DEFAULT-ONLY4 seq 10 permit 0.0.0.0/0
+ipv6 prefix-list DEFAULT-ONLY6 seq 10 permit ::/0
+route-map EIGRP-DEFAULT4 permit 10
+ match ip address prefix-list DEFAULT-ONLY4
+exit
+route-map EIGRP-DEFAULT6 permit 10
+ match ipv6 address prefix-list DEFAULT-ONLY6
+exit
+router eigrp SPB
+ address-family ipv4 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.18
+  network 10.20.0.0 0.0.255.255
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet0/1
+   no passive-interface
+  exit-af-interface
+  topology base
+   no auto-summary
+   redistribute static metric 10000 100 255 1 1500 route-map EIGRP-DEFAULT4
+  exit-af-topology
+  no shutdown
+ exit-address-family
+ address-family ipv6 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.18
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet0/1
+   no passive-interface
+  exit-af-interface
+  topology base
+   redistribute static metric 10000 100 255 1 1500 route-map EIGRP-DEFAULT6
+  exit-af-topology
+  no shutdown
+ exit-address-family
+exit
+end
+write memory

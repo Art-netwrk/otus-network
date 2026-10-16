@@ -1,0 +1,62 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+interface Loopback0
+ ip address 10.20.255.9 255.255.255.255
+ ipv6 address fd10:20:0:ffff::9/128
+ no shutdown
+exit
+interface Ethernet0/3
+ ipv6 address fd10:20:0:3::2/64
+ no shutdown
+exit
+interface Ethernet1/0
+ ipv6 address fd10:20:0:6::2/64
+ no shutdown
+exit
+interface Vlan10
+ ipv6 address fd10:20:0:10::1/64
+ no shutdown
+exit
+interface Vlan99
+ ipv6 address fd10:20:0:99::9/64
+ no shutdown
+exit
+router eigrp SPB
+ address-family ipv4 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.9
+  network 10.20.0.0 0.0.255.255
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/3
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet1/0
+   no passive-interface
+  exit-af-interface
+  topology base
+   no auto-summary
+  exit-af-topology
+  no shutdown
+ exit-address-family
+ address-family ipv6 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.9
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/3
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet1/0
+   no passive-interface
+  exit-af-interface
+  topology base
+  exit-af-topology
+  no shutdown
+ exit-address-family
+exit
+end
+write memory

@@ -1,0 +1,70 @@
+enable
+configure terminal
+ip routing
+ipv6 unicast-routing
+ipv6 cef
+interface Loopback0
+ ip address 10.20.255.17 255.255.255.255
+ ipv6 address fd10:20:0:ffff::17/128
+ no shutdown
+exit
+interface Ethernet0/1
+ ipv6 address fd10:20:0:2::2/64
+ no shutdown
+exit
+interface Ethernet0/0
+ ipv6 address fd10:20:0:3::1/64
+ no shutdown
+exit
+interface Ethernet0/2
+ ipv6 address fd10:20:0:4::1/64
+ no shutdown
+exit
+ip prefix-list SPB-SUMMARY4 seq 10 permit 10.20.0.0/16
+ipv6 prefix-list SPB-SUMMARY6 seq 10 permit fd10:20::/48
+router eigrp SPB
+ address-family ipv4 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.17
+  network 10.20.0.0 0.0.255.255
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/1
+   no passive-interface
+   summary-address 10.20.0.0 255.255.0.0
+  exit-af-interface
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet0/2
+   no passive-interface
+  exit-af-interface
+  topology base
+   no auto-summary
+   distribute-list prefix SPB-SUMMARY4 out Ethernet0/1
+  exit-af-topology
+  no shutdown
+ exit-address-family
+ address-family ipv6 unicast autonomous-system 2042
+  eigrp router-id 10.20.255.17
+  af-interface default
+   passive-interface
+  exit-af-interface
+  af-interface Ethernet0/1
+   no passive-interface
+   summary-address fd10:20::/48
+  exit-af-interface
+  af-interface Ethernet0/0
+   no passive-interface
+  exit-af-interface
+  af-interface Ethernet0/2
+   no passive-interface
+  exit-af-interface
+  topology base
+   distribute-list prefix-list SPB-SUMMARY6 out Ethernet0/1
+  exit-af-topology
+  no shutdown
+ exit-address-family
+exit
+end
+write memory

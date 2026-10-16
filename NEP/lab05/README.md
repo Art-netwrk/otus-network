@@ -8,7 +8,8 @@
 2. Настроить суммаризацию на R16/R17 и передачу только default к R32.
 3. Добавить IPv6 и сохранить конфигурации.
 
-![EIGRP в Санкт-Петербурге](images/eigrp-topology.png)
+<img width="1133" height="721" alt="image" src="https://github.com/user-attachments/assets/971b376f-6dca-4816-98eb-4c35fd5950d0" />
+
 
 ## Основные настройки
 

@@ -9,7 +9,8 @@
 2. Передать маршруты между R24 и R26 внутри Триады.
 3. Объявить Loopback и WAN-подсети пограничных роутеров.
 
-![BGP между автономными системами](images/bgp-topology.png)
+<img width="1997" height="1056" alt="image" src="https://github.com/user-attachments/assets/555c96a3-43a1-4243-88a6-bc64de2c129a" />
+
 
 ## Основные настройки
 

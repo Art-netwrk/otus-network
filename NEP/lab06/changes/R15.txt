@@ -1,0 +1,22 @@
+enable
+configure terminal
+ip prefix-list BGP-LOCAL4 seq 10 permit 10.255.0.15/32
+ip prefix-list BGP-LOCAL4 seq 20 permit 10.254.0.4/30
+router bgp 1001
+ bgp router-id 10.255.0.15
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 10.254.0.6 remote-as 301
+ neighbor 10.254.0.6 description R21_AS301_eBGP
+ !
+ address-family ipv4 unicast
+  network 10.255.0.15 mask 255.255.255.255
+  network 10.254.0.4 mask 255.255.255.252
+  neighbor 10.254.0.6 activate
+  neighbor 10.254.0.6 prefix-list BGP-LOCAL4 out
+  no auto-summary
+  no synchronization
+ exit-address-family
+exit
+end
+write memory

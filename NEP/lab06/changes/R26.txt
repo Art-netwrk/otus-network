@@ -1,0 +1,21 @@
+enable
+configure terminal
+router bgp 520
+ bgp router-id 10.255.0.26
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 10.254.0.42 remote-as 2042
+ neighbor 10.254.0.42 description R18_AS2042_eBGP
+ neighbor 10.254.0.29 remote-as 520
+ neighbor 10.254.0.29 description R24_AS520_iBGP
+ !
+ address-family ipv4 unicast
+  neighbor 10.254.0.42 activate
+  neighbor 10.254.0.29 activate
+  neighbor 10.254.0.29 next-hop-self
+  no auto-summary
+  no synchronization
+ exit-address-family
+exit
+end
+write memory

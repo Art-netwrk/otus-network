@@ -1,0 +1,20 @@
+enable
+configure terminal
+router bgp 101
+ bgp router-id 10.255.0.22
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 10.254.0.1 remote-as 1001
+ neighbor 10.254.0.1 description R14_AS1001_eBGP
+ neighbor 10.254.0.10 remote-as 301
+ neighbor 10.254.0.10 description R21_AS301_eBGP
+ !
+ address-family ipv4 unicast
+  neighbor 10.254.0.1 activate
+  neighbor 10.254.0.10 activate
+  no auto-summary
+  no synchronization
+ exit-address-family
+exit
+end
+write memory

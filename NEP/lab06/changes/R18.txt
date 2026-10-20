@@ -1,0 +1,28 @@
+enable
+configure terminal
+ip prefix-list BGP-LOCAL4 seq 10 permit 10.20.255.18/32
+ip prefix-list BGP-LOCAL4 seq 20 permit 10.254.0.36/30
+ip prefix-list BGP-LOCAL4 seq 30 permit 10.254.0.40/30
+router bgp 2042
+ bgp router-id 10.20.255.18
+ bgp log-neighbor-changes
+ no bgp default ipv4-unicast
+ neighbor 10.254.0.37 remote-as 520
+ neighbor 10.254.0.37 description R24_AS520_eBGP
+ neighbor 10.254.0.41 remote-as 520
+ neighbor 10.254.0.41 description R26_AS520_eBGP
+ !
+ address-family ipv4 unicast
+  network 10.20.255.18 mask 255.255.255.255
+  network 10.254.0.36 mask 255.255.255.252
+  network 10.254.0.40 mask 255.255.255.252
+  neighbor 10.254.0.37 activate
+  neighbor 10.254.0.37 prefix-list BGP-LOCAL4 out
+  neighbor 10.254.0.41 activate
+  neighbor 10.254.0.41 prefix-list BGP-LOCAL4 out
+  no auto-summary
+  no synchronization
+ exit-address-family
+exit
+end
+write memory

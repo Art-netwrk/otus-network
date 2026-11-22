@@ -1,0 +1,94 @@
+R18>en
+R18#ping 10.253.90.1 source Tunnel90
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.253.90.1, timeout is 2 seconds:
+Packet sent with a source address of 10.253.90.2
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 14/15/17 ms
+R18#show crypto ikev2 sa
+ IPv4 Crypto IKEv2  SA
+
+Tunnel-id Local                 Remote                fvrf/ivrf            Status
+2         10.255.100.18/500     10.255.100.15/500     none/none            READY
+      Encr: AES-CBC, keysize: 256, PRF: SHA256, Hash: SHA256, DH Grp:14, Auth sign: PSK, Auth verify: PSK
+      Life/Active Time: 86400/1737 sec
+
+ IPv6 Crypto IKEv2  SA
+
+R18#show crypto ipsec sa
+
+interface: Tunnel90
+    Crypto map tag: Tunnel90-head-0, local addr 10.255.100.18
+
+   protected vrf: (none)
+   local  ident (addr/mask/prot/port): (10.255.100.18/255.255.255.255/47/0)
+   remote ident (addr/mask/prot/port): (10.255.100.15/255.255.255.255/47/0)
+   current_peer 10.255.100.15 port 500
+     PERMIT, flags={origin_is_acl,}
+    #pkts encaps: 410, #pkts encrypt: 410, #pkts digest: 410
+    #pkts decaps: 415, #pkts decrypt: 415, #pkts verify: 415
+    #pkts compressed: 0, #pkts decompressed: 0
+    #pkts not compressed: 0, #pkts compr. failed: 0
+    #pkts not decompressed: 0, #pkts decompress failed: 0
+    #send errors 0, #recv errors 0
+
+     local crypto endpt.: 10.255.100.18, remote crypto endpt.: 10.255.100.15
+     plaintext mtu 1458, path mtu 1500, ip mtu 1500, ip mtu idb Ethernet0/2
+     current outbound spi: 0x8D397270(2369352304)
+     PFS (Y/N): Y, DH group: group14
+
+     inbound esp sas:
+      spi: 0x39264D18(958811416)
+        transform: esp-256-aes esp-sha256-hmac ,
+        in use settings ={Transport, }
+        conn id: 11, flow_id: SW:11, sibling_flags 80000000, crypto map: Tunnel90-head-0
+        sa timing: remaining key lifetime (k/sec): (4157486/3272)
+        IV size: 16 bytes
+        replay detection support: Y
+        Status: ACTIVE(ACTIVE)
+
+     inbound ah sas:
+
+     inbound pcp sas:
+
+     outbound esp sas:
+      spi: 0x8D397270(2369352304)
+        transform: esp-256-aes esp-sha256-hmac ,
+        in use settings ={Transport, }
+        conn id: 12, flow_id: SW:12, sibling_flags 80000000, crypto map: Tunnel90-head-0
+        sa timing: remaining key lifetime (k/sec): (4157486/3272)
+        IV size: 16 bytes
+        replay detection support: Y
+        Status: ACTIVE(ACTIVE)
+
+     outbound ah sas:
+
+     outbound pcp sas:
+R18#show ip eigrp neighbors
+EIGRP-IPv4 VR(SPB) Address-Family Neighbors for AS(2042)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+1   10.20.0.2               Et0/0                    14 01:10:00   46   276  0  50
+0   10.20.0.6               Et0/1                    11 01:10:00    9   100  0  35
+EIGRP-IPv4 VR(CORP-VPN) Address-Family Neighbors for AS(65010)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.253.90.1             Tu90                     11 00:28:34   51   306  0  3
+R18#show ip route 10.10.10.2
+Routing entry for 10.10.0.0/16
+  Known via "eigrp 65010", distance 90, metric 6144000, type internal
+  Redistributing via eigrp 2042, eigrp 65010
+  Advertised by eigrp 2042 metric 10000 100 255 1 1400 route-map VPN-INTO-SPB4
+  Last update from 10.253.90.1 on Tunnel90, 00:26:16 ago
+  Routing Descriptor Blocks:
+  * 10.253.90.1, from 10.253.90.1, 00:26:16 ago, via Tunnel90
+      Route metric is 6144000, traffic share count is 1
+      Total delay is 11000 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1400 bytes
+      Loading 1/255, Hops 1
+R18#ping 10.10.10.2 source 10.20.0.1
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.10.10.2, timeout is 2 seconds:
+Packet sent with a source address of 10.20.0.1
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 8/14/19 ms

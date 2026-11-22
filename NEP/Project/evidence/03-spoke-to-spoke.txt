@@ -1,0 +1,47 @@
+R18#ping 10.30.10.1 source 10.20.0.1 repeat 30
+Type escape sequence to abort.
+Sending 30, 100-byte ICMP Echos to 10.30.10.1, timeout is 2 seconds:
+Packet sent with a source address of 10.20.0.1
+!!!!!.!!!!!!!!!!!!!!!!!!!!!!!!
+Success rate is 96 percent (29/30), round-trip min/avg/max = 6/17/38 ms
+R18#ping 10.30.10.1 source 10.20.0.1 repeat 30
+Type escape sequence to abort.
+Sending 30, 100-byte ICMP Echos to 10.30.10.1, timeout is 2 seconds:
+Packet sent with a source address of 10.20.0.1
+!!!!!!!!!!!!!!!!!!!!!!!!!!!!!!
+Success rate is 100 percent (30/30), round-trip min/avg/max = 6/14/31 ms
+R18#show dmvpn
+Legend: Attrb --> S - Static, D - Dynamic, I - Incomplete
+        N - NATed, L - Local, X - No Socket
+        # Ent --> Number of NHRP entries with same NBMA peer
+        NHS Status: E --> Expecting Replies, R --> Responding, W --> Waiting
+        UpDn Time --> Up or Down Time for a Tunnel
+==========================================================================
+
+Interface: Tunnel100, IPv4 NHRP Details
+Type:Spoke, NHRP Peers:2,
+
+ # Ent  Peer NBMA Addr Peer Tunnel Add State  UpDn Tm Attrb
+ ----- --------------- --------------- ----- -------- -----
+     2 10.255.100.28     10.253.100.28    UP 00:00:21   DT1
+                         10.253.100.28    UP 00:00:21   DT1
+     1 10.255.100.15      10.253.100.1    UP 00:03:56     S
+
+R18#show crypto
+
+Number of Crypto Socket connections 2
+
+ Tu100 Peers (local/remote): 10.255.100.18/10.255.100.28
+       Local Ident  (addr/mask/port/prot): (10.255.100.18/255.255.255.255/0/47)
+       Remote Ident (addr/mask/port/prot): (10.255.100.28/255.255.255.255/0/47)
+       IPSec Profile: "CORP-IPSEC"
+       Socket State: Open
+       Client: "TUNNEL SEC" (Client State: Active)
+ Tu100 Peers (local/remote): 10.255.100.18/10.255.100.15
+       Local Ident  (addr/mask/port/prot): (10.255.100.18/255.255.255.255/0/47)
+       Remote Ident (addr/mask/port/prot): (10.255.100.15/255.255.255.255/0/47)
+       IPSec Profile: "CORP-IPSEC"
+       Socket State: Open
+       Client: "TUNNEL SEC" (Client State: Active)
+Crypto Sockets in Listen state:
+Client: "TUNNEL SEC" Profile: "CORP-IPSEC" Map-name: "Tunnel100-head-0"

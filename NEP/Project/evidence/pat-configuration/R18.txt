@@ -1,0 +1,40 @@
+R18>enable
+R18#configure terminal
+Enter configuration commands, one per line.  End with CNTL/Z.
+R18(config)#ip access-list extended CORP-NAT4
+R18(config-ext-nacl)#deny ip 10.20.0.0 0.0.255.255 10.10.0.0 0.0.255.255
+R18(config-ext-nacl)#deny ip 10.20.0.0 0.0.255.255 10.20.0.0 0.0.255.255
+R18(config-ext-nacl)#deny ip 10.20.0.0 0.0.255.255 10.30.0.0 0.0.255.255
+R18(config-ext-nacl)#permit ip 10.20.0.0 0.0.255.255 any
+R18(config-ext-nacl)#exit
+R18(config)#interface Ethernet0/0
+R18(config-if)#ip nat inside
+
+*Nov 19 19:50:06.654: %LINEPROTO-5-UPDOWN: Line protocol on Interface NVI0, changed state to up
+R18(config-if)#exit
+R18(config)#interface Ethernet0/1
+R18(config-if)#ip nat inside
+R18(config-if)#exit
+R18(config)#interface Ethernet0/2
+R18(config-if)#ip nat outside
+R18(config-if)#exit
+R18(config)#route-map PAT-E0_2 permit 10
+R18(config-route-map)#match ip address CORP-NAT4
+R18(config-route-map)#match interface Ethernet0/2
+R18(config-route-map)#exit
+R18(config)#$de source route-map PAT-E0_2 interface Ethernet0/2 overload
+R18(config)#interface Ethernet0/3
+R18(config-if)#ip nat outside
+R18(config-if)#exit
+R18(config)#route-map PAT-E0_3 permit 10
+R18(config-route-map)#match ip address CORP-NAT4
+R18(config-route-map)#match interface Ethernet0/3
+R18(config-route-map)#exit
+R18(config)#$de source route-map PAT-E0_3 interface Ethernet0/3 overload
+R18(config)#end
+R18#write memory
+*Nov 19 19:50:38.209: %SYS-5-CONFIG_I: Configured from console by console
+R18#write memory
+Building configuration...
+[OK]
+R18#

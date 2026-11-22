@@ -1,0 +1,47 @@
+R15#ping 10.253.90.2 source Tunnel90
+Type escape sequence to abort.
+Sending 5, 100-byte ICMP Echos to 10.253.90.2, timeout is 2 seconds:
+Packet sent with a source address of 10.253.90.1
+!!!!!
+Success rate is 100 percent (5/5), round-trip min/avg/max = 13/15/16 ms
+R15#show crypto ikev2 sa
+ IPv4 Crypto IKEv2  SA
+
+Tunnel-id Local                 Remote                fvrf/ivrf            Status
+1         10.255.100.15/500     10.255.100.18/500     none/none            READY
+      Encr: AES-CBC, keysize: 256, PRF: SHA256, Hash: SHA256, DH Grp:14, Auth sign: PSK, Auth verify: PSK
+      Life/Active Time: 86400/287 sec
+
+ IPv6 Crypto IKEv2  SA
+
+R15#show crypto ipsec sa
+
+interface: Tunnel90
+    Crypto map tag: Tunnel90-head-0, local addr 10.255.100.15
+
+   protected vrf: (none)
+   local  ident (addr/mask/prot/port): (10.255.100.15/255.255.255.255/47/0)
+   remote ident (addr/mask/prot/port): (10.255.100.18/255.255.255.255/47/0)
+   current_peer 10.255.100.18 port 500
+     PERMIT, flags={origin_is_acl,}
+    #pkts encaps: 73, #pkts encrypt: 73, #pkts digest: 73
+    #pkts decaps: 69, #pkts decrypt: 69, #pkts verify: 69
+    #pkts compressed: 0, #pkts decompressed: 0
+    #pkts not compressed: 0, #pkts compr. failed: 0
+    #pkts not decompressed: 0, #pkts decompress failed: 0
+    #send errors 0, #recv errors 0
+
+     local crypto endpt.: 10.255.100.15, remote crypto endpt.: 10.255.100.18
+     plaintext mtu 1458, path mtu 1500, ip mtu 1500, ip mtu idb Ethernet0/2
+     current outbound spi: 0x2B8BE00E(730587150)
+     PFS (Y/N): N, DH group: none
+
+     inbound esp sas:
+      spi: 0x18720E45(410127941)
+
+R15#show ip eigrp neighbors
+EIGRP-IPv4 VR(CORP-VPN) Address-Family Neighbors for AS(65010)
+H   Address                 Interface              Hold Uptime   SRTT   RTO  Q  Seq
+                                                   (sec)         (ms)       Cnt Num
+0   10.253.90.2             Tu90                     14 00:04:34   34   204  0  3
+R15#

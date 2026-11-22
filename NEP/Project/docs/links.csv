@@ -1,0 +1,47 @@
+EVE network ID,Устройство A,Порт A,Устройство B,Порт B,Назначение
+1,SW3,Ethernet0/0,SW4,Ethernet0/0,trunk dot1Q
+2,SW2,Ethernet0/0,SW5,Ethernet0/0,trunk dot1Q
+3,SW2,Ethernet0/1,SW4,Ethernet0/1,trunk dot1Q
+4,SW3,Ethernet0/1,SW5,Ethernet0/1,trunk dot1Q
+5,SW4,Ethernet0/2,SW5,Ethernet0/2,"LACP, Port-channel1"
+6,SW4,Ethernet0/3,SW5,Ethernet0/3,"LACP, Port-channel1"
+7,SW10,Ethernet0/0,SW9,Ethernet0/0,"LACP, Port-channel1"
+8,SW10,Ethernet0/1,SW9,Ethernet0/1,"LACP, Port-channel1"
+9,SW2,Ethernet0/2,VPC7,eth0,"порт VPC, VLAN 20"
+10,SW3,Ethernet0/2,VPC1,eth0,"порт VPC, VLAN 10"
+11,SW9,Ethernet0/2,VPC8,eth0,"порт VPC, VLAN 10"
+12,SW10,Ethernet0/2,VPC,eth0,"порт VPC, VLAN 20"
+13,R12,Ethernet0/0,SW4,Ethernet1/0,маршрутизируемая /30
+14,R13,Ethernet0/0,SW5,Ethernet1/0,маршрутизируемая /30
+15,R12,Ethernet0/1,SW5,Ethernet1/1,маршрутизируемая /30
+16,R13,Ethernet0/1,SW4,Ethernet1/1,маршрутизируемая /30
+17,R12,Ethernet0/2,R14,Ethernet0/0,маршрутизируемая /30
+18,R13,Ethernet0/2,R15,Ethernet0/0,маршрутизируемая /30
+19,R13,Ethernet0/3,R14,Ethernet0/1,маршрутизируемая /30
+20,R12,Ethernet0/3,R15,Ethernet0/1,маршрутизируемая /30
+21,R17,Ethernet0/0,SW9,Ethernet0/3,маршрутизируемая /30
+22,R16,Ethernet0/0,SW10,Ethernet0/3,маршрутизируемая /30
+23,R16,Ethernet0/1,R18,Ethernet0/0,маршрутизируемая /30
+24,R17,Ethernet0/1,R18,Ethernet0/1,маршрутизируемая /30
+25,R17,Ethernet0/2,SW10,Ethernet1/0,маршрутизируемая /30
+26,R16,Ethernet0/2,SW9,Ethernet1/0,маршрутизируемая /30
+27,R15,Ethernet0/3,R20,Ethernet0/0,маршрутизируемая /30
+28,R14,Ethernet0/3,R19,Ethernet0/0,маршрутизируемая /30
+29,R14,Ethernet0/2,R22,Ethernet0/0,маршрутизируемая /30
+30,R15,Ethernet0/2,R21,Ethernet0/0,маршрутизируемая /30
+31,R21,Ethernet0/1,R22,Ethernet0/1,маршрутизируемая /30
+32,R22,Ethernet0/2,R23,Ethernet0/0,маршрутизируемая /30
+33,R21,Ethernet0/2,R24,Ethernet0/0,маршрутизируемая /30
+34,R23,Ethernet0/1,R25,Ethernet0/0,маршрутизируемая /30
+35,R24,Ethernet0/1,R26,Ethernet0/0,маршрутизируемая /30
+36,R25,Ethernet0/1,R27,Ethernet0/0,маршрутизируемая /30
+37,R26,Ethernet0/1,R28,Ethernet0/0,маршрутизируемая /30
+38,R25,Ethernet0/2,R26,Ethernet0/2,маршрутизируемая /30
+39,R23,Ethernet0/2,R24,Ethernet0/2,маршрутизируемая /30
+40,R18,Ethernet0/2,R24,Ethernet0/3,маршрутизируемая /30
+41,R18,Ethernet0/3,R26,Ethernet0/3,маршрутизируемая /30
+42,R25,Ethernet0/3,R28,Ethernet0/1,маршрутизируемая /30
+43,SW29,Ethernet0/0,VPC30,eth0,"порт VPC, VLAN 10"
+44,SW29,Ethernet0/1,VPC31,eth0,"порт VPC, VLAN 20"
+45,R28,Ethernet0/2,SW29,Ethernet0/2,trunk dot1Q до подынтерфейсов R28
+46,R16,Ethernet0/3,R32,Ethernet0/0,маршрутизируемая /30

@@ -1,0 +1,1607 @@
+
+=== R12 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.25      YES TFTP   up                    up      
+Ethernet0/1                10.10.0.29      YES TFTP   up                    up      
+Ethernet0/2                10.10.0.2       YES TFTP   up                    up      
+Ethernet0/3                10.10.0.18      YES TFTP   up                    up      
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.12     YES TFTP   up                    up      
+R12#
+
+=== R12 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R12#
+
+=== R12 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R12#
+
+=== R13 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.33      YES TFTP   up                    up      
+Ethernet0/1                10.10.0.37      YES TFTP   up                    up      
+Ethernet0/2                10.10.0.14      YES TFTP   up                    up      
+Ethernet0/3                10.10.0.6       YES TFTP   up                    up      
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.13     YES TFTP   up                    up      
+R13#
+
+=== R13 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R13#
+
+=== R13 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R13#
+
+=== SW4 | Проверка исходных настроек ===
+show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0/0            unassigned      YES unset  up                    up      
+Ethernet0/1            unassigned      YES unset  up                    up      
+Ethernet0/2            unassigned      YES unset  up                    up      
+Ethernet0/3            unassigned      YES unset  up                    up      
+Ethernet1/0            10.10.0.26      YES TFTP   up                    up      
+Ethernet1/1            10.10.0.38      YES TFTP   up                    up      
+Ethernet1/2            unassigned      YES unset  up                    up      
+Ethernet1/3            unassigned      YES unset  up                    up      
+Port-channel1          unassigned      YES unset  up                    up      
+Loopback0              10.255.0.4      YES TFTP   up                    up      
+Vlan10                 10.10.10.2      YES TFTP   up                    up      
+Vlan20                 10.10.20.2      YES TFTP   up                    up      
+Vlan99                 10.10.99.2      YES TFTP   up                    up      
+SW4#
+
+=== SW4 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+SW4#
+
+=== SW4 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+SW4#
+
+=== SW5 | Проверка исходных настроек ===
+show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0/0            unassigned      YES unset  up                    up      
+Ethernet0/1            unassigned      YES unset  up                    up      
+Ethernet0/2            unassigned      YES unset  up                    up      
+Ethernet0/3            unassigned      YES unset  up                    up      
+Ethernet1/0            10.10.0.34      YES TFTP   up                    up      
+Ethernet1/1            10.10.0.30      YES TFTP   up                    up      
+Ethernet1/2            unassigned      YES unset  up                    up      
+Ethernet1/3            unassigned      YES unset  up                    up      
+Port-channel1          unassigned      YES unset  up                    up      
+Loopback0              10.255.0.5      YES TFTP   up                    up      
+Vlan10                 10.10.10.3      YES TFTP   up                    up      
+Vlan20                 10.10.20.3      YES TFTP   up                    up      
+Vlan99                 10.10.99.3      YES TFTP   up                    up      
+SW5#
+
+=== SW5 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+SW5#
+
+=== SW5 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+SW5#
+
+=== R19 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.10      YES TFTP   up                    up      
+Ethernet0/1                unassigned      YES TFTP   administratively down down    
+Ethernet0/2                unassigned      YES TFTP   administratively down down    
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.19     YES TFTP   up                    up      
+R19#
+
+=== R19 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R19#
+
+=== R19 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R19#
+
+=== R20 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.22      YES TFTP   up                    up      
+Ethernet0/1                unassigned      YES TFTP   administratively down down    
+Ethernet0/2                unassigned      YES TFTP   administratively down down    
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.20     YES TFTP   up                    up      
+R20#
+
+=== R20 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R20#
+
+=== R20 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R20#
+
+=== R23 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.254.0.14     YES TFTP   up                    up      
+Ethernet0/1                10.254.0.21     YES TFTP   up                    up      
+Ethernet0/2                10.254.0.25     YES TFTP   up                    up      
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.23     YES TFTP   up                    up      
+R23#
+
+=== R23 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R23#
+
+=== R23 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R23#
+
+=== R28 | Проверка исходных настроек ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.254.0.54     YES TFTP   up                    up      
+Ethernet0/1                10.254.0.50     YES TFTP   up                    up      
+Ethernet0/2                unassigned      YES TFTP   up                    up      
+Ethernet0/2.10             10.30.10.1      YES TFTP   up                    up      
+Ethernet0/2.20             10.30.20.1      YES TFTP   up                    up      
+Ethernet0/2.99             10.30.99.1      YES TFTP   up                    up      
+Ethernet0/2.1000           unassigned      YES unset  up                    up      
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.28     YES TFTP   up                    up      
+R28#
+
+=== R28 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+R28#
+
+=== R28 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+R28#
+
+=== SW29 | Проверка исходных настроек ===
+show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0/0            unassigned      YES unset  up                    up      
+Ethernet0/1            unassigned      YES unset  up                    up      
+Ethernet0/2            unassigned      YES unset  up                    up      
+Ethernet0/3            unassigned      YES unset  up                    up      
+Vlan99                 10.30.99.29     YES TFTP   up                    up      
+SW29#
+
+=== SW29 | Проверка исходных настроек ===
+show running-config | include ^ip nat|^ntp |^ip dhcp pool|standby .* ip
+SW29#
+
+=== SW29 | Проверка исходных настроек ===
+show ip ssh | include SSH
+SSH Disabled - version 1.99
+%Please create RSA keys to enable SSH (and of atleast 768 bits for SSH v2).
+SW29#
+
+=== VPC1 | Проверка DHCP ===
+ip dhcp
+DD
+D
+Can't find dhcp server
+
+VPCS>
+
+=== VPC7 | Проверка DHCP ===
+ip dhcp
+DD
+D
+Can't find dhcp server
+
+VPCS>
+
+=== VPC1 | Проверка DHCP ===
+
+VPCS>
+
+=== VPC7 | Проверка DHCP ===
+
+VPCS>
+
+=== VPC1 | Проверка DHCP ===
+save
+Saving startup configuration to startup.vpc
+.  done
+
+VPCS>
+
+=== VPC7 | Проверка DHCP ===
+save
+Saving startup configuration to startup.vpc
+.  done
+
+VPCS>
+
+=== R12 | Исходное состояние после запуска ===
+show running-config | include ^hostname|^ntp master|^ip nat pool
+hostname R12
+R12#
+
+=== R12 | Исходное состояние после запуска ===
+show version | include uptime
+R12 uptime is 0 minutes
+R12#
+
+=== R14 | Исходное состояние после запуска ===
+show running-config | include ^hostname|^ntp master|^ip nat pool
+hostname R14
+R14#
+
+=== R14 | Исходное состояние после запуска ===
+show version | include uptime
+R14 uptime is 0 minutes
+R14#
+
+=== R18 | Исходное состояние после запуска ===
+show running-config | include ^hostname|^ntp master|^ip nat pool
+hostname R18
+R18#
+
+=== R18 | Исходное состояние после запуска ===
+show version | include uptime
+R18 uptime is 0 minutes
+R18#
+
+=== R19 | Исходное состояние после запуска ===
+show running-config | include ^hostname|^ntp master|^ip nat pool
+hostname R19
+R19#
+
+=== R19 | Исходное состояние после запуска ===
+show version | include uptime
+R19 uptime is 0 minutes
+R19#
+
+=== VPC1 | DHCP клиента и сохранение ===
+ip dhcp
+DD
+ORA IP 10.10.10.100/24 GW 10.10.10.2
+
+VPCS>
+
+=== VPC1 | DHCP клиента и сохранение ===
+
+VPCS>
+
+=== VPC1 | DHCP клиента и сохранение ===
+save
+Saving startup configuration to startup.vpc
+.  done
+
+VPCS>
+
+=== VPC7 | DHCP клиента и сохранение ===
+ip dhcp
+DD
+DO
+Can't find dhcp server
+
+VPCS>
+
+=== VPC7 | DHCP клиента и сохранение ===
+
+VPCS>
+
+=== VPC7 | DHCP клиента и сохранение ===
+save
+Saving startup configuration to startup.vpc
+.  done
+
+VPCS>
+
+=== VPC1 | Проверка рабочих параметров ===
+show ip
+
+NAME        : VPCS[1]
+IP/MASK     : 10.10.10.100/24
+GATEWAY     : 10.10.10.2
+DNS         : 
+DHCP SERVER : 10.10.0.25
+DHCP LEASE  : 86178, 86400/43200/75600
+MAC         : 00:50:79:66:68:01
+LPORT       : 20000
+RHOST:PORT  : 127.0.0.1:30000
+MTU         : 1500
+
+VPCS>
+
+=== R12 | Проверка рабочих параметров ===
+show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/	 	    Lease expiration        Type
+		    Hardware address/
+		    User name
+10.10.10.100        0100.5079.6668.01       Nov 25 2026 03:18 PM    Automatic
+R12#
+
+=== R13 | Проверка рабочих параметров ===
+show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/	 	    Lease expiration        Type
+		    Hardware address/
+		    User name
+10.10.20.100        0100.5079.6668.07       Nov 24 2026 03:27 PM    Automatic
+R13#
+
+=== R15 | Проверка рабочих параметров ===
+show ip route 10.255.0.23
+% Subnet not in table
+R15#
+
+=== R18 | Проверка рабочих параметров ===
+show ip route 10.255.0.23
+Routing entry for 10.255.0.23/32
+  Known via "bgp 2042", distance 20, metric 0
+  Tag 520, type external
+  Last update from 10.254.0.41 00:02:56 ago
+  Routing Descriptor Blocks:
+    10.254.0.41, from 10.254.0.41, 00:02:56 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 1
+      Route tag 520
+      MPLS label: none
+  * 10.254.0.37, from 10.254.0.37, 00:02:56 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 1
+      Route tag 520
+      MPLS label: none
+R18#
+
+=== R12 | Проверка рабочих параметров ===
+show ntp status
+Clock is synchronized, stratum 5, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 24800 (1/100 of seconds), resolution is 4000
+reference time is EEB02A1F.11A9FC18 (15:22:07.069 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.28 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 7 sec ago.
+R12#
+
+=== R13 | Проверка рабочих параметров ===
+show ntp status
+Clock is synchronized, stratum 7, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 24700 (1/100 of seconds), resolution is 4000
+reference time is EEB02A1F.AF1AA1A0 (15:22:07.684 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.28 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 7 sec ago.
+R13#
+
+=== VPC7 | Проверка рабочих параметров ===
+ip dhcp
+DORA IP 10.10.20.100/24 GW 10.10.20.3
+
+VPCS>
+
+=== VPC7 | Проверка рабочих параметров ===
+show ip
+
+NAME        : VPCS[1]
+IP/MASK     : 10.10.20.100/24
+GATEWAY     : 10.10.20.3
+DNS         : 
+DHCP SERVER : 10.10.0.33
+DHCP LEASE  : 86400, 86400/43200/75600
+MAC         : 00:50:79:66:68:07
+LPORT       : 20000
+RHOST:PORT  : 127.0.0.1:30000
+MTU         : 1500
+
+VPCS>
+
+=== VPC7 | Проверка рабочих параметров ===
+save
+Saving startup configuration to startup.vpc
+.  done
+
+VPCS>
+
+=== SW29 | Состояние SSHv2 ===
+show ip ssh | include SSH Enabled
+SSH Enabled - version 2.0
+SW29#
+
+=== R19 | Состояние SSHv2 ===
+show ip ssh | include SSH Enabled
+SSH Enabled - version 2.0
+R19#
+
+=== VPC1 | Проверка NAT трафиком ===
+ping 10.254.0.2 -c 3
+
+84 bytes from 10.254.0.2 icmp_seq=1 ttl=252 time=8.014 ms
+84 bytes from 10.254.0.2 icmp_seq=2 ttl=252 time=4.032 ms
+84 bytes from 10.254.0.2 icmp_seq=3 ttl=252 time=3.105 ms
+
+VPCS>
+
+=== VPC7 | Проверка NAT трафиком ===
+ping 10.254.0.6 -c 3
+
+84 bytes from 10.254.0.6 icmp_seq=1 ttl=252 time=7.258 ms
+84 bytes from 10.254.0.6 icmp_seq=2 ttl=252 time=4.548 ms
+84 bytes from 10.254.0.6 icmp_seq=3 ttl=252 time=3.091 ms
+
+VPCS>
+
+=== VPC8 | Проверка NAT трафиком ===
+ping 10.255.0.23 -c 3
+
+84 bytes from 10.255.0.23 icmp_seq=1 ttl=251 time=9.814 ms
+84 bytes from 10.255.0.23 icmp_seq=2 ttl=251 time=3.813 ms
+84 bytes from 10.255.0.23 icmp_seq=3 ttl=251 time=4.278 ms
+
+VPCS>
+
+=== VPC30 | Проверка NAT трафиком ===
+ping 10.10.250.20 -c 3
+
+84 bytes from 10.10.250.20 icmp_seq=1 ttl=250 time=7.712 ms
+84 bytes from 10.10.250.20 icmp_seq=2 ttl=250 time=6.788 ms
+84 bytes from 10.10.250.20 icmp_seq=3 ttl=250 time=5.187 ms
+
+VPCS>
+
+=== R14 | Трансляции после ICMP ===
+show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 10.10.250.14:62893 10.10.10.100:62893 10.254.0.2:62893  10.254.0.2:62893
+icmp 10.10.250.14:63149 10.10.10.100:63149 10.254.0.2:63149  10.254.0.2:63149
+icmp 10.10.250.14:63405 10.10.10.100:63405 10.254.0.2:63405  10.254.0.2:63405
+tcp 10.10.250.19:22    10.255.0.19:22     ---                ---
+--- 10.10.250.20       10.255.0.20        ---                ---
+R14#
+
+=== R14 | Трансляции после ICMP ===
+show ip nat statistics
+Total active translations: 5 (2 static, 3 dynamic; 4 extended)
+Peak translations: 5, occurred 00:00:01 ago
+Outside interfaces:
+  Ethernet0/2
+Inside interfaces: 
+  Ethernet0/0, Ethernet0/1, Ethernet0/3
+Hits: 6  Misses: 0
+CEF Translated packets: 6, CEF Punted packets: 0
+Expired translations: 0
+Dynamic mappings:
+-- Inside Source
+[Id: 1] access-list MSK-PAT pool MSK refcount 3
+ pool MSK: netmask 255.255.255.0
+	start 10.10.250.14 end 10.10.250.14
+	type generic, total addresses 1, allocated 1 (100%), misses 0
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0
+R14#
+
+=== R15 | Трансляции после ICMP ===
+show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 10.10.250.15:62893 10.10.20.100:62893 10.254.0.6:62893  10.254.0.6:62893
+icmp 10.10.250.15:63149 10.10.20.100:63149 10.254.0.6:63149  10.254.0.6:63149
+icmp 10.10.250.15:63405 10.10.20.100:63405 10.254.0.6:63405  10.254.0.6:63405
+tcp 10.10.250.19:22    10.255.0.19:22     ---                ---
+icmp 10.10.250.20:62893 10.255.0.20:62893 10.30.10.10:62893  10.30.10.10:62893
+icmp 10.10.250.20:63149 10.255.0.20:63149 10.30.10.10:63149  10.30.10.10:63149
+icmp 10.10.250.20:63405 10.255.0.20:63405 10.30.10.10:63405  10.30.10.10:63405
+--- 10.10.250.20       10.255.0.20        ---                ---
+R15#
+
+=== R15 | Трансляции после ICMP ===
+show ip nat statistics
+Total active translations: 8 (2 static, 6 dynamic; 7 extended)
+Peak translations: 8, occurred 00:00:02 ago
+Outside interfaces:
+  Ethernet0/2
+Inside interfaces: 
+  Ethernet0/0, Ethernet0/1, Ethernet0/3
+Hits: 12  Misses: 0
+CEF Translated packets: 12, CEF Punted packets: 0
+Expired translations: 0
+Dynamic mappings:
+-- Inside Source
+[Id: 1] access-list MSK-PAT pool MSK refcount 3
+ pool MSK: netmask 255.255.255.0
+	start 10.10.250.15 end 10.10.250.15
+	type generic, total addresses 1, allocated 1 (100%), misses 0
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0
+R15#
+
+=== R18 | Трансляции после ICMP ===
+show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+icmp 10.20.250.1:62893 10.20.10.10:62893  10.255.0.23:62893  10.255.0.23:62893
+icmp 10.20.250.1:63149 10.20.10.10:63149  10.255.0.23:63149  10.255.0.23:63149
+icmp 10.20.250.1:63405 10.20.10.10:63405  10.255.0.23:63405  10.255.0.23:63405
+R18#
+
+=== R18 | Трансляции после ICMP ===
+show ip nat statistics
+Total active translations: 3 (0 static, 3 dynamic; 3 extended)
+Peak translations: 3, occurred 00:00:02 ago
+Outside interfaces:
+  Ethernet0/2, Ethernet0/3
+Inside interfaces: 
+  Ethernet0/0, Ethernet0/1
+Hits: 6  Misses: 0
+CEF Translated packets: 6, CEF Punted packets: 0
+Expired translations: 0
+Dynamic mappings:
+-- Inside Source
+[Id: 1] access-list SPB-PAT pool SPB-FIVE refcount 3
+ pool SPB-FIVE: netmask 255.255.255.248
+	start 10.20.250.1 end 10.20.250.5
+	type generic, total addresses 5, allocated 1 (20%), misses 0
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0
+R18#
+
+=== R28 | Трансляции после ICMP ===
+show ip nat translations
+Pro Inside global      Inside local       Outside local      Outside global
+tcp 10.254.0.50:2222   10.30.99.29:22     ---                ---
+R28#
+
+=== R28 | Трансляции после ICMP ===
+show ip nat statistics
+Total active translations: 1 (1 static, 0 dynamic; 1 extended)
+Peak translations: 1, occurred 00:13:20 ago
+Outside interfaces:
+  Ethernet0/0, Ethernet0/1
+Inside interfaces: 
+  Ethernet0/2.10, Ethernet0/2.20, Ethernet0/2.99
+Hits: 0  Misses: 0
+CEF Translated packets: 0, CEF Punted packets: 0
+Expired translations: 0
+Dynamic mappings:
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0
+R28#
+
+=== R19 | Маршрут управления ===
+show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "ospf 1", distance 110, metric 11, candidate default path, type inter area
+  Last update from 10.10.0.9 on Ethernet0/0, 00:14:25 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.9, from 10.255.0.14, 00:14:25 ago, via Ethernet0/0
+      Route metric is 11, traffic share count is 1
+R19#
+
+=== R19 | Маршрут управления ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.10      YES TFTP   up                    up      
+Ethernet0/1                unassigned      YES TFTP   administratively down down    
+Ethernet0/2                unassigned      YES TFTP   administratively down down    
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.19     YES TFTP   up                    up      
+R19#
+
+=== SW29 | Маршрут управления ===
+show ip route 0.0.0.0
+Default gateway is 10.30.99.1
+
+Host               Gateway           Last Use    Total Uses  Interface
+ICMP redirect cache is empty
+SW29#
+
+=== SW29 | Маршрут управления ===
+show ip interface brief
+Interface              IP-Address      OK? Method Status                Protocol
+Ethernet0/0            unassigned      YES unset  up                    up      
+Ethernet0/1            unassigned      YES unset  up                    up      
+Ethernet0/2            unassigned      YES unset  up                    up      
+Ethernet0/3            unassigned      YES unset  up                    up      
+Vlan99                 10.30.99.29     YES TFTP   up                    up      
+SW29#
+
+=== R27 | Маршрут управления ===
+show ip route 0.0.0.0
+Routing entry for 0.0.0.0/0, supernet
+  Known via "static", distance 1, metric 0, candidate default path
+  Routing Descriptor Blocks:
+  * 10.254.0.45, via Ethernet0/0
+      Route metric is 0, traffic share count is 1
+R27#
+
+=== R27 | Маршрут управления ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.254.0.46     YES NVRAM  up                    up      
+Ethernet0/1                unassigned      YES NVRAM  administratively down down    
+Ethernet0/2                unassigned      YES NVRAM  administratively down down    
+Ethernet0/3                unassigned      YES NVRAM  administratively down down    
+Ethernet1/0                unassigned      YES NVRAM  administratively down down    
+Ethernet1/1                unassigned      YES NVRAM  administratively down down    
+Ethernet1/2                unassigned      YES NVRAM  administratively down down    
+Ethernet1/3                unassigned      YES NVRAM  administratively down down    
+Loopback0                  10.255.0.27     YES NVRAM  up                    up      
+R27#
+
+=== SW2 | Синхронизация времени ===
+show ntp status
+Clock is unsynchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 85900 (1/100 of seconds), resolution is 4000
+reference time is EEB02C60.4F1AA098 (15:31:44.309 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 2.00 msec
+root dispersion is 1756.13 msec, peer dispersion is 1752.34 msec
+loopfilter state is 'FREQ' (Drift being measured), drift is 0.000000000 s/s
+system poll interval is 64, last update was 42 sec ago.
+SW2#
+
+=== SW2 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     42     64     7  2.000   0.000 1752.3
++~10.255.0.13     127.127.1.1      7     54     64   377  2.000   1.000  2.921
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW2#
+
+=== SW3 | Синхронизация времени ===
+show ntp status
+Clock is unsynchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86100 (1/100 of seconds), resolution is 4000
+reference time is EEB02C5A.D74BC8F8 (15:31:38.841 UTC Tue Nov 24 2026)
+clock offset is -0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.48 msec, peer dispersion is 2.93 msec
+loopfilter state is 'FREQ' (Drift being measured), drift is 0.000000000 s/s
+system poll interval is 64, last update was 50 sec ago.
+SW3#
+
+=== SW3 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     49     64   377  1.000  -0.500  2.935
++~10.255.0.13     127.127.1.1      7     58     64    17  1.000   0.500 752.65
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW3#
+
+=== SW4 | Синхронизация времени ===
+show ntp status
+Clock is unsynchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86200 (1/100 of seconds), resolution is 4000
+reference time is EEB02C56.872B0380 (15:31:34.528 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.48 msec, peer dispersion is 2.92 msec
+loopfilter state is 'FREQ' (Drift being measured), drift is 0.000000000 s/s
+system poll interval is 64, last update was 54 sec ago.
+SW4#
+
+=== SW4 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     54     64   377  1.000   0.500  2.926
++~10.255.0.13     127.127.1.1      7     53     64   377  1.000   0.500  2.902
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW4#
+
+=== SW5 | Синхронизация времени ===
+show ntp status
+Clock is unsynchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86300 (1/100 of seconds), resolution is 4000
+reference time is EEB02C5C.4F5C29D0 (15:31:40.310 UTC Tue Nov 24 2026)
+clock offset is -0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.49 msec, peer dispersion is 2.91 msec
+loopfilter state is 'FREQ' (Drift being measured), drift is 0.000000000 s/s
+system poll interval is 64, last update was 49 sec ago.
+SW5#
+
+=== SW5 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     49     64   377  1.000  -0.500  2.917
++~10.255.0.13     127.127.1.1      7     54     64   377  1.000   0.500  2.929
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW5#
+
+=== R12 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 5, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86400 (1/100 of seconds), resolution is 4000
+reference time is EEB02C7F.116872E0 (15:32:15.068 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.40 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 15 sec ago.
+R12#
+
+=== R12 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~127.127.1.1     .LOCL.           4     15     16   377  0.000   0.000  1.204
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R12#
+
+=== R13 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 7, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86500 (1/100 of seconds), resolution is 4000
+reference time is EEB02C8F.AF5C2AD8 (15:32:31.685 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.18 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 1 sec ago.
+R13#
+
+=== R13 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~127.127.1.1     .LOCL.           6      0     16   377  0.000   0.000  1.204
+ ~10.255.0.12     127.127.1.1      5     59     64   377  1.000   0.500  2.951
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R13#
+
+=== R14 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86600 (1/100 of seconds), resolution is 4000
+reference time is EEB02AAF.122D0E88 (15:24:31.071 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 12.90 msec, peer dispersion is 4.04 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 128, last update was 481 sec ago.
+R14#
+
+=== R14 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     76    128   377  0.000   0.000  4.045
++~10.255.0.13     127.127.1.1      7     24    128   377  0.000   0.000  5.979
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R14#
+
+=== R15 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86600 (1/100 of seconds), resolution is 4000
+reference time is EEB02C89.50E56120 (15:32:25.316 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 6.45 msec, peer dispersion is 2.99 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 128, last update was 8 sec ago.
+R15#
+
+=== R15 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5      8    128   377  0.000   0.000  2.997
++~10.255.0.13     127.127.1.1      7     14     64   377  1.000   0.500  3.045
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R15#
+
+=== R19 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86700 (1/100 of seconds), resolution is 4000
+reference time is EEB02C54.11A9FC18 (15:31:32.069 UTC Tue Nov 24 2026)
+clock offset is -0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.25 msec, peer dispersion is 2.62 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is -0.000000000 s/s
+system poll interval is 256, last update was 61 sec ago.
+R19#
+
+=== R19 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     61    256   377  1.000  -0.500  2.621
++~10.255.0.13     127.127.1.1      7    123    128   377  1.000   0.500  3.196
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R19#
+
+=== R20 | Синхронизация времени ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 86700 (1/100 of seconds), resolution is 4000
+reference time is EEB02A7F.60831378 (15:23:43.377 UTC Tue Nov 24 2026)
+clock offset is -0.5000 msec, root delay is 1.00 msec
+root dispersion is 242.27 msec, peer dispersion is 3.44 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 128, last update was 531 sec ago.
+R20#
+
+=== R20 | Синхронизация времени ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5    132    128   377  1.000  -0.500  3.449
++~10.255.0.13     127.127.1.1      7    122    128   377  0.000   0.000  6.122
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R20#
+
+=== R27 | Межофисный IPv4 R27 → VPC1 ===
+ping 10.10.10.100 source 10.255.0.27 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.10.10.100, timeout is 2 seconds:
+Packet sent with a source address of 10.255.0.27 
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 2/4/7 ms
+R27#
+
+=== R27 | Межофисный IPv4 R27 → VPC8 ===
+ping 10.20.10.10 source 10.255.0.27 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.20.10.10, timeout is 2 seconds:
+Packet sent with a source address of 10.255.0.27 
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/2/4 ms
+R27#
+
+=== R27 | Межофисный IPv4 R27 → VPC30 ===
+ping 10.30.10.10 source 10.255.0.27 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.30.10.10, timeout is 2 seconds:
+Packet sent with a source address of 10.255.0.27 
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/2 ms
+R27#
+
+=== VPC8 | Межофисный IPv4 VPC8 → VPC1 ===
+ping 10.10.10.100 -c 3
+
+84 bytes from 10.10.10.100 icmp_seq=1 ttl=56 time=4.813 ms
+84 bytes from 10.10.10.100 icmp_seq=2 ttl=56 time=3.974 ms
+84 bytes from 10.10.10.100 icmp_seq=3 ttl=56 time=5.194 ms
+
+VPCS>
+
+=== VPC1 | Межофисный IPv4 VPC1 → VPC8 ===
+ping 10.20.10.10 -c 3
+
+84 bytes from 10.20.10.10 icmp_seq=1 ttl=55 time=4.766 ms
+84 bytes from 10.20.10.10 icmp_seq=2 ttl=55 time=6.001 ms
+84 bytes from 10.20.10.10 icmp_seq=3 ttl=55 time=4.448 ms
+
+VPCS>
+
+=== VPC30 | Межофисный IPv4 VPC30 → VPC1 ===
+ping 10.10.10.100 -c 3
+
+84 bytes from 10.10.10.100 icmp_seq=1 ttl=56 time=6.308 ms
+84 bytes from 10.10.10.100 icmp_seq=2 ttl=56 time=5.890 ms
+84 bytes from 10.10.10.100 icmp_seq=3 ttl=56 time=4.207 ms
+
+VPCS>
+
+=== VPC8 | Межофисный IPv4 VPC8 → VPC30 ===
+ping 10.30.10.10 -c 3
+
+84 bytes from 10.30.10.10 icmp_seq=1 ttl=58 time=2.489 ms
+84 bytes from 10.30.10.10 icmp_seq=2 ttl=58 time=2.795 ms
+84 bytes from 10.30.10.10 icmp_seq=3 ttl=58 time=2.275 ms
+
+VPCS>
+
+=== VPC1 | Межофисный IPv4 VPC1 → VPC30 ===
+ping 10.30.10.10 -c 3
+
+84 bytes from 10.30.10.10 icmp_seq=1 ttl=56 time=3.737 ms
+84 bytes from 10.30.10.10 icmp_seq=2 ttl=56 time=3.420 ms
+84 bytes from 10.30.10.10 icmp_seq=3 ttl=56 time=4.733 ms
+
+VPCS>
+
+=== VPC30 | Межофисный IPv4 VPC30 → VPC8 ===
+ping 10.20.10.10 -c 3
+
+84 bytes from 10.20.10.10 icmp_seq=1 ttl=59 time=2.390 ms
+84 bytes from 10.20.10.10 icmp_seq=2 ttl=59 time=2.270 ms
+84 bytes from 10.20.10.10 icmp_seq=3 ttl=59 time=2.937 ms
+
+VPCS>
+
+=== VPC8 | Межофисный IPv4 VPC8 → R27 ===
+ping 10.255.0.27 -c 3
+
+84 bytes from 10.255.0.27 icmp_seq=1 ttl=250 time=2.165 ms
+84 bytes from 10.255.0.27 icmp_seq=2 ttl=250 time=3.419 ms
+84 bytes from 10.255.0.27 icmp_seq=3 ttl=250 time=1.816 ms
+
+VPCS>
+
+=== VPC1 | Межофисный IPv4 VPC1 → R27 ===
+ping 10.255.0.27 -c 3
+
+84 bytes from 10.255.0.27 icmp_seq=1 ttl=248 time=2.593 ms
+84 bytes from 10.255.0.27 icmp_seq=2 ttl=248 time=2.600 ms
+84 bytes from 10.255.0.27 icmp_seq=3 ttl=248 time=4.150 ms
+
+VPCS>
+
+=== VPC30 | Межофисный IPv4 VPC30 → R27 ===
+ping 10.255.0.27 -c 3
+
+84 bytes from 10.255.0.27 icmp_seq=1 ttl=253 time=1.916 ms
+84 bytes from 10.255.0.27 icmp_seq=2 ttl=253 time=1.691 ms
+84 bytes from 10.255.0.27 icmp_seq=3 ttl=253 time=1.672 ms
+
+VPCS>
+
+=== R27 | Вход SSH на SW29 ===
+ssh -l netops -p 2222 10.254.0.50
+Password: 
+
+
+SW29>
+show users
+    Line       User       Host(s)              Idle       Location
+   0 con 0                idle                 00:02:55   
+*  2 vty 0     netops     idle                 00:00:00 10.254.0.46
+
+  Interface    User               Mode         Idle     Peer Address
+
+SW29>
+exit
+
+[Connection to 10.254.0.50 closed by foreign host]
+R27#
+
+=== SW2 | Контроль источников времени и пути управления ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 105500 (1/100 of seconds), resolution is 4000
+reference time is EEB02CA4.4DD2F280 (15:32:52.304 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 883.84 msec, peer dispersion is 877.57 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 170 sec ago.
+SW2#
+
+=== SW3 | Контроль источников времени и пути управления ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 105500 (1/100 of seconds), resolution is 4000
+reference time is EEB02D28.D851EDD8 (15:35:04.845 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.27 msec, peer dispersion is 2.93 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 38 sec ago.
+SW3#
+
+=== SW4 | Контроль источников времени и пути управления ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 105500 (1/100 of seconds), resolution is 4000
+reference time is EEB02CE2.8872B198 (15:33:54.533 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 1.00 msec
+root dispersion is 8.25 msec, peer dispersion is 5.44 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 108 sec ago.
+SW4#
+
+=== SW5 | Контроль источников времени и пути управления ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 249.9997 Hz, precision is 2**10
+ntp uptime is 105600 (1/100 of seconds), resolution is 4016
+reference time is EEB02CE4.4F1AA098 (15:33:56.309 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 1.00 msec
+root dispersion is 8.23 msec, peer dispersion is 5.76 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000001061 s/s
+system poll interval is 64, last update was 106 sec ago.
+SW5#
+
+=== R13 | Контроль источников времени и пути управления ===
+show ntp status
+Clock is synchronized, stratum 7, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 105500 (1/100 of seconds), resolution is 4000
+reference time is EEB02D40.AF1AA1A0 (15:35:28.684 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.37 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 14 sec ago.
+R13#
+
+=== R14 | Контроль источников времени и пути управления ===
+show ip nat translations | include 250.19
+tcp 10.10.250.19:22    10.255.0.19:22     ---                ---
+R14#
+
+=== R15 | Контроль источников времени и пути управления ===
+show ip nat translations | include 250.19
+tcp 10.10.250.19:22    10.255.0.19:22     10.254.0.38:59211  10.254.0.38:59211
+tcp 10.10.250.19:22    10.255.0.19:22     ---                ---
+R15#
+
+=== SW2 | Контроль источников времени и пути управления ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5    170     64    74  1.000   0.500 877.57
++~10.255.0.13     127.127.1.1      7     49     64   377  2.000   0.000  2.921
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW2#
+
+=== SW3 | Контроль источников времени и пути управления ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     37     64   377  1.000   0.500  2.935
++~10.255.0.13     127.127.1.1      7    185     64   174  2.000   0.000 377.75
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW3#
+
+=== SW4 | Контроль источников времени и пути управления ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     40     64   377  0.000   0.000  5.443
++~10.255.0.13     127.127.1.1      7     45     64   377  1.000   0.500  2.924
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW4#
+
+=== SW5 | Контроль источников времени и пути управления ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     39     64   377  0.000   0.000  5.764
++~10.255.0.13     127.127.1.1      7     44     64   377  0.000   0.000  2.918
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW5#
+
+=== R13 | Контроль источников времени и пути управления ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~127.127.1.1     .LOCL.           6     13     16   377  0.000   0.000  1.206
+ ~10.255.0.12     127.127.1.1      5     47     64   377  1.000  -0.500  2.914
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R13#
+
+=== R14 | Контроль источников времени и пути управления ===
+show ip route 10.255.0.19
+Routing entry for 10.255.0.19/32
+  Known via "ospf 1", distance 110, metric 11, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.10 on Ethernet0/3, 00:17:47 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.10, from 10.255.0.19, 00:17:47 ago, via Ethernet0/3
+      Route metric is 11, traffic share count is 1
+R14#
+
+=== R15 | Контроль источников времени и пути управления ===
+show ip route 10.255.0.19
+Routing entry for 10.255.0.19/32
+  Known via "ospf 1", distance 110, metric 31, type inter area
+  Advertised by bgp 1001
+  Last update from 10.10.0.14 on Ethernet0/0, 00:17:37 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.18, from 10.255.0.14, 00:17:47 ago, via Ethernet0/1
+      Route metric is 31, traffic share count is 1
+    10.10.0.14, from 10.255.0.14, 00:17:37 ago, via Ethernet0/0
+      Route metric is 31, traffic share count is 1
+R15#
+
+=== R19 | Диагностика входа SSH ===
+show running-config | section line vty
+line vty 0 4
+ login local
+ transport input ssh
+R19#
+
+=== R19 | Диагностика входа SSH ===
+show ip ssh | include SSH Enabled
+SSH Enabled - version 2.0
+R19#
+
+=== R19 | Диагностика входа SSH ===
+show ssh
+%No SSHv2 server connections running.
+%No SSHv1 server connections running.
+R19#
+
+=== R19 | Диагностика входа SSH ===
+show users
+    Line       User       Host(s)              Idle       Location
+*  0 con 0                idle                 00:00:00   
+
+  Interface    User               Mode         Idle     Peer Address
+
+R19#
+
+=== R19 | Диагностика входа SSH ===
+show ip route 10.255.0.19
+Routing entry for 10.255.0.19/32
+  Known via "connected", distance 0, metric 0 (connected, via interface)
+  Routing Descriptor Blocks:
+  * directly connected, via Loopback0
+      Route metric is 0, traffic share count is 1
+R19#
+
+=== R12 | Диагностика входа SSH ===
+show running-config | section line vty
+line vty 0 4
+ login
+ transport input none
+R12#
+
+=== R12 | Диагностика входа SSH ===
+show ip ssh | include SSH Enabled
+R12#
+
+=== R12 | Диагностика входа SSH ===
+show ssh
+%No SSHv2 server connections running.
+%No SSHv1 server connections running.
+R12#
+
+=== R12 | Диагностика входа SSH ===
+show users
+    Line       User       Host(s)              Idle       Location
+*  0 con 0                idle                 00:00:00   
+
+  Interface    User               Mode         Idle     Peer Address
+
+R12#
+
+=== R12 | Диагностика входа SSH ===
+show ip route 10.255.0.19
+Routing entry for 10.255.0.19/32
+  Known via "ospf 1", distance 110, metric 21, type inter area
+  Last update from 10.10.0.1 on Ethernet0/2, 00:17:57 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.1, from 10.255.0.14, 00:17:57 ago, via Ethernet0/2
+      Route metric is 21, traffic share count is 1
+R12#
+
+=== R18 | Диагностика входа SSH ===
+show running-config | section line vty
+line vty 0 4
+ login
+ transport input none
+R18#
+
+=== R18 | Диагностика входа SSH ===
+show ip ssh | include SSH Enabled
+R18#
+
+=== R18 | Диагностика входа SSH ===
+show ssh
+%No SSHv2 server connections running.
+%No SSHv1 server connections running.
+R18#
+
+=== R18 | Диагностика входа SSH ===
+show users
+    Line       User       Host(s)              Idle       Location
+*  0 con 0                idle                 00:00:00   
+
+  Interface    User               Mode         Idle     Peer Address
+
+R18#
+
+=== R18 | Диагностика входа SSH ===
+show ip route 10.255.0.19
+Routing entry for 10.255.0.19/32
+  Known via "bgp 2042", distance 20, metric 0
+  Tag 520, type external
+  Last update from 10.254.0.41 00:16:34 ago
+  Routing Descriptor Blocks:
+    10.254.0.41, from 10.254.0.41, 00:16:34 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 3
+      Route tag 520
+      MPLS label: none
+  * 10.254.0.37, from 10.254.0.37, 00:16:34 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 3
+      Route tag 520
+      MPLS label: none
+R18#
+
+=== R20 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114000 (1/100 of seconds), resolution is 4000
+reference time is EEB02D18.60831378 (15:34:48.377 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 8.46 msec, peer dispersion is 2.58 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000004 s/s
+system poll interval is 256, last update was 139 sec ago.
+R20#
+
+=== SW3 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02D6B.D7CEDB68 (15:36:11.843 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 7.60 msec, peer dispersion is 2.94 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 56 sec ago.
+SW3#
+
+=== R20 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5      1    256   377  1.000   0.500  2.586
++~10.255.0.13     127.127.1.1      7    124    256   377  1.000   0.500  2.239
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R20#
+
+=== SW3 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     56     64   377  1.000   0.500  2.941
++~10.255.0.13     127.127.1.1      7    271     64   360  1.000   0.500 444.97
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW3#
+
+=== R12 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 5, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02D9F.11EB8550 (15:37:03.070 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.24 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 5 sec ago.
+R12#
+
+=== R12 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~127.127.1.1     .LOCL.           4      5     16   377  0.000   0.000  1.204
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R12#
+
+=== R15 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02D12.5126EA58 (15:34:42.317 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 9.43 msec, peer dispersion is 3.82 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 128, last update was 146 sec ago.
+R15#
+
+=== SW4 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02CE2.8872B198 (15:33:54.533 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 1.00 msec
+root dispersion is 9.52 msec, peer dispersion is 5.96 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 194 sec ago.
+SW4#
+
+=== R15 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     13    128   377  0.000   0.000  3.827
++~10.255.0.13     127.127.1.1      7     86    128   377  1.000  -0.500  2.549
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R15#
+
+=== SW4 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     58     64   377  0.000   0.000  5.967
++~10.255.0.13     127.127.1.1      7     64     64   377  0.000   0.000  3.687
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW4#
+
+=== R13 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 7, reference is 127.127.1.1    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02DA0.AF5C2AD8 (15:37:04.685 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 2.22 msec, peer dispersion is 1.20 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 16, last update was 4 sec ago.
+R13#
+
+=== SW5 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 249.9997 Hz, precision is 2**10
+ntp uptime is 114200 (1/100 of seconds), resolution is 4016
+reference time is EEB02CE4.4F1AA098 (15:33:56.309 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 1.00 msec
+root dispersion is 9.52 msec, peer dispersion is 6.60 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000001061 s/s
+system poll interval is 64, last update was 192 sec ago.
+SW5#
+
+=== R13 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~127.127.1.1     .LOCL.           6      4     16   377  0.000   0.000  1.204
+ ~10.255.0.12     127.127.1.1      5     66     64   377  1.000   0.500  2.922
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R13#
+
+=== SW5 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     57     64   377  0.000   0.000  6.601
++~10.255.0.13     127.127.1.1      7     61     64   377  0.000   0.000  4.916
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW5#
+
+=== R14 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114200 (1/100 of seconds), resolution is 4000
+reference time is EEB02D52.116872E0 (15:35:46.068 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 0.00 msec
+root dispersion is 8.10 msec, peer dispersion is 3.68 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 128, last update was 82 sec ago.
+R14#
+
+=== SW2 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114100 (1/100 of seconds), resolution is 4000
+reference time is EEB02CA4.4DD2F280 (15:32:52.304 UTC Tue Nov 24 2026)
+clock offset is 0.5000 msec, root delay is 1.00 msec
+root dispersion is 885.13 msec, peer dispersion is 877.57 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is 0.000000000 s/s
+system poll interval is 64, last update was 256 sec ago.
+SW2#
+
+=== R14 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5     82    128   377  0.000   0.000  3.686
++~10.255.0.13     127.127.1.1      7     37    128   377  0.000   0.000  2.591
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R14#
+
+=== R19 | Итоговая проверка NTP ===
+show ntp status
+Clock is synchronized, stratum 6, reference is 10.255.0.12    
+nominal freq is 250.0000 Hz, actual freq is 250.0000 Hz, precision is 2**10
+ntp uptime is 114200 (1/100 of seconds), resolution is 4000
+reference time is EEB02C54.11A9FC18 (15:31:32.069 UTC Tue Nov 24 2026)
+clock offset is 0.0000 msec, root delay is 1.00 msec
+root dispersion is 11.38 msec, peer dispersion is 2.14 msec
+loopfilter state is 'CTRL' (Normal Controlled Loop), drift is -0.000000000 s/s
+system poll interval is 256, last update was 336 sec ago.
+R19#
+
+=== SW2 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5    256     64   170  1.000   0.500 877.57
++~10.255.0.13     127.127.1.1      7     67     64   377  1.000   0.500  5.474
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+SW2#
+
+=== R19 | Итоговая проверка NTP ===
+show ntp associations
+
+  address         ref clock       st   when   poll reach  delay  offset   disp
+*~10.255.0.12     127.127.1.1      5    201    256   377  0.000   0.000  2.148
++~10.255.0.13     127.127.1.1      7    262    256   377  1.000  -0.500  2.131
+ * sys.peer, # selected, + candidate, - outlyer, x falseticker, ~ configured
+R19#
+
+=== R12 | Итоговая проверка пула и аренды ===
+show ip dhcp pool
+
+Pool MOSCOW-10 :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased addresses
+ 10.10.10.101         10.10.10.1       - 10.10.10.254      1
+R12#
+
+=== R12 | Итоговая проверка пула и аренды ===
+show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/	 	    Lease expiration        Type
+		    Hardware address/
+		    User name
+10.10.10.100        0100.5079.6668.01       Nov 25 2026 03:18 PM    Automatic
+R12#
+
+=== R13 | Итоговая проверка пула и аренды ===
+show ip dhcp pool
+
+Pool MOSCOW-20 :
+ Utilization mark (high/low)    : 100 / 0
+ Subnet size (first/next)       : 0 / 0 
+ Total addresses                : 254
+ Leased addresses               : 1
+ Pending event                  : none
+ 1 subnet is currently in the pool :
+ Current index        IP address range                    Leased addresses
+ 10.10.20.101         10.10.20.1       - 10.10.20.254      1
+R13#
+
+=== R13 | Итоговая проверка пула и аренды ===
+show ip dhcp binding
+Bindings from all pools not associated with VRF:
+IP address          Client-ID/	 	    Lease expiration        Type
+		    Hardware address/
+		    User name
+10.10.20.100        0100.5079.6668.07       Nov 25 2026 03:22 PM    Automatic
+R13#
+
+=== R18 | Размер пула AS2042 ===
+show running-config | include ^ip nat pool
+ip nat pool SPB-FIVE 10.20.250.1 10.20.250.5 netmask 255.255.255.248
+R18#
+
+=== R18 | Размер пула AS2042 ===
+show ip nat statistics
+Total active translations: 0 (0 static, 0 dynamic; 0 extended)
+Peak translations: 4, occurred 00:01:54 ago
+Outside interfaces:
+  Ethernet0/2, Ethernet0/3
+Inside interfaces: 
+  Ethernet0/0, Ethernet0/1
+Hits: 15  Misses: 0
+CEF Translated packets: 15, CEF Punted packets: 0
+Expired translations: 7
+Dynamic mappings:
+-- Inside Source
+[Id: 1] access-list SPB-PAT pool SPB-FIVE refcount 0
+ pool SPB-FIVE: netmask 255.255.255.248
+	start 10.20.250.1 end 10.20.250.5
+	type generic, total addresses 5, allocated 0 (0%), misses 0
+
+Total doors: 0
+Appl doors: 0
+Normal doors: 0
+Queued Packets: 0
+R18#
+
+=== R18 | Проверка внешнего SSH-адреса R19, до аутентификации ===
+R18#ssh -l netops 10.10.250.19
+Password: 
+
+=== R12 | Проверка внутреннего SSH-адреса R19, до аутентификации ===
+R12#ssh -l netops 10.255.0.19
+Password: 
+
+=== R19 | Сохранение учётной записи R19 ===
+write memory
+Building configuration...
+[OK]
+R19#
+
+=== R18 | Вход SSH на R19 ===
+ssh -l netops 10.10.250.19
+Password: 
+
+
+R19>
+show users
+    Line       User       Host(s)              Idle       Location
+   0 con 0                idle                 00:00:01   
+*  2 vty 0     netops     idle                 00:00:00 10.254.0.38
+   3 vty 1     netops     idle                 00:00:04 10.10.0.2
+
+  Interface    User               Mode         Idle     Peer Address
+
+R19>
+exit
+
+[Connection to 10.10.250.19 closed by foreign host]
+R18>
+
+=== R12 | Вход SSH на R19 ===
+ssh -l netops 10.255.0.19
+Password: 
+
+R19>
+show users
+    Line       User       Host(s)              Idle       Location
+   0 con 0                idle                 00:00:17   
+*  2 vty 0     netops     idle                 00:00:00 10.10.0.2
+   3 vty 1     netops     idle                 00:00:19 10.10.0.2
+
+  Interface    User               Mode         Idle     Peer Address
+
+R19>
+exit
+
+[Connection to 10.255.0.19 closed by foreign host]
+R12>

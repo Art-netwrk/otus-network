@@ -1,0 +1,1603 @@
+
+=== R12 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.25      YES TFTP   up                    up      
+Ethernet0/1                10.10.0.29      YES TFTP   up                    up      
+Ethernet0/2                10.10.0.2       YES TFTP   up                    up      
+Ethernet0/3                10.10.0.18      YES TFTP   up                    up      
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.12     YES TFTP   up                    up      
+R12#
+
+=== R12 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 10.255.0.12
+  It is an area border router
+  Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+  Routing on Interfaces Configured Explicitly (Area 0):
+    Ethernet0/3
+    Ethernet0/2
+  Routing on Interfaces Configured Explicitly (Area 10):
+    Loopback0
+    Ethernet0/1
+    Ethernet0/0
+  Passive Interface(s):
+    Ethernet1/0
+    Ethernet1/1
+    Ethernet1/2
+    Ethernet1/3
+    Loopback0
+    RG-AR-IF-INPUT1
+    VoIP-Null0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.255.0.5           110      00:00:18
+    10.255.0.4           110      00:00:18
+    10.255.0.13          110      00:00:18
+  Distance: (default is 110)
+
+R12#
+
+=== R32 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.20.0.26      YES TFTP   up                    up      
+Ethernet0/1                unassigned      YES TFTP   administratively down down    
+Ethernet0/2                unassigned      YES TFTP   administratively down down    
+Ethernet0/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.20.255.32    YES TFTP   up                    up      
+R32#
+
+=== R32 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "eigrp 2042"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 VR(SPB) Address-Family Protocol for AS(2042)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    NSF-aware route hold timer is 240
+    Router-ID: 10.20.255.32
+    Stub, connected, summary
+    Topology : 0 (base) 
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 2
+      Total Redist Count: 0
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.20.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: internal 90 external 170
+
+R32#
+
+=== R13 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.33      YES TFTP   up                    up      
+Ethernet0/1                10.10.0.37      YES TFTP   up                    up      
+Ethernet0/2                10.10.0.14      YES TFTP   up                    up      
+Ethernet0/3                10.10.0.6       YES TFTP   up                    up      
+Ethernet1/0                unassigned      YES TFTP   administratively down down    
+Ethernet1/1                unassigned      YES TFTP   administratively down down    
+Ethernet1/2                unassigned      YES TFTP   administratively down down    
+Ethernet1/3                unassigned      YES TFTP   administratively down down    
+Loopback0                  10.255.0.13     YES TFTP   up                    up      
+R13#
+
+=== R13 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 10.255.0.13
+  It is an area border router
+  Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+  Routing on Interfaces Configured Explicitly (Area 0):
+    Ethernet0/3
+    Ethernet0/2
+  Routing on Interfaces Configured Explicitly (Area 10):
+    Loopback0
+    Ethernet0/1
+    Ethernet0/0
+  Passive Interface(s):
+    Ethernet1/0
+    Ethernet1/1
+    Ethernet1/2
+    Ethernet1/3
+    Loopback0
+    RG-AR-IF-INPUT1
+    VoIP-Null0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.255.0.5           110      00:00:00
+    10.255.0.4           110      00:00:00
+    10.255.0.12          110      00:00:18
+  Distance: (default is 110)
+
+R13#
+
+=== R16 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.20.0.17      YES TFTP   up                    up      
+Ethernet0/1                10.20.0.2       YES TFTP   up                    up      
+Ethernet0/2                10.20.0.21      YES TFTP   up                    up      
+Ethernet0/3                10.20.0.25      YES TFTP   up                    up      
+Loopback0                  10.20.255.16    YES TFTP   up                    up      
+R16#
+
+=== R16 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "eigrp 2042"
+  Outgoing update filter list for all interfaces is not set
+    Ethernet0/1 filtered by (prefix-list) SPB-SUMMARY4 (per-user), default is not set
+    Ethernet0/3 filtered by (prefix-list) DEFAULT-ONLY4 (per-user), default is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  EIGRP-IPv4 VR(SPB) Address-Family Protocol for AS(2042)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    NSF-aware route hold timer is 240
+    Router-ID: 10.20.255.16
+    Topology : 0 (base) 
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 16
+      Total Redist Count: 0
+
+  Automatic Summarization: disabled
+  Address Summarization:
+    10.20.0.0/16 for Et0/1
+      Summarizing 15 components with metric 163840
+  Maximum path: 4
+  Routing for Networks:
+    10.20.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.20.0.26            90      00:00:16
+    10.20.0.22            90      00:00:16
+    10.20.0.18            90      00:00:16
+  Distance: internal 90 external 170
+
+R16#
+
+=== R14 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.1       YES TFTP   up                    up      
+Ethernet0/1                10.10.0.5       YES TFTP   up                    up      
+Ethernet0/2                10.254.0.1      YES TFTP   up                    up      
+Ethernet0/3                10.10.0.9       YES TFTP   up                    up      
+Loopback0                  10.255.0.14     YES TFTP   up                    up      
+NVI0                       10.10.0.1       YES unset  up                    up      
+R14#
+
+=== R14 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 10.255.0.14
+  It is an area border and autonomous system boundary router
+ Redistributing External Routes from,
+    bgp 1001 with metric mapped to 20, includes subnets in redistribution
+  Number of areas in this router is 2. 1 normal 1 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+  Routing on Interfaces Configured Explicitly (Area 0):
+    Loopback0
+    Ethernet0/2
+    Ethernet0/1
+    Ethernet0/0
+  Routing on Interfaces Configured Explicitly (Area 101):
+    Ethernet0/3
+  Passive Interface(s):
+    Ethernet0/2
+    Loopback0
+    NVI0
+    RG-AR-IF-INPUT1
+    VoIP-Null0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.255.0.12          110      00:00:00
+  Distance: (default is 110)
+
+Routing Protocol is "bgp 1001"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  IGP synchronization is disabled
+  Automatic route summarization is disabled
+  Neighbor(s):
+    Address          FiltIn FiltOut DistIn DistOut Weight RouteMap
+    10.254.0.2                   10                      
+    10.255.0.15                                          
+  Maximum path: 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: external 20 internal 200 local 200
+
+R14#
+
+=== R15 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.10.0.13      YES TFTP   up                    up      
+Ethernet0/1                10.10.0.17      YES TFTP   up                    up      
+Ethernet0/2                10.254.0.5      YES TFTP   up                    up      
+Ethernet0/3                10.10.0.21      YES TFTP   up                    up      
+Loopback0                  10.255.0.15     YES TFTP   up                    up      
+NVI0                       10.10.0.13      YES unset  up                    up      
+R15#
+
+=== R15 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "ospf 1"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Router ID 10.255.0.15
+  It is an area border and autonomous system boundary router
+ Redistributing External Routes from,
+    bgp 1001 with metric mapped to 20, includes subnets in redistribution
+  Number of areas in this router is 2. 2 normal 0 stub 0 nssa
+  Maximum path: 4
+  Routing for Networks:
+  Routing on Interfaces Configured Explicitly (Area 0):
+    Loopback0
+    Ethernet0/2
+    Ethernet0/1
+    Ethernet0/0
+  Routing on Interfaces Configured Explicitly (Area 102):
+    Ethernet0/3
+  Passive Interface(s):
+    Ethernet0/2
+    Loopback0
+    NVI0
+    RG-AR-IF-INPUT1
+    VoIP-Null0
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 110)
+
+Routing Protocol is "bgp 1001"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  IGP synchronization is disabled
+  Automatic route summarization is disabled
+  Neighbor(s):
+    Address          FiltIn FiltOut DistIn DistOut Weight RouteMap
+    10.254.0.6                   10                       PREFER-LAMAS
+    10.255.0.14                                          
+  Maximum path: 1
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: external 20 internal 200 local 200
+
+R15#
+
+=== R18 | Исходная конфигурация ===
+show ip interface brief
+Interface                  IP-Address      OK? Method Status                Protocol
+Ethernet0/0                10.20.0.1       YES TFTP   up                    up      
+Ethernet0/1                10.20.0.5       YES TFTP   up                    up      
+Ethernet0/2                10.254.0.38     YES TFTP   up                    up      
+Ethernet0/3                10.254.0.42     YES TFTP   up                    up      
+Loopback0                  10.20.255.18    YES TFTP   up                    up      
+NVI0                       10.20.0.1       YES unset  up                    up      
+R18#
+
+=== R18 | Исходная конфигурация ===
+show ip protocols
+*** IP Routing is NSF aware ***
+
+Routing Protocol is "application"
+  Sending updates every 0 seconds
+  Invalid after 0 seconds, hold down 0, flushed after 0
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Maximum path: 32
+  Routing for Networks:
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: (default is 4)
+
+Routing Protocol is "eigrp 2042"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  Default networks flagged in outgoing updates
+  Default networks accepted from incoming updates
+  Redistributing: static
+  EIGRP-IPv4 VR(SPB) Address-Family Protocol for AS(2042)
+    Metric weight K1=1, K2=0, K3=1, K4=0, K5=0 K6=0
+    Metric rib-scale 128
+    Metric version 64bit
+    NSF-aware route hold timer is 240
+    Router-ID: 10.20.255.18
+    Topology : 0 (base) 
+      Active Timer: 3 min
+      Distance: internal 90 external 170
+      Maximum path: 4
+      Maximum hopcount 100
+      Maximum metric variance 1
+      Total Prefix Count: 7
+      Total Redist Count: 1
+
+  Automatic Summarization: disabled
+  Maximum path: 4
+  Routing for Networks:
+    10.20.0.0/16
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+    10.20.0.6             90      00:00:03
+    10.20.0.2             90      00:00:03
+  Distance: internal 90 external 170
+
+Routing Protocol is "bgp 2042"
+  Outgoing update filter list for all interfaces is not set
+  Incoming update filter list for all interfaces is not set
+  IGP synchronization is disabled
+  Automatic route summarization is disabled
+  Neighbor(s):
+    Address          FiltIn FiltOut DistIn DistOut Weight RouteMap
+    10.254.0.37                                           TRIADA-IN
+    10.254.0.41                                           TRIADA-IN
+  Maximum path: 2
+  Routing Information Sources:
+    Gateway         Distance      Last Update
+  Distance: external 20 internal 200 local 200
+
+R18#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.14:0; Local LDP Ident 10.255.0.12:0
+	TCP connection: 10.255.0.14.47015 - 10.255.0.12.646
+	State: Oper; Msgs sent/rcvd: 26/29; Downstream
+	Up time: 00:00:15
+	LDP discovery sources:
+	  Ethernet0/2, Src IP addr: 10.10.0.1
+        Addresses bound to peer LDP Ident:
+          10.10.0.1       10.10.0.5       10.254.0.1      10.10.0.9       
+          10.255.0.14     198.18.12.14    
+    Peer LDP Ident: 10.255.0.15:0; Local LDP Ident 10.255.0.12:0
+	TCP connection: 10.255.0.15.23164 - 10.255.0.12.646
+	State: Oper; Msgs sent/rcvd: 26/29; Downstream
+	Up time: 00:00:05
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.10.0.17
+        Addresses bound to peer LDP Ident:
+          10.10.0.13      10.10.0.17      10.254.0.5      10.10.0.21      
+          10.255.0.15     198.18.12.15    
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.14:0; Local LDP Ident 10.255.0.13:0
+	TCP connection: 10.255.0.14.17010 - 10.255.0.13.646
+	State: Oper; Msgs sent/rcvd: 26/28; Downstream
+	Up time: 00:00:13
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.10.0.5
+        Addresses bound to peer LDP Ident:
+          10.10.0.1       10.10.0.5       10.254.0.1      10.10.0.9       
+          10.255.0.14     198.18.12.14    
+    Peer LDP Ident: 10.255.0.15:0; Local LDP Ident 10.255.0.13:0
+	TCP connection: 10.255.0.15.19651 - 10.255.0.13.646
+	State: Oper; Msgs sent/rcvd: 26/29; Downstream
+	Up time: 00:00:03
+	LDP discovery sources:
+	  Ethernet0/2, Src IP addr: 10.10.0.13
+        Addresses bound to peer LDP Ident:
+          10.10.0.13      10.10.0.17      10.254.0.5      10.10.0.21      
+          10.255.0.15     198.18.12.15    
+R13#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.12:0; Local LDP Ident 10.255.0.14:0
+	TCP connection: 10.255.0.12.646 - 10.255.0.14.47015
+	State: Oper; Msgs sent/rcvd: 29/26; Downstream
+	Up time: 00:00:15
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.10.0.2
+        Addresses bound to peer LDP Ident:
+          10.10.0.25      10.10.0.29      10.10.0.2       10.10.0.18      
+          10.255.0.12     
+    Peer LDP Ident: 10.255.0.13:0; Local LDP Ident 10.255.0.14:0
+	TCP connection: 10.255.0.13.646 - 10.255.0.14.17010
+	State: Oper; Msgs sent/rcvd: 28/26; Downstream
+	Up time: 00:00:13
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.10.0.6
+        Addresses bound to peer LDP Ident:
+          10.10.0.33      10.10.0.37      10.10.0.14      10.10.0.6       
+          10.255.0.13     
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.12:0; Local LDP Ident 10.255.0.15:0
+	TCP connection: 10.255.0.12.646 - 10.255.0.15.23164
+	State: Oper; Msgs sent/rcvd: 29/26; Downstream
+	Up time: 00:00:05
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.10.0.18
+        Addresses bound to peer LDP Ident:
+          10.10.0.25      10.10.0.29      10.10.0.2       10.10.0.18      
+          10.255.0.12     
+    Peer LDP Ident: 10.255.0.13:0; Local LDP Ident 10.255.0.15:0
+	TCP connection: 10.255.0.13.646 - 10.255.0.15.19651
+	State: Oper; Msgs sent/rcvd: 29/26; Downstream
+	Up time: 00:00:03
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.10.0.14
+        Addresses bound to peer LDP Ident:
+          10.10.0.33      10.10.0.37      10.10.0.14      10.10.0.6       
+          10.255.0.13     
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.32:0; Local LDP Ident 10.252.12.16:0
+	TCP connection: 10.252.12.32.36491 - 10.252.12.16.646
+	State: Oper; Msgs sent/rcvd: 24/10; Downstream
+	Up time: 00:00:32
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.20.0.26
+        Addresses bound to peer LDP Ident:
+          10.20.0.26      10.20.255.32    10.252.12.32    198.18.12.32    
+    Peer LDP Ident: 10.252.12.18:0; Local LDP Ident 10.252.12.16:0
+	TCP connection: 10.252.12.18.35180 - 10.252.12.16.646
+	State: Oper; Msgs sent/rcvd: 24/14; Downstream
+	Up time: 00:00:10
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.20.0.1
+        Addresses bound to peer LDP Ident:
+          10.20.0.1       10.20.0.5       10.254.0.38     10.254.0.42     
+          10.20.255.18    10.252.12.18    198.18.12.18    
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.16:0; Local LDP Ident 10.252.12.18:0
+	TCP connection: 10.252.12.16.646 - 10.252.12.18.35180
+	State: Oper; Msgs sent/rcvd: 14/24; Downstream
+	Up time: 00:00:10
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.20.0.2
+        Addresses bound to peer LDP Ident:
+          10.20.0.17      10.20.0.2       10.20.0.21      10.20.0.25      
+          10.20.255.16    10.252.12.16    
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.16:0; Local LDP Ident 10.252.12.32:0
+	TCP connection: 10.252.12.16.646 - 10.252.12.32.36491
+	State: Oper; Msgs sent/rcvd: 10/24; Downstream
+	Up time: 00:00:32
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.20.0.25
+        Addresses bound to peer LDP Ident:
+          10.20.0.17      10.20.0.2       10.20.0.21      10.20.0.25      
+          10.20.255.16    10.252.12.16    
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   0             Et0/3      10.10.0.17  
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   0             Et0/2      10.10.0.13  
+R13#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         29         10.255.0.15/32   0             Et0/0      10.10.0.2   
+           29         10.255.0.15/32   0             Et0/1      10.10.0.6   
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.14 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+17         26         10.255.0.14/32   0             Et0/0      10.10.0.14  
+           26         10.255.0.14/32   0             Et0/1      10.10.0.18  
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+26         Pop Label  10.252.12.32/32  350           Et0/3      10.20.0.26  
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+18         26         10.252.12.32/32  0             Et0/0      10.20.0.2   
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.18 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+17         28         10.252.12.18/32  0             Et0/0      10.20.0.25  
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 11, type intra area
+  Last update from 10.10.0.17 on Ethernet0/3, 00:00:07 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.17, from 10.255.0.15, 00:00:07 ago, via Ethernet0/3
+      Route metric is 11, traffic share count is 1
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 11, type intra area
+  Last update from 10.10.0.13 on Ethernet0/2, 00:00:05 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.13, from 10.255.0.15, 00:00:05 ago, via Ethernet0/2
+      Route metric is 11, traffic share count is 1
+R13#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.2 on Ethernet0/0, 00:00:07 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.6, from 10.255.0.15, 00:00:07 ago, via Ethernet0/1
+      Route metric is 21, traffic share count is 1
+    10.10.0.2, from 10.255.0.15, 00:00:07 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.14
+Routing entry for 10.255.0.14/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.14 on Ethernet0/0, 00:00:05 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.18, from 10.255.0.14, 00:00:05 ago, via Ethernet0/1
+      Route metric is 21, traffic share count is 1
+    10.10.0.14, from 10.255.0.14, 00:00:05 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.32
+Routing entry for 10.252.12.32/32
+  Known via "eigrp 2042", distance 90, metric 1024640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.26 on Ethernet0/3, 00:00:34 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.26, from 10.20.0.26, 00:00:34 ago, via Ethernet0/3
+      Route metric is 1024640, traffic share count is 1
+      Total delay is 1002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 1
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.32
+Routing entry for 10.252.12.32/32
+  Known via "eigrp 2042", distance 90, metric 1536640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.2 on Ethernet0/0, 00:00:17 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.2, from 10.20.0.2, 00:00:17 ago, via Ethernet0/0
+      Route metric is 1536640, traffic share count is 1
+      Total delay is 2002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.18
+Routing entry for 10.252.12.18/32
+  Known via "eigrp 2042", distance 90, metric 1536640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.25 on Ethernet0/0, 00:00:13 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.25, from 10.20.0.25, 00:00:13 ago, via Ethernet0/0
+      Route metric is 1536640, traffic share count is 1
+      Total delay is 2002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+R32#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.255.0.14, local AS number 1001
+BGP table version is 1, main routing table version 1
+10 network entries using 1400 bytes of memory
+10 path entries using 800 bytes of memory
+5/0 BGP path/bestpath attribute entries using 720 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 2920 total bytes of memory
+BGP activity 11/0 prefixes, 11/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.254.0.2      4          101       2       2        1    0    0 00:00:18        0
+10.255.0.15     4         1001       0       0        1    0    0 never    Idle
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.255.0.15, local AS number 1001
+BGP table version is 1, main routing table version 1
+10 network entries using 1400 bytes of memory
+10 path entries using 800 bytes of memory
+5/0 BGP path/bestpath attribute entries using 720 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 2920 total bytes of memory
+BGP activity 11/0 prefixes, 11/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.254.0.6      4          301       2       2        1    0    0 00:00:11        0
+10.255.0.14     4         1001       0       0        1    0    0 never    Idle
+R15#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.20.255.18, local AS number 2042
+BGP table version is 1, main routing table version 1
+3 network entries using 420 bytes of memory
+3 path entries using 240 bytes of memory
+2/0 BGP path/bestpath attribute entries using 288 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 948 total bytes of memory
+BGP activity 4/0 prefixes, 4/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.32    4         2042       2       2        1    0    0 00:00:10        0
+10.254.0.37     4          520       2       2        1    0    0 00:00:14        0
+10.254.0.41     4          520       2       2        1    0    0 00:00:06        0
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 198.18.12.32, local AS number 2042
+BGP table version is 1, main routing table version 1
+1 network entries using 140 bytes of memory
+1 path entries using 80 bytes of memory
+1/0 BGP path/bestpath attribute entries using 144 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 364 total bytes of memory
+BGP activity 1/0 prefixes, 1/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.18    4         2042       2       2        1    0    0 00:00:10        0
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R13#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15
+% Subnet not in table
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.14
+% Subnet not in table
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.32
+% Subnet not in table
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.18
+% Subnet not in table
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15 255.255.255.255
+% Network not in table
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15 255.255.255.255
+% Network not in table
+R13#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.15 detail
+0.0.0.0/0, epoch 0, flags [default route handler, default route]
+  no route
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.14 detail
+0.0.0.0/0, epoch 0, flags [default route handler, default route]
+  no route
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.32 255.255.255.255
+% Network not in table
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.32 detail
+0.0.0.0/0, epoch 0, flags [attached, default route]
+  attached to Null0
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.18 detail
+0.0.0.0/0, epoch 0, flags [default route]
+  nexthop 10.20.0.25 Ethernet0/0
+R32#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.15 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.15, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.14 
+..
+*Nov 24 20:30:42.874: %BGP-5-ADJCHANGE: neighbor 10.255.0.15 Up ........
+Success rate is 0 percent (0/10)
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.14 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.14, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.15 
+..
+*Nov 24 20:30:42.874: %BGP-5-ADJCHANGE: neighbor 10.255.0.14 Up ........
+Success rate is 0 percent (0/10)
+R15#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.32 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.32, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.18 
+..........
+Success rate is 0 percent (0/10)
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.18 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.18, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.32 
+..........
+Success rate is 0 percent (0/10)
+R32#
+
+=== R14 | Состояние iBGP после запуска ===
+show ip bgp summary
+BGP router identifier 10.255.0.14, local AS number 1001
+BGP table version is 1, main routing table version 1
+14 network entries using 1960 bytes of memory
+14 path entries using 1120 bytes of memory
+6/0 BGP path/bestpath attribute entries using 864 bytes of memory
+3 BGP AS-PATH entries using 72 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 4016 total bytes of memory
+BGP activity 20/0 prefixes, 24/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.254.0.2      4          101       5       2        1    0    0 00:01:04        1
+10.255.0.15     4         1001       2       2        1    0    0 00:00:45        0
+R14#
+
+=== R14 | Состояние iBGP после запуска ===
+show ip bgp 198.18.12.15
+BGP routing table entry for 0.0.0.0/0, version 0
+Paths: (1 available, no best path)
+  Not advertised to any peer
+  Refresh Epoch 1
+  101
+    10.254.0.2 (inaccessible) from 10.254.0.2 (10.255.0.22)
+      Origin IGP, localpref 100, valid, external
+      rx pathid: 0, tx pathid: 0
+R14#
+
+=== R18 | Состояние iBGP после запуска ===
+show ip bgp summary
+BGP router identifier 10.20.255.18, local AS number 2042
+BGP table version is 1, main routing table version 1
+25 network entries using 3500 bytes of memory
+42 path entries using 3360 bytes of memory
+7/0 BGP path/bestpath attribute entries using 1008 bytes of memory
+3 BGP AS-PATH entries using 72 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 7940 total bytes of memory
+BGP activity 49/0 prefixes, 84/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.32    4         2042       5       3        1    0    0 00:00:57        1
+10.254.0.37     4          520       7       2        1    0    0 00:01:01       17
+10.254.0.41     4          520       7       2        1    0    0 00:00:53       19
+R18#
+
+=== R18 | Состояние iBGP после запуска ===
+show ip bgp 198.18.12.32
+BGP routing table entry for 198.18.12.32/32, version 0
+Paths: (1 available, no best path)
+Multipath: eBGP
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    10.252.12.32 (inaccessible) from 10.252.12.32 (198.18.12.32)
+      Origin IGP, metric 0, localpref 100, valid, internal
+      rx pathid: 0, tx pathid: 0
+R18#
+
+=== R32 | Состояние iBGP после запуска ===
+show ip bgp summary
+BGP router identifier 198.18.12.32, local AS number 2042
+BGP table version is 26, main routing table version 26
+25 network entries using 3500 bytes of memory
+25 path entries using 2000 bytes of memory
+5/5 BGP path/bestpath attribute entries using 720 bytes of memory
+2 BGP AS-PATH entries using 48 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 6268 total bytes of memory
+BGP activity 25/0 prefixes, 25/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.18    4         2042       8       5       26    0    0 00:00:57       24
+R32#
+
+=== R32 | Состояние iBGP после запуска ===
+show ip bgp 198.18.12.18
+BGP routing table entry for 198.18.12.18/32, version 7
+Paths: (1 available, best #1, table default)
+  Not advertised to any peer
+  Refresh Epoch 1
+  Local
+    10.252.12.18 (metric 1536640) from 10.252.12.18 (10.20.255.18)
+      Origin IGP, metric 0, localpref 100, valid, internal, best
+      rx pathid: 0, tx pathid: 0x0
+R32#
+
+=== R14 | Транспортная достижимость next hop ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.2 on Ethernet0/0, 00:01:02 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.6, from 10.255.0.15, 00:01:02 ago, via Ethernet0/1
+      Route metric is 21, traffic share count is 1
+    10.10.0.2, from 10.255.0.15, 00:01:02 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R14#
+
+=== R14 | Транспортная достижимость next hop ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         29         10.255.0.15/32   0             Et0/0      10.10.0.2   
+           29         10.255.0.15/32   0             Et0/1      10.10.0.6   
+R14#
+
+=== R14 | Транспортная достижимость next hop ===
+ping 10.255.0.15 source Loopback0 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.255.0.15, timeout is 2 seconds:
+Packet sent with a source address of 10.255.0.14 
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/2 ms
+R14#
+
+=== R18 | Транспортная достижимость next hop ===
+show ip route 10.252.12.32
+Routing entry for 10.252.12.32/32
+  Known via "eigrp 2042", distance 90, metric 1536640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.2 on Ethernet0/0, 00:01:13 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.2, from 10.20.0.2, 00:01:13 ago, via Ethernet0/0
+      Route metric is 1536640, traffic share count is 1
+      Total delay is 2002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+R18#
+
+=== R18 | Транспортная достижимость next hop ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+18         26         10.252.12.32/32  0             Et0/0      10.20.0.2   
+R18#
+
+=== R18 | Транспортная достижимость next hop ===
+ping 10.252.12.32 source Loopback112 repeat 3
+Type escape sequence to abort.
+Sending 3, 100-byte ICMP Echos to 10.252.12.32, timeout is 2 seconds:
+Packet sent with a source address of 10.252.12.18 
+!!!
+Success rate is 100 percent (3/3), round-trip min/avg/max = 1/1/2 ms
+R18#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.12:0; Local LDP Ident 10.255.0.14:0
+	TCP connection: 10.255.0.12.646 - 10.255.0.14.47015
+	State: Oper; Msgs sent/rcvd: 32/28; Downstream
+	Up time: 00:01:18
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.10.0.2
+        Addresses bound to peer LDP Ident:
+          10.10.0.25      10.10.0.29      10.10.0.2       10.10.0.18      
+          10.255.0.12     
+    Peer LDP Ident: 10.255.0.13:0; Local LDP Ident 10.255.0.14:0
+	TCP connection: 10.255.0.13.646 - 10.255.0.14.17010
+	State: Oper; Msgs sent/rcvd: 31/28; Downstream
+	Up time: 00:01:15
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.10.0.6
+        Addresses bound to peer LDP Ident:
+          10.10.0.33      10.10.0.37      10.10.0.14      10.10.0.6       
+          10.255.0.13     
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.12:0; Local LDP Ident 10.255.0.15:0
+	TCP connection: 10.255.0.12.646 - 10.255.0.15.23164
+	State: Oper; Msgs sent/rcvd: 30/28; Downstream
+	Up time: 00:01:07
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.10.0.18
+        Addresses bound to peer LDP Ident:
+          10.10.0.25      10.10.0.29      10.10.0.2       10.10.0.18      
+          10.255.0.12     
+    Peer LDP Ident: 10.255.0.13:0; Local LDP Ident 10.255.0.15:0
+	TCP connection: 10.255.0.13.646 - 10.255.0.15.19651
+	State: Oper; Msgs sent/rcvd: 30/28; Downstream
+	Up time: 00:01:05
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.10.0.14
+        Addresses bound to peer LDP Ident:
+          10.10.0.33      10.10.0.37      10.10.0.14      10.10.0.6       
+          10.255.0.13     
+R15#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.16:0; Local LDP Ident 10.252.12.18:0
+	TCP connection: 10.252.12.16.646 - 10.252.12.18.35180
+	State: Oper; Msgs sent/rcvd: 15/25; Downstream
+	Up time: 00:01:12
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.20.0.2
+        Addresses bound to peer LDP Ident:
+          10.20.0.17      10.20.0.2       10.20.0.21      10.20.0.25      
+          10.20.255.16    10.252.12.16    
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.16:0; Local LDP Ident 10.252.12.32:0
+	TCP connection: 10.252.12.16.646 - 10.252.12.32.36491
+	State: Oper; Msgs sent/rcvd: 11/25; Downstream
+	Up time: 00:01:35
+	LDP discovery sources:
+	  Ethernet0/0, Src IP addr: 10.20.0.25
+        Addresses bound to peer LDP Ident:
+          10.20.0.17      10.20.0.2       10.20.0.21      10.20.0.25      
+          10.20.255.16    10.252.12.16    
+R32#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         29         10.255.0.15/32   0             Et0/0      10.10.0.2   
+           29         10.255.0.15/32   0             Et0/1      10.10.0.6   
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.14 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+17         26         10.255.0.14/32   0             Et0/0      10.10.0.14  
+           26         10.255.0.14/32   0             Et0/1      10.10.0.18  
+R15#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+18         26         10.252.12.32/32  0             Et0/0      10.20.0.2   
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.18 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+17         28         10.252.12.18/32  0             Et0/0      10.20.0.25  
+R32#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.2 on Ethernet0/0, 00:01:09 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.6, from 10.255.0.15, 00:01:09 ago, via Ethernet0/1
+      Route metric is 21, traffic share count is 1
+    10.10.0.2, from 10.255.0.15, 00:01:09 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.14
+Routing entry for 10.255.0.14/32
+  Known via "ospf 1", distance 110, metric 21, type intra area
+  Advertised by bgp 1001
+  Last update from 10.10.0.14 on Ethernet0/0, 00:01:08 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.18, from 10.255.0.14, 00:01:08 ago, via Ethernet0/1
+      Route metric is 21, traffic share count is 1
+    10.10.0.14, from 10.255.0.14, 00:01:08 ago, via Ethernet0/0
+      Route metric is 21, traffic share count is 1
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.252.12.32:0; Local LDP Ident 10.252.12.16:0
+	TCP connection: 10.252.12.32.36491 - 10.252.12.16.646
+	State: Oper; Msgs sent/rcvd: 25/11; Downstream
+	Up time: 00:01:35
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.20.0.26
+        Addresses bound to peer LDP Ident:
+          10.20.0.26      10.20.255.32    10.252.12.32    198.18.12.32    
+    Peer LDP Ident: 10.252.12.18:0; Local LDP Ident 10.252.12.16:0
+	TCP connection: 10.252.12.18.35180 - 10.252.12.16.646
+	State: Oper; Msgs sent/rcvd: 25/15; Downstream
+	Up time: 00:01:12
+	LDP discovery sources:
+	  Ethernet0/1, Src IP addr: 10.20.0.1
+        Addresses bound to peer LDP Ident:
+          10.20.0.1       10.20.0.5       10.254.0.38     10.254.0.42     
+          10.20.255.18    10.252.12.18    198.18.12.18    
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.32
+Routing entry for 10.252.12.32/32
+  Known via "eigrp 2042", distance 90, metric 1536640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.2 on Ethernet0/0, 00:01:19 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.2, from 10.20.0.2, 00:01:19 ago, via Ethernet0/0
+      Route metric is 1536640, traffic share count is 1
+      Total delay is 2002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.18
+Routing entry for 10.252.12.18/32
+  Known via "eigrp 2042", distance 90, metric 1536640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.25 on Ethernet0/0, 00:01:15 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.25, from 10.20.0.25, 00:01:15 ago, via Ethernet0/0
+      Route metric is 1536640, traffic share count is 1
+      Total delay is 2002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 2
+R32#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.255.0.14, local AS number 1001
+BGP table version is 19, main routing table version 19
+16 network entries using 2240 bytes of memory
+28 path entries using 2240 bytes of memory
+12/7 BGP path/bestpath attribute entries using 1728 bytes of memory
+5 BGP AS-PATH entries using 120 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+6 BGP filter-list cache entries using 96 bytes of memory
+BGP using 6424 total bytes of memory
+BGP activity 35/0 prefixes, 53/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.254.0.2      4          101       5       9       15    0    0 00:01:20        1
+10.255.0.15     4         1001      10      11       19    0    0 00:01:01       14
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.255.0.15, local AS number 1001
+BGP table version is 17, main routing table version 17
+16 network entries using 2240 bytes of memory
+27 path entries using 2160 bytes of memory
+13/7 BGP path/bestpath attribute entries using 1872 bytes of memory
+4 BGP AS-PATH entries using 96 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+7 BGP filter-list cache entries using 112 bytes of memory
+BGP using 6480 total bytes of memory
+BGP activity 35/0 prefixes, 51/4 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.254.0.6      4          301       5      10       17    0    0 00:01:14        1
+10.255.0.14     4         1001      11      10       17    0    0 00:01:01       13
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+26         Pop Label  10.252.12.32/32  1556          Et0/3      10.20.0.26  
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 10.20.255.18, local AS number 2042
+BGP table version is 32, main routing table version 32
+27 network entries using 3780 bytes of memory
+48 path entries using 3840 bytes of memory
+21 multipath network entries and 42 multipath paths
+9/6 BGP path/bestpath attribute entries using 1296 bytes of memory
+4 BGP AS-PATH entries using 96 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 9012 total bytes of memory
+BGP activity 52/0 prefixes, 97/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.32    4         2042       5      11       32    0    0 00:01:12        1
+10.254.0.37     4          520      11       6       26    0    0 00:01:16       21
+10.254.0.41     4          520       8       6       26    0    0 00:01:08       21
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip bgp summary
+BGP router identifier 198.18.12.32, local AS number 2042
+BGP table version is 28, main routing table version 28
+27 network entries using 3780 bytes of memory
+27 path entries using 2160 bytes of memory
+6/6 BGP path/bestpath attribute entries using 864 bytes of memory
+3 BGP AS-PATH entries using 72 bytes of memory
+0 BGP route-map cache entries using 0 bytes of memory
+0 BGP filter-list cache entries using 0 bytes of memory
+BGP using 6876 total bytes of memory
+BGP activity 27/0 prefixes, 27/0 paths, scan interval 60 secs
+
+Neighbor        V           AS MsgRcvd MsgSent   TblVer  InQ OutQ Up/Down  State/PfxRcd
+10.252.12.18    4         2042      11       5       28    0    0 00:01:12       26
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.14:0; Local LDP Ident 10.255.0.12:0
+	TCP connection: 10.255.0.14.47015 - 10.255.0.12.646
+	State: Oper; Msgs sent/rcvd: 28/32; Downstream
+	Up time: 00:01:18
+	LDP discovery sources:
+	  Ethernet0/2, Src IP addr: 10.10.0.1
+        Addresses bound to peer LDP Ident:
+          10.10.0.1       10.10.0.5       10.254.0.1      10.10.0.9       
+          10.255.0.14     198.18.12.14    
+    Peer LDP Ident: 10.255.0.15:0; Local LDP Ident 10.255.0.12:0
+	TCP connection: 10.255.0.15.23164 - 10.255.0.12.646
+	State: Oper; Msgs sent/rcvd: 28/30; Downstream
+	Up time: 00:01:07
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.10.0.17
+        Addresses bound to peer LDP Ident:
+          10.10.0.13      10.10.0.17      10.254.0.5      10.10.0.21      
+          10.255.0.15     198.18.12.15    
+R12#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15
+Routing entry for 198.18.12.15/32
+  Known via "bgp 1001", distance 200, metric 0, type internal
+  Last update from 10.255.0.15 00:00:09 ago
+  Routing Descriptor Blocks:
+  * 10.255.0.15, from 10.255.0.15, 00:00:09 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 0
+      MPLS label: none
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.14
+Routing entry for 198.18.12.14/32
+  Known via "bgp 1001", distance 200, metric 0, type internal
+  Last update from 10.255.0.14 00:00:10 ago
+  Routing Descriptor Blocks:
+  * 10.255.0.14, from 10.255.0.14, 00:00:10 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 0
+      MPLS label: none
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.252.12.32
+Routing entry for 10.252.12.32/32
+  Known via "eigrp 2042", distance 90, metric 1024640, type internal
+  Redistributing via eigrp 2042
+  Last update from 10.20.0.26 on Ethernet0/3, 00:01:36 ago
+  Routing Descriptor Blocks:
+  * 10.20.0.26, from 10.20.0.26, 00:01:36 ago, via Ethernet0/3
+      Route metric is 1024640, traffic share count is 1
+      Total delay is 1002 microseconds, minimum bandwidth is 10000 Kbit
+      Reliability 255/255, minimum MTU 1500 bytes
+      Loading 1/255, Hops 1
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.32
+Routing entry for 198.18.12.32/32
+  Known via "bgp 2042", distance 200, metric 0, type internal
+  Last update from 10.252.12.32 00:00:15 ago
+  Routing Descriptor Blocks:
+  * 10.252.12.32, from 10.252.12.32, 00:00:15 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 0
+      MPLS label: none
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.18
+Routing entry for 198.18.12.18/32
+  Known via "bgp 2042", distance 200, metric 0, type internal
+  Last update from 10.252.12.18 00:00:15 ago
+  Routing Descriptor Blocks:
+  * 10.252.12.18, from 10.252.12.18, 00:00:15 ago
+      Route metric is 0, traffic share count is 1
+      AS Hops 0
+      MPLS label: none
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   0             Et0/3      10.10.0.17  
+R12#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.15 detail
+198.18.12.15/32, epoch 0, flags [rib only nolabel, rib defined all labels]
+  recursive via 10.255.0.15
+    nexthop 10.10.0.2 Ethernet0/0 label 29
+    nexthop 10.10.0.6 Ethernet0/1 label 29
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.14 detail
+198.18.12.14/32, epoch 0, flags [rib only nolabel, rib defined all labels]
+  recursive via 10.255.0.14
+    nexthop 10.10.0.14 Ethernet0/0 label 26
+    nexthop 10.10.0.18 Ethernet0/1 label 26
+R15#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.32 detail
+198.18.12.32/32, epoch 0, flags [rib only nolabel, rib defined all labels]
+  recursive via 10.252.12.32
+    nexthop 10.20.0.2 Ethernet0/0 label 26
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+show ip cef 198.18.12.18 detail
+198.18.12.18/32, epoch 0, flags [rib only nolabel, rib defined all labels]
+  recursive via 10.252.12.18
+    nexthop 10.20.0.25 Ethernet0/0 label 28
+R32#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 11, type intra area
+  Last update from 10.10.0.17 on Ethernet0/3, 00:01:10 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.17, from 10.255.0.15, 00:01:10 ago, via Ethernet0/3
+      Route metric is 11, traffic share count is 1
+R12#
+
+=== R14 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.15 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.15, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.14 
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 1/1/2 ms
+R14#
+
+=== R15 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.14 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.14, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.15 
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 1/1/1 ms
+R15#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R16#
+
+=== R18 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.32 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.32, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.18 
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 1/1/3 ms
+R18#
+
+=== R32 | Проверка LDP, маршрутов и пересылки ===
+ping 198.18.12.18 source Loopback212 repeat 10 timeout 1
+Type escape sequence to abort.
+Sending 10, 100-byte ICMP Echos to 198.18.12.18, timeout is 1 seconds:
+Packet sent with a source address of 198.18.12.32 
+!!!!!!!!!!
+Success rate is 100 percent (10/10), round-trip min/avg/max = 1/1/2 ms
+R32#
+
+=== R16 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.32 255.255.255.255
+% Network not in table
+R16#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R12#
+
+=== R12 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15 255.255.255.255
+% Network not in table
+R12#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show mpls ldp neighbor
+    Peer LDP Ident: 10.255.0.14:0; Local LDP Ident 10.255.0.13:0
+	TCP connection: 10.255.0.14.17010 - 10.255.0.13.646
+	State: Oper; Msgs sent/rcvd: 28/31; Downstream
+	Up time: 00:01:16
+	LDP discovery sources:
+	  Ethernet0/3, Src IP addr: 10.10.0.5
+        Addresses bound to peer LDP Ident:
+          10.10.0.1       10.10.0.5       10.254.0.1      10.10.0.9       
+          10.255.0.14     198.18.12.14    
+    Peer LDP Ident: 10.255.0.15:0; Local LDP Ident 10.255.0.13:0
+	TCP connection: 10.255.0.15.19651 - 10.255.0.13.646
+	State: Oper; Msgs sent/rcvd: 28/30; Downstream
+	Up time: 00:01:06
+	LDP discovery sources:
+	  Ethernet0/2, Src IP addr: 10.10.0.13
+        Addresses bound to peer LDP Ident:
+          10.10.0.13      10.10.0.17      10.254.0.5      10.10.0.21      
+          10.255.0.15     198.18.12.15    
+R13#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   1350          Et0/2      10.10.0.13  
+R13#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show ip route 10.255.0.15
+Routing entry for 10.255.0.15/32
+  Known via "ospf 1", distance 110, metric 11, type intra area
+  Last update from 10.10.0.13 on Ethernet0/2, 00:01:09 ago
+  Routing Descriptor Blocks:
+  * 10.10.0.13, from 10.255.0.15, 00:01:09 ago, via Ethernet0/2
+      Route metric is 11, traffic share count is 1
+R13#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show running-config | include ^router bgp
+R13#
+
+=== R13 | Проверка LDP, маршрутов и пересылки ===
+show ip route 198.18.12.15 255.255.255.255
+% Network not in table
+R13#
+
+=== R12 | Счётчики до нагрузки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   2280          Et0/3      10.10.0.17  
+R12#
+
+=== R13 | Счётчики до нагрузки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   1350          Et0/2      10.10.0.13  
+R13#
+
+=== R16 | Счётчики до нагрузки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+26         Pop Label  10.252.12.32/32  3836          Et0/3      10.20.0.26  
+R16#
+
+=== R14 | Передача по LSP ===
+ping 198.18.12.15 source Loopback212 repeat 20
+Type escape sequence to abort.
+Sending 20, 100-byte ICMP Echos to 198.18.12.15, timeout is 2 seconds:
+Packet sent with a source address of 198.18.12.14 
+!!!!!!!!!!!!!!!!!!!!
+Success rate is 100 percent (20/20), round-trip min/avg/max = 1/1/1 ms
+R14#
+
+=== R18 | Передача по LSP ===
+ping 198.18.12.32 source Loopback212 repeat 20
+Type escape sequence to abort.
+Sending 20, 100-byte ICMP Echos to 198.18.12.32, timeout is 2 seconds:
+Packet sent with a source address of 198.18.12.18 
+!!!!!!!!!!!!!!!!!!!!
+Success rate is 100 percent (20/20), round-trip min/avg/max = 1/1/2 ms
+R18#
+
+=== R12 | Счётчики после нагрузки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   4560          Et0/3      10.10.0.17  
+R12#
+
+=== R13 | Счётчики после нагрузки ===
+show mpls forwarding-table 10.255.0.15 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+29         Pop Label  10.255.0.15/32   1350          Et0/2      10.10.0.13  
+R13#
+
+=== R16 | Счётчики после нагрузки ===
+show mpls forwarding-table 10.252.12.32 32
+Local      Outgoing   Prefix           Bytes Label   Outgoing   Next Hop    
+Label      Label      or Tunnel Id     Switched      interface              
+26         Pop Label  10.252.12.32/32  6116          Et0/3      10.20.0.26  
+R16#
